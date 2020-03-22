@@ -1,0 +1,76 @@
+body {
+  background: #1e1e20;
+  color: #ffffff;
+  font-family: moonLight;
+}
+
+@font-face {
+  font-family: moonLight;
+  src: url("../fonts/Moon Light.otf");
+}
+
+@font-face {
+  font-family: moonBold;
+  src: url("../fonts/Moon Bold.otf");
+}
+
+#menu{
+  width: 55px;
+  height: 100%;
+  background: #1f1f24;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  border-right: 1px solid #aaaaaa;
+  overflow-x:hidden;
+}
+
+#menuButton{
+  margin: 5px;
+  width: 45px;
+  height: 45px;
+  background: url("../images/hamburger.png");
+}
+
+.menuButtonOpen{
+  background-image: url("../images/close.png") !important;
+}
+
+.menuOpen{
+  width: 80% !important;
+  max-width: 900px;
+}
+
+#nav{
+  position: absolute;
+  top: 20;
+  left: 80;
+}
+
+#nav a{
+  color: #ffffff;
+  margin-right: 30px;
+  font-family: MoonLight;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+#nav a.selected{
+  text-decoration: underline;
+}
+
+#toymenu{
+  position: absolute;
+  top: 80;
+  left: 80;
+}
+
+
+
+#content{
+  position: absolute;
+  top: 0;
+  left: 65;
+  z-index: 1;
+}

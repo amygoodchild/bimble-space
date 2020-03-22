@@ -1,0 +1,38 @@
+//- layout.pug
+html
+  head
+    title Bimble Space - #{title}
+    block scripts
+      script(src='libraries/jquery-3.4.1.js')
+      script(src='scripts/mainscripts.js')
+      
+    block styles  
+      link(rel='stylesheet', href='css/style.css')
+        
+  body
+    #menu 
+      block menu
+        #menuButton
+        #nav
+          if (title=="home")
+              a.selected(href="/") home
+          else
+              a(href="/") home
+          each page in ["about", "contact"]
+            if (title==page)
+              a.selected(href="/" + page)= page
+            else
+              a(href="/" + page)= page
+              
+        #toymenu 
+          each page in ["spirograph"]
+            if (title==page)
+              a.toyLink(href="/" + page)
+                img(src="/images/toythumbs/" + page + ".jpg")
+            else
+              a.gameLink(href="/" + page)
+                img(src="/images/toythumbs/" + page + ".jpg")
+              
+    #content
+      block content
+      
