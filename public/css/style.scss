@@ -1,0 +1,234 @@
+body {
+  background: rgb(21,0,36);
+  background: linear-gradient(180deg, rgba(21,0,36,1) 0%, rgba(50,4,64,1) 61%, rgba(83,1,49,1) 100%);
+  color: #ffffff;
+  font-family: moonLight;
+  overflow: hidden;
+}
+
+
+$light: #b9befa;
+
+@mixin leftcircle($width, $color, $left, $bottom) {
+  width: $width+px;
+  height: $width+px;
+  background: $color;
+  -webkit-border-radius: $width/2+px !important;
+     -moz-border-radius: $width/2+px !important;
+          border-radius: $width/2+px !important;
+  position: absolute;
+  left: $left;
+  bottom: $bottom;
+}
+
+@mixin rightcircle($width, $color, $right, $bottom) {
+  width: $width+px;
+  height: $width+px;
+  background: $color;
+  -webkit-border-radius: $width/2+px !important;
+     -moz-border-radius: $width/2+px !important;
+          border-radius: $width/2+px !important;
+  position: absolute;
+  right: $right;
+  bottom: $bottom;
+}
+
+
+@font-face {
+  font-family: moonLight;
+  src: url("../fonts/Moon Light.otf");
+}
+
+@font-face {
+  font-family: moonBold;
+  src: url("../fonts/Moon Bold.otf");
+}
+
+#menu{
+  width: 55px;
+  height: 100%;
+  background: #1b0522;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  border-right: 1px solid #5f5f5f;
+  overflow-x:hidden;
+}
+
+.menuButton{
+  margin: 15px 5px;
+  width: 45px;
+  height: 45px;
+}
+
+.menuButtonClosed{
+  background: url("../images/hamburger.png");
+}
+
+.menuButtonOpen{
+  background-image: url("../images/close.png");
+  display: none;
+}
+
+.menuOpen{
+  width: 80% !important;
+  max-width: 900px;
+}
+
+#nav{
+  position: absolute;
+  top: 25;
+  left: 80;
+}
+
+#nav a{
+  color: #ffffff;
+  margin-right: 30px;
+  font-family: MoonLight;
+  text-decoration: none;
+  font-size: 25px;
+}
+
+#nav a.selected{
+  text-decoration: underline;
+}
+
+#toymenu{
+  position: absolute;
+  top: 80;
+  left: 80;
+}
+
+.toyMenuHeader{
+  margin: 20px 0px 10px;
+  font-size: 15px;
+  color: #bcbcbc;
+}
+
+#content{
+  position: absolute;
+  top: 0;
+  left: 80;
+  z-index: 1;
+}
+
+/*
+*
+* Home page
+*
+*/
+
+
+#homepage > .definition{
+  position: absolute;
+  left: 100px;
+  top: 40vh;
+  width: 800px;
+}
+
+#homepage > .definition > h1 {
+  font-size: 45px;
+  margin: 10px 0px 0px 0px;
+}
+
+#homepage > .definition > .pronunciation{
+  font-size: 15px;
+  font-style: italic;
+  margin:0px;
+  padding: 0px;
+  color: #bcbcbc;
+}
+
+#homepage > .definition > .theDefinition{
+  font-size: 20px;
+  margin:0px;
+  padding-top: 8px;
+  color: #ffffff;
+}
+
+
+/*
+*
+* Illustration
+*
+*/
+
+.stars {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    .star {
+        border-radius: 50%;
+        background-color: $light;
+        animation: twinkle 5s linear infinite;
+    }
+    @for $i from 1 through (60) {
+        $size: random(3);
+        $top: random(100)+vh;
+        $left: random(100)+vw;
+        .star:nth-of-type(#{$i}) {
+            width: $size;
+            height: $size;
+            top: $top;
+            left: $left;
+            animation-delay: random(5) + s;
+            position: absolute;
+        }
+    }
+}
+
+.shootingstar{
+  -ms-transform: rotate(200deg); /* IE 9 */
+  transform: rotate(200deg); /* Standard syntax */
+  position: absolute;
+  left: 500;
+  top: 500;
+  z-index: 2;
+  opacity: 0.2;
+  background: rgb(255,255,255);
+  background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 80%);
+  width: 200px;
+  height: 3px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.shootingstar2{
+  -ms-transform: rotate(200deg); /* IE 9 */
+  transform: rotate(200deg); /* Standard syntax */
+  position: absolute;
+  left: 500;
+  top: 500;
+  z-index: 2;
+  opacity: 0.2;
+  background: rgb(255,255,255);
+  background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 80%);
+  width: 200px;
+  height: 3px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.clouds {
+  left: 0;
+  bottom: 0;
+  z-index: 3;
+  opacity: 0.5;
+
+  .cloud:nth-of-type(1) { @include leftcircle(500, #110224, -5, -146); }
+  .cloud:nth-of-type(2) { @include leftcircle(700, #110224, 305, -206); }
+  .cloud:nth-of-type(3) { @include leftcircle(400, #110224, 895, -206); }
+  .cloud:nth-of-type(4) { @include rightcircle(800, #110224, -465, -206); }
+  .cloud:nth-of-type(5) { @include rightcircle(300, #110224, 128, -184); }
+
+  .cloud:nth-of-type(6) { @include leftcircle(400, #1f3237, -50, -150); }
+  .cloud:nth-of-type(7) { @include leftcircle(300, #1f3237, 300, -150); }
+
+}

@@ -5,14 +5,25 @@ html
     block scripts
       script(src='libraries/jquery-3.4.1.js')
       script(src='scripts/mainscripts.js')
+      script(src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js")
       
     block styles  
       link(rel='stylesheet', href='css/style.css')
         
   body
+    .stars
+      - for (var i = 0; i < 60; i++)
+        .star
+      .shootingstar
+      .shootingstar2
+    .clouds
+      - for (var i = 0; i < 50; i++)
+        .cloud
+
     #menu 
       block menu
-        #menuButton
+        .menuButton.menuButtonClosed
+        .menuButton.menuButtonOpen
         #nav
           if (title=="home")
               a.selected(href="/") home
@@ -25,6 +36,7 @@ html
               a(href="/" + page)= page
               
         #toymenu 
+          .toyMenuHeader Browse toys:
           each page in ["spirograph"]
             if (title==page)
               a.toyLink(href="/" + page)
