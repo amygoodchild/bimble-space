@@ -123,7 +123,7 @@ $light: #b9befa;
 #homepage > .definition{
   position: absolute;
   left: 100px;
-  top: 40vh;
+  top: 35vh;
   width: 800px;
 }
 
@@ -143,8 +143,20 @@ $light: #b9befa;
 #homepage > .definition > .theDefinition{
   font-size: 20px;
   margin:0px;
-  padding-top: 8px;
+  padding: 8px 0px 30px;
   color: #ffffff;
+}
+
+#homepage > .definition > .playLink{
+  border: 2px solid #ffffff;
+  margin: 40px 0px 0px 0px;
+  padding: 10px 30px;
+  color: #ffffff;
+  text-decoration: none;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+
 }
 
 

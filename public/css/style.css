@@ -91,7 +91,7 @@ body {
 #homepage > .definition {
   position: absolute;
   left: 100px;
-  top: 40vh;
+  top: 35vh;
   width: 800px;
 }
 
@@ -111,8 +111,19 @@ body {
 #homepage > .definition > .theDefinition {
   font-size: 20px;
   margin: 0px;
-  padding-top: 8px;
+  padding: 8px 0px 30px;
   color: #ffffff;
+}
+
+#homepage > .definition > .playLink {
+  border: 2px solid #ffffff;
+  margin: 40px 0px 0px 0px;
+  padding: 10px 30px;
+  color: #ffffff;
+  text-decoration: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 
 /*
@@ -137,481 +148,481 @@ body {
 .stars .star:nth-of-type(1) {
   width: 2;
   height: 2;
-  top: 17vh;
-  left: 28vw;
-  animation-delay: 2s;
+  top: 76vh;
+  left: 91vw;
+  animation-delay: 4s;
   position: absolute;
 }
 .stars .star:nth-of-type(2) {
-  width: 2;
-  height: 2;
-  top: 23vh;
-  left: 72vw;
-  animation-delay: 5s;
+  width: 3;
+  height: 3;
+  top: 93vh;
+  left: 11vw;
+  animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(3) {
-  width: 1;
-  height: 1;
-  top: 36vh;
-  left: 34vw;
+  width: 3;
+  height: 3;
+  top: 35vh;
+  left: 20vw;
   animation-delay: 5s;
   position: absolute;
 }
 .stars .star:nth-of-type(4) {
   width: 3;
   height: 3;
-  top: 83vh;
-  left: 79vw;
-  animation-delay: 3s;
+  top: 45vh;
+  left: 98vw;
+  animation-delay: 1s;
   position: absolute;
 }
 .stars .star:nth-of-type(5) {
   width: 3;
   height: 3;
-  top: 8vh;
-  left: 31vw;
-  animation-delay: 1s;
+  top: 58vh;
+  left: 2vw;
+  animation-delay: 4s;
   position: absolute;
 }
 .stars .star:nth-of-type(6) {
-  width: 3;
-  height: 3;
-  top: 29vh;
-  left: 8vw;
+  width: 2;
+  height: 2;
+  top: 8vh;
+  left: 55vw;
   animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(7) {
-  width: 3;
-  height: 3;
-  top: 70vh;
-  left: 24vw;
-  animation-delay: 2s;
+  width: 2;
+  height: 2;
+  top: 46vh;
+  left: 10vw;
+  animation-delay: 3s;
   position: absolute;
 }
 .stars .star:nth-of-type(8) {
-  width: 3;
-  height: 3;
-  top: 96vh;
-  left: 65vw;
-  animation-delay: 2s;
+  width: 1;
+  height: 1;
+  top: 78vh;
+  left: 29vw;
+  animation-delay: 5s;
   position: absolute;
 }
 .stars .star:nth-of-type(9) {
-  width: 1;
-  height: 1;
-  top: 97vh;
-  left: 65vw;
+  width: 2;
+  height: 2;
+  top: 6vh;
+  left: 100vw;
   animation-delay: 5s;
   position: absolute;
 }
 .stars .star:nth-of-type(10) {
-  width: 1;
-  height: 1;
-  top: 84vh;
-  left: 85vw;
-  animation-delay: 4s;
+  width: 3;
+  height: 3;
+  top: 49vh;
+  left: 88vw;
+  animation-delay: 3s;
   position: absolute;
 }
 .stars .star:nth-of-type(11) {
   width: 2;
   height: 2;
-  top: 14vh;
-  left: 18vw;
+  top: 24vh;
+  left: 60vw;
   animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(12) {
-  width: 3;
-  height: 3;
-  top: 78vh;
-  left: 91vw;
-  animation-delay: 3s;
+  width: 2;
+  height: 2;
+  top: 95vh;
+  left: 78vw;
+  animation-delay: 4s;
   position: absolute;
 }
 .stars .star:nth-of-type(13) {
   width: 1;
   height: 1;
-  top: 59vh;
-  left: 41vw;
+  top: 55vh;
+  left: 19vw;
   animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(14) {
-  width: 1;
-  height: 1;
-  top: 53vh;
-  left: 93vw;
-  animation-delay: 1s;
+  width: 3;
+  height: 3;
+  top: 24vh;
+  left: 8vw;
+  animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(15) {
-  width: 2;
-  height: 2;
-  top: 2vh;
-  left: 71vw;
-  animation-delay: 5s;
+  width: 3;
+  height: 3;
+  top: 53vh;
+  left: 46vw;
+  animation-delay: 1s;
   position: absolute;
 }
 .stars .star:nth-of-type(16) {
   width: 3;
   height: 3;
-  top: 12vh;
-  left: 53vw;
-  animation-delay: 2s;
+  top: 79vh;
+  left: 75vw;
+  animation-delay: 5s;
   position: absolute;
 }
 .stars .star:nth-of-type(17) {
-  width: 2;
-  height: 2;
-  top: 25vh;
-  left: 41vw;
-  animation-delay: 4s;
+  width: 1;
+  height: 1;
+  top: 37vh;
+  left: 36vw;
+  animation-delay: 3s;
   position: absolute;
 }
 .stars .star:nth-of-type(18) {
-  width: 3;
-  height: 3;
-  top: 61vh;
-  left: 67vw;
+  width: 2;
+  height: 2;
+  top: 75vh;
+  left: 76vw;
   animation-delay: 5s;
   position: absolute;
 }
 .stars .star:nth-of-type(19) {
-  width: 1;
-  height: 1;
-  top: 8vh;
-  left: 48vw;
-  animation-delay: 4s;
+  width: 3;
+  height: 3;
+  top: 3vh;
+  left: 12vw;
+  animation-delay: 3s;
   position: absolute;
 }
 .stars .star:nth-of-type(20) {
-  width: 2;
-  height: 2;
-  top: 18vh;
-  left: 11vw;
-  animation-delay: 5s;
+  width: 3;
+  height: 3;
+  top: 2vh;
+  left: 83vw;
+  animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(21) {
   width: 1;
   height: 1;
-  top: 36vh;
-  left: 55vw;
+  top: 60vh;
+  left: 25vw;
   animation-delay: 3s;
   position: absolute;
 }
 .stars .star:nth-of-type(22) {
-  width: 1;
-  height: 1;
-  top: 16vh;
-  left: 30vw;
-  animation-delay: 1s;
+  width: 2;
+  height: 2;
+  top: 11vh;
+  left: 29vw;
+  animation-delay: 5s;
   position: absolute;
 }
 .stars .star:nth-of-type(23) {
   width: 2;
   height: 2;
-  top: 66vh;
-  left: 22vw;
-  animation-delay: 1s;
+  top: 6vh;
+  left: 56vw;
+  animation-delay: 3s;
   position: absolute;
 }
 .stars .star:nth-of-type(24) {
   width: 1;
   height: 1;
-  top: 71vh;
-  left: 3vw;
-  animation-delay: 4s;
+  top: 9vh;
+  left: 21vw;
+  animation-delay: 5s;
   position: absolute;
 }
 .stars .star:nth-of-type(25) {
   width: 2;
   height: 2;
-  top: 19vh;
-  left: 61vw;
-  animation-delay: 1s;
+  top: 94vh;
+  left: 100vw;
+  animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(26) {
-  width: 2;
-  height: 2;
-  top: 28vh;
-  left: 23vw;
-  animation-delay: 2s;
-  position: absolute;
-}
-.stars .star:nth-of-type(27) {
-  width: 1;
-  height: 1;
-  top: 35vh;
-  left: 46vw;
-  animation-delay: 2s;
-  position: absolute;
-}
-.stars .star:nth-of-type(28) {
-  width: 1;
-  height: 1;
-  top: 25vh;
-  left: 4vw;
+  width: 3;
+  height: 3;
+  top: 91vh;
+  left: 31vw;
   animation-delay: 1s;
   position: absolute;
 }
+.stars .star:nth-of-type(27) {
+  width: 2;
+  height: 2;
+  top: 77vh;
+  left: 97vw;
+  animation-delay: 1s;
+  position: absolute;
+}
+.stars .star:nth-of-type(28) {
+  width: 2;
+  height: 2;
+  top: 94vh;
+  left: 32vw;
+  animation-delay: 5s;
+  position: absolute;
+}
 .stars .star:nth-of-type(29) {
-  width: 3;
-  height: 3;
-  top: 12vh;
-  left: 10vw;
-  animation-delay: 4s;
+  width: 2;
+  height: 2;
+  top: 62vh;
+  left: 36vw;
+  animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(30) {
   width: 3;
   height: 3;
-  top: 69vh;
-  left: 74vw;
-  animation-delay: 4s;
+  top: 87vh;
+  left: 91vw;
+  animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(31) {
-  width: 1;
-  height: 1;
-  top: 93vh;
-  left: 59vw;
-  animation-delay: 5s;
+  width: 2;
+  height: 2;
+  top: 19vh;
+  left: 88vw;
+  animation-delay: 1s;
   position: absolute;
 }
 .stars .star:nth-of-type(32) {
-  width: 1;
-  height: 1;
-  top: 49vh;
-  left: 12vw;
-  animation-delay: 2s;
+  width: 2;
+  height: 2;
+  top: 15vh;
+  left: 84vw;
+  animation-delay: 5s;
   position: absolute;
 }
 .stars .star:nth-of-type(33) {
   width: 2;
   height: 2;
-  top: 39vh;
-  left: 29vw;
-  animation-delay: 3s;
+  top: 51vh;
+  left: 90vw;
+  animation-delay: 4s;
   position: absolute;
 }
 .stars .star:nth-of-type(34) {
   width: 3;
   height: 3;
-  top: 27vh;
-  left: 50vw;
-  animation-delay: 5s;
+  top: 84vh;
+  left: 71vw;
+  animation-delay: 1s;
   position: absolute;
 }
 .stars .star:nth-of-type(35) {
   width: 3;
   height: 3;
-  top: 86vh;
-  left: 28vw;
-  animation-delay: 5s;
+  top: 16vh;
+  left: 10vw;
+  animation-delay: 1s;
   position: absolute;
 }
 .stars .star:nth-of-type(36) {
-  width: 3;
-  height: 3;
-  top: 48vh;
-  left: 94vw;
-  animation-delay: 2s;
+  width: 2;
+  height: 2;
+  top: 9vh;
+  left: 21vw;
+  animation-delay: 4s;
   position: absolute;
 }
 .stars .star:nth-of-type(37) {
-  width: 3;
-  height: 3;
-  top: 42vh;
-  left: 47vw;
+  width: 2;
+  height: 2;
+  top: 98vh;
+  left: 59vw;
   animation-delay: 5s;
   position: absolute;
 }
 .stars .star:nth-of-type(38) {
-  width: 2;
-  height: 2;
-  top: 22vh;
-  left: 30vw;
-  animation-delay: 1s;
+  width: 1;
+  height: 1;
+  top: 87vh;
+  left: 91vw;
+  animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(39) {
-  width: 1;
-  height: 1;
-  top: 18vh;
-  left: 53vw;
-  animation-delay: 1s;
+  width: 3;
+  height: 3;
+  top: 78vh;
+  left: 14vw;
+  animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(40) {
-  width: 1;
-  height: 1;
-  top: 31vh;
-  left: 56vw;
-  animation-delay: 4s;
+  width: 2;
+  height: 2;
+  top: 24vh;
+  left: 9vw;
+  animation-delay: 5s;
   position: absolute;
 }
 .stars .star:nth-of-type(41) {
-  width: 1;
-  height: 1;
-  top: 85vh;
-  left: 72vw;
-  animation-delay: 5s;
+  width: 2;
+  height: 2;
+  top: 83vh;
+  left: 38vw;
+  animation-delay: 3s;
   position: absolute;
 }
 .stars .star:nth-of-type(42) {
   width: 2;
   height: 2;
-  top: 52vh;
-  left: 21vw;
-  animation-delay: 2s;
+  top: 57vh;
+  left: 72vw;
+  animation-delay: 3s;
   position: absolute;
 }
 .stars .star:nth-of-type(43) {
-  width: 2;
-  height: 2;
-  top: 11vh;
-  left: 24vw;
-  animation-delay: 5s;
-  position: absolute;
-}
-.stars .star:nth-of-type(44) {
-  width: 2;
-  height: 2;
-  top: 34vh;
-  left: 41vw;
+  width: 1;
+  height: 1;
+  top: 23vh;
+  left: 6vw;
   animation-delay: 2s;
   position: absolute;
 }
-.stars .star:nth-of-type(45) {
+.stars .star:nth-of-type(44) {
   width: 1;
   height: 1;
-  top: 86vh;
-  left: 70vw;
+  top: 2vh;
+  left: 48vw;
+  animation-delay: 1s;
+  position: absolute;
+}
+.stars .star:nth-of-type(45) {
+  width: 2;
+  height: 2;
+  top: 61vh;
+  left: 38vw;
   animation-delay: 4s;
   position: absolute;
 }
 .stars .star:nth-of-type(46) {
   width: 1;
   height: 1;
-  top: 99vh;
-  left: 73vw;
-  animation-delay: 5s;
+  top: 18vh;
+  left: 98vw;
+  animation-delay: 4s;
   position: absolute;
 }
 .stars .star:nth-of-type(47) {
   width: 2;
   height: 2;
-  top: 74vh;
-  left: 78vw;
-  animation-delay: 5s;
+  top: 6vh;
+  left: 77vw;
+  animation-delay: 1s;
   position: absolute;
 }
 .stars .star:nth-of-type(48) {
   width: 2;
   height: 2;
-  top: 8vh;
-  left: 11vw;
+  top: 22vh;
+  left: 54vw;
   animation-delay: 3s;
   position: absolute;
 }
 .stars .star:nth-of-type(49) {
-  width: 3;
-  height: 3;
-  top: 88vh;
-  left: 24vw;
-  animation-delay: 1s;
+  width: 1;
+  height: 1;
+  top: 27vh;
+  left: 77vw;
+  animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(50) {
-  width: 1;
-  height: 1;
-  top: 99vh;
-  left: 87vw;
-  animation-delay: 3s;
+  width: 2;
+  height: 2;
+  top: 75vh;
+  left: 29vw;
+  animation-delay: 1s;
   position: absolute;
 }
 .stars .star:nth-of-type(51) {
-  width: 3;
-  height: 3;
-  top: 26vh;
-  left: 75vw;
-  animation-delay: 5s;
+  width: 1;
+  height: 1;
+  top: 58vh;
+  left: 3vw;
+  animation-delay: 3s;
   position: absolute;
 }
 .stars .star:nth-of-type(52) {
   width: 1;
   height: 1;
-  top: 65vh;
-  left: 68vw;
+  top: 47vh;
+  left: 10vw;
   animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(53) {
-  width: 2;
-  height: 2;
-  top: 79vh;
-  left: 61vw;
-  animation-delay: 1s;
+  width: 3;
+  height: 3;
+  top: 17vh;
+  left: 27vw;
+  animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(54) {
-  width: 3;
-  height: 3;
-  top: 52vh;
-  left: 90vw;
-  animation-delay: 2s;
+  width: 1;
+  height: 1;
+  top: 66vh;
+  left: 42vw;
+  animation-delay: 4s;
   position: absolute;
 }
 .stars .star:nth-of-type(55) {
   width: 2;
   height: 2;
-  top: 74vh;
-  left: 85vw;
-  animation-delay: 1s;
+  top: 88vh;
+  left: 17vw;
+  animation-delay: 5s;
   position: absolute;
 }
 .stars .star:nth-of-type(56) {
   width: 3;
   height: 3;
-  top: 5vh;
-  left: 65vw;
+  top: 6vh;
+  left: 11vw;
   animation-delay: 2s;
   position: absolute;
 }
 .stars .star:nth-of-type(57) {
   width: 3;
   height: 3;
-  top: 20vh;
-  left: 35vw;
-  animation-delay: 4s;
+  top: 26vh;
+  left: 81vw;
+  animation-delay: 1s;
   position: absolute;
 }
 .stars .star:nth-of-type(58) {
-  width: 1;
-  height: 1;
-  top: 93vh;
-  left: 70vw;
-  animation-delay: 5s;
+  width: 3;
+  height: 3;
+  top: 57vh;
+  left: 16vw;
+  animation-delay: 1s;
   position: absolute;
 }
 .stars .star:nth-of-type(59) {
-  width: 1;
-  height: 1;
-  top: 18vh;
-  left: 97vw;
+  width: 3;
+  height: 3;
+  top: 77vh;
+  left: 98vw;
   animation-delay: 3s;
   position: absolute;
 }
 .stars .star:nth-of-type(60) {
-  width: 3;
-  height: 3;
-  top: 31vh;
-  left: 29vw;
-  animation-delay: 1s;
+  width: 1;
+  height: 1;
+  top: 3vh;
+  left: 46vw;
+  animation-delay: 5s;
   position: absolute;
 }
 
