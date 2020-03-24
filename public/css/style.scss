@@ -6,9 +6,11 @@ body {
   overflow: hidden;
   margin: 0px}
 
-html, body{
+#everything{
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  position: fixed;
 }
 
 $light: #b9befa;
@@ -194,8 +196,6 @@ $light: #b9befa;
     left: 0;
     right: 0;
     bottom: 0;
-    width: 100%;
-    height: 100%;
     z-index: 1;
     .star {
         border-radius: 50%;
