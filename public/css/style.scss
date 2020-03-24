@@ -4,8 +4,12 @@ body {
   color: #ffffff;
   font-family: moonLight;
   overflow: hidden;
-}
+  margin: 0px}
 
+html, body{
+  width: 100%;
+  height: 100%;
+}
 
 $light: #b9befa;
 
@@ -44,6 +48,14 @@ $light: #b9befa;
   src: url("../fonts/Moon Bold.otf");
 }
 
+
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+
+
 #menu{
   width: 55px;
   height: 100%;
@@ -60,6 +72,7 @@ $light: #b9befa;
   margin: 15px 5px;
   width: 45px;
   height: 45px;
+  cursor: pointer;
 }
 
 .menuButtonClosed{
@@ -165,6 +178,16 @@ $light: #b9befa;
 * Illustration
 *
 */
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
 
 .stars {
     top: 0;

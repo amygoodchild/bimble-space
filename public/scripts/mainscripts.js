@@ -24,7 +24,7 @@ $(document).ready(function(){
     (function loop() {
       var rand = Math.round(Math.random() * (20000 - 5000)) + 20000;
       console.log(rand);
-      $(".shootingstar").animate({left: "4000px", top: "1500px", opacity: "0"}, 1000).animate({left: "-150px", top: "40px", opacity: "0.2"}, 1);;
+      //$(".shootingstar").animate({left: "4000px", top: "1500px", opacity: "0"}, 1500).animate({left: "-150px", top: "40px", opacity: "0.2"}, 1);;
       setTimeout(function() {
               doSomething();
               loop();
@@ -41,7 +41,7 @@ $(document).ready(function(){
     (function loop() {
       var rand = Math.round(Math.random() * (20000 - 5000)) + 20000;
       console.log(rand);
-      $(".shootingstar2").animate({left: "4000px", top: "1700px", opacity: "0"}, 1000).animate({left: "-150px", top: "240px", opacity: "0.2"}, 1);;
+      //$(".shootingstar2").animate({left: "4000px", top: "1700px", opacity: "0"}, 1500).animate({left: "-150px", top: "240px", opacity: "0.2"}, 1);;
       setTimeout(function() {
               doSomething();
               loop();
