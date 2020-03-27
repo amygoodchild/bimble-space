@@ -23,9 +23,11 @@ html
           .cloud
 
       #menu 
-        block menu
-          .menuButton.menuButtonClosed
-          .menuButton.menuButtonOpen
+        .menuButton.menuButtonClosed
+        .menuButton.menuButtonOpen
+        .menuButtonMobile.menuButtonClosedMobile
+        .menuButtonMobile.menuButtonOpenMobile
+        #menuContents
           #nav
             if (title=="home")
                 a.selected(href="/") home

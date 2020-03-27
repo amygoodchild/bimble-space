@@ -51,11 +51,6 @@ $light: #b9befa;
 }
 
 
-@media only screen and (max-width: 600px) {
-  body {
-    background-color: lightblue;
-  }
-}
 
 
 #menu{
@@ -75,6 +70,12 @@ $light: #b9befa;
   width: 45px;
   height: 45px;
   cursor: pointer;
+  display: inline-block;
+  float: left;
+}
+
+.menuButtonMobile{
+  display: none;
 }
 
 .menuButtonClosed{
@@ -91,10 +92,15 @@ $light: #b9befa;
   max-width: 900px;
 }
 
+#menuContents{
+  width: 80vw;
+  margin-left: 90px;
+  margin-top: 25px;
+}
+
 #nav{
-  position: absolute;
-  top: 25;
-  left: 80;
+  display: inline-block;
+  float: left;
 }
 
 #nav a{
@@ -110,15 +116,21 @@ $light: #b9befa;
 }
 
 #toymenu{
-  position: absolute;
-  top: 80;
-  left: 80;
+  float: left;
+  clear: both;
+  display: inline-block;
+
 }
 
 .toyMenuHeader{
   margin: 20px 0px 10px;
   font-size: 15px;
   color: #bcbcbc;
+}
+
+.toyLink{
+  border: 1px solid #ffffff;
+  float: left;
 }
 
 #content{
@@ -266,4 +278,55 @@ $light: #b9befa;
   .cloud:nth-of-type(6) { @include leftcircle(400, #1f3237, -50, -150); }
   .cloud:nth-of-type(7) { @include leftcircle(300, #1f3237, 300, -150); }
 
+}
+
+
+
+@media (orientation: portrait) {
+  #menu{
+    width: 100%;
+    height: 55px;
+    border-bottom: 1px solid #5f5f5f;
+  }
+
+  .menuButtonMobile{
+    margin: 5px 10px;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    display: block;
+  }
+
+  .menuButton{
+    display: none;
+  }
+
+  .menuButtonClosedMobile{
+    background: url("../images/hamburger.png");
+  }
+
+  .menuButtonOpenMobile{
+    background-image: url("../images/close.png");
+    display: none;
+  }
+
+  #nav{
+    position: absolute;
+    top: 80;
+    left: 0;
+    width: 100%;
+  }
+
+  #nav a{
+    margin-right: 0px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+    display:block;
+  }
+
+  #toymenu{
+    position: absolute;
+    top: 300;
+  }
 }

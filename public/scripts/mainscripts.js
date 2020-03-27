@@ -1,5 +1,27 @@
 $(document).ready(function(){
 
+  $( window ).resize(function() {
+    if ($( window ).height() < $( window ).width()){
+      $("#menu").css("width", "55px");
+      $("#menu").css("height", "100%");
+      $(".menuButtonClosed").css("display", "block");
+      $(".menuButtonOpen").css("display", "none");
+      $(".menuButtonClosedMobile").css("display", "none");
+      $(".menuButtonOpenMobile").css("display", "none");
+    }
+    else{
+      $("#menu").css("height", "55px");
+      $("#menu").css("width", "100%");
+      $(".menuButtonClosedMobile").css("display", "block");
+      $(".menuButtonOpenMobile").css("display", "none");
+      $(".menuButtonClosed").css("display", "none");
+      $(".menuButtonOpen").css("display", "none");
+    }
+  });
+
+
+
+
   $(".menuButtonClosed").click(function(){
     $("#menu").animate({width: "80%"}, 400);
     $(".menuButtonClosed").css("display", "none");
@@ -12,6 +34,22 @@ $(document).ready(function(){
     $(".menuButtonClosed").css("display", "block");
     $(".menuButtonOpen").css("display", "none");
   });
+
+
+  $(".menuButtonClosedMobile").click(function(){
+    $("#menu").animate({height: "100%"}, 400);
+    $(".menuButtonClosedMobile").css("display", "none");
+    $(".menuButtonOpenMobile").css("display", "block");
+  });
+
+  $(".menuButtonOpenMobile").click(function(){
+    $("#menu").animate({height: "55px"}, 400);
+    $(".menuButtonClosedMobile").css("display", "block");
+    $(".menuButtonOpenMobile").css("display", "none");
+  });
+
+
+
 
   $(".star").each(function( index ) {
     $(this).css("left", Math.floor((Math.random() * 100) + 1)+"vw");
