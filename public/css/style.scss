@@ -133,6 +133,14 @@ $light: #b9befa;
   float: left;
 }
 
+#homepage{
+  position: absolute;
+  top: 0;
+  left: 65;
+  z-index: 1;
+  width: calc(100% - 65px);
+}
+
 #content{
   position: absolute;
   top: 0;
@@ -332,7 +340,7 @@ $light: #b9befa;
     top: 300;
   }
 
-  #content{
+  #homepage{
     width: 100%;
     left: 0px;
   }

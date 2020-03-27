@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
 
 // Toy pages
 app.get('/spirograph', function (req, res) {
-  res.render('toy', { title: 'spirograph' })
+  res.render('toy', { title: 'spirograph', theScripts: ["buttons", "buttonsmobile", "colorbuttons", "colorbuttonsmobile"]})
 })
 
 // Content Pages

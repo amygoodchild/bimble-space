@@ -1,6 +1,18 @@
 extends layout.pug
 
+block toyscripts 
+  script(src='scripts/p5js/p5.js')
+  script(src='scripts/p5js/p5.dom.js')
+  script(src='scripts/p5js/p5.clickable.js')
+
+  script(src='scripts/p5js/p5.sound.js')
+  
+  script(src='scripts/' + title + '/sketch.js')
+
+  each val in theScripts
+    script(src='scripts/' + title + '/'+ val +'.js')
+  
+
 block content
-  h1= title
-  p this is a toy page
+  #theToyContainer
   
