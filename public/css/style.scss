@@ -1,6 +1,6 @@
 body {
   background: rgb(21,0,36);
-  background: linear-gradient(180deg, rgba(21,0,36,1) 0%, rgba(50,4,64,1) 61%, rgba(83,1,49,1) 100%);
+  background: linear-gradient(180deg, #16184f 0%, rgba(50,4,64,1) 61%, rgba(83,1,49,1) 100%);
   color: #ffffff;
   font-family: moonLight;
   overflow: hidden;
@@ -136,8 +136,9 @@ $light: #b9befa;
 #content{
   position: absolute;
   top: 0;
-  left: 80;
+  left: 55;
   z-index: 1;
+  width: calc(100% - 55px);
 }
 
 /*
@@ -147,11 +148,12 @@ $light: #b9befa;
 */
 
 
+
 #homepage > .definition{
   position: absolute;
-  left: 100px;
+  left: 10%;
   top: 35vh;
-  width: 800px;
+  width: 70%;
 }
 
 #homepage > .definition > h1 {
@@ -328,5 +330,14 @@ $light: #b9befa;
   #toymenu{
     position: absolute;
     top: 300;
+  }
+
+  #content{
+    width: 100%;
+    left: 0px;
+  }
+
+  #homepage > .definition{
+    width: 80%;
   }
 }
