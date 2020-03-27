@@ -59,8 +59,6 @@ function setup() {
 
 function draw() {
 
-
-
     if (playing){
    		for (let i = 0; i<perFrame; i++){
 	   		stencil.move();
@@ -78,7 +76,7 @@ function draw() {
 
 
 
-	if (windowWidth < 900){
+	if (windowWidth < windowHeight){
 		fill('#ffffff');
 		rect(0,0,width,45);
 		rect(0,height-210,width,210);

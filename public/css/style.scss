@@ -66,7 +66,7 @@ $light: #b9befa;
 }
 
 .menuButton{
-  margin: 15px 5px;
+  margin: 15px 6px 0px 4px;
   width: 45px;
   height: 45px;
   cursor: pointer;
@@ -338,6 +338,15 @@ $light: #b9befa;
   #toymenu{
     position: absolute;
     top: 300;
+  }
+
+  #content{
+    position: absolute;
+    top: 55;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: calc(100% - 55px);
   }
 
   #homepage{
