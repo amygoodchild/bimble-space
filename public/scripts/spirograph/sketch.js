@@ -17,7 +17,12 @@ let perFrame;
 function setup() {
 
 	colorMode(HSB, 255);
-  var canvas = createCanvas(windowWidth, windowHeight);
+	if (windowWidth > windowHeight){
+  	var canvas = createCanvas(windowWidth-55, windowHeight);
+	}
+	else{
+		var canvas = createCanvas(windowWidth, windowHeight-55);
+	}
 	canvas.parent('theToyContainer');
 	background('#ffffff');
 
