@@ -5,11 +5,12 @@ let stencil
 let mover;
 let penColor;
 let penSize;
-let canvasColor;
+let canvasColor = "#ffffff";
 let animationSpeed;
 let playing = true;
 let rainbow = false;
 let hue;
+let helpOpen = false;
 
 // Do multiple points per frame to get around browser slowness
 let perFrame;
@@ -25,7 +26,7 @@ function setup() {
 	frameRate(60);
 
 
-  textFont(moonLight);
+  textFont(moonBold);
 
 	let theWidth = int(windowWidth);
 	let theHeight = int(windowHeight);
@@ -71,6 +72,7 @@ function setup() {
   animationSpeed = 300;
 
 
+
 }
 
 function draw() {
@@ -110,9 +112,9 @@ function draw() {
 	}
 
 
-
-    //text(windowWidth, 10, 400);
-    //print(windowWidth);
+	if (helpOpen){
+		drawHelp();
+	}
 }
 
 class Stencil{
@@ -174,7 +176,7 @@ class Mover{
 			translate(width/2, height/2-100);
 		}
 		else{
-			translate(width/2+150, height/2);
+			translate(((width-271)/2)+271, height/2);
 		}
 
 
@@ -194,7 +196,12 @@ class Mover{
 	}
 }
 
-function windowResized() {
-  resizeCanvas(int(windowWidth), int(windowHeight));
-  background(color(canvasColor));
+
+function drawHelp(){
+	fill("#ffffff");
+	stroke("#000000");
+	strokeWeight(1);
+	rect( 321, 50, 500, 600);
+	noStroke();
+
 }

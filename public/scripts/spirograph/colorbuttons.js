@@ -6,7 +6,7 @@ function createColorButtons(){
 
 	for (let i = 0; i<17; i++){
 		colorButtons[i] = new Clickable();
-		colorButtons[i].locate(10,45*i+30);
+		colorButtons[i].locate(10,45*i+35);
 		colorButtons[i].text = "";
 		colorButtons[i].cornerRadius = 4;
 		colorButtons[i].strokeWeight = 1;
@@ -25,7 +25,7 @@ function createColorButtons(){
 	}
 
 	for (let i = 9; i<17; i++){
-		colorButtons[i].locate(55, (45*i+30) - 405);
+		colorButtons[i].locate(55, (45*i+35) - 405);
 	}
 
 
@@ -63,7 +63,7 @@ function createColorButtons(){
 
 	for (let i = 0; i<8; i++){
 		canvasColorButtons[i] = new Clickable();
-		canvasColorButtons[i].locate(10,45*i+470);
+		canvasColorButtons[i].locate(10,45*i+475);
 		canvasColorButtons[i].text = "";
 		canvasColorButtons[i].cornerRadius = 4;
 		canvasColorButtons[i].strokeWeight = 1;
@@ -84,7 +84,7 @@ function createColorButtons(){
 
 
 	for (let i = 4; i<8; i++){
-		canvasColorButtons[i].locate(55,(45*i)+470-180);
+		canvasColorButtons[i].locate(55,(45*i)+475-180);
 	}
 
 
@@ -100,12 +100,16 @@ function createColorButtons(){
 }
 
 function drawColorButtons(){
+
+
+	textFont(moonBold);
+
 	fill('#000000');
   textAlign(LEFT, CENTER);
-	textSize(13.5);
-	text('Pen Colour', 10, startHeight);
+	textSize(14);
+	text('Colour', 10, startHeight-5);
 
-	text('BG Colour', 10, 455);
+	text('BG Colour', 10, 460);
 
 
 
