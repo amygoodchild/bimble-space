@@ -17,23 +17,26 @@ let perFrame;
 function setup() {
 
 	colorMode(HSB, 255);
+	frameRate(60);
+
+	let theWidth = int(windowWidth);
+	let theHeight = int(windowHeight);
+
 	if (windowWidth > windowHeight){
-  	var canvas = createCanvas(windowWidth-55, windowHeight);
+  	var canvas = createCanvas(theWidth-55, theHeight);
 	}
 	else{
-		var canvas = createCanvas(windowWidth, windowHeight-55);
+		var canvas = createCanvas(theWidth, theHeight-55);
 	}
 	canvas.parent('theToyContainer');
 	background('#ffffff');
 
+	stencil = new Stencil();
+  mover = new Mover();
 
-  createColorButtons();
-	createOtherButtons();
-
-	if (windowWidth < 900){
+	if (windowWidth < windowHeight){
 		createColorButtonsMobile();
 		createOtherButtonsMobile();
-
 	}
 	else{
 		createColorButtons();
@@ -41,25 +44,23 @@ function setup() {
 	}
 
 
-    stencil = new Stencil();
-    mover = new Mover();
-
-    if(windowWidth<900){
-    	perFrame = 4;
-    }
-    else if (windowWidth <1025){
-    	perFrame = 10;
-    }
-    else{
-    	perFrame = 40;
-    }
+  if(windowWidth<900){
+    perFrame = 4;
+  }
+  else if (windowWidth <1025){
+    perFrame = 10;
+  }
+  else{
+  	perFrame = 40;
+  }
 
 
-    penColor = color(0,0,0);
-    penSize = 3.0;
-    hue =0;
 
-    animationSpeed = 300;
+  penColor = color(0,0,0);
+  penSize = 3.0;
+  hue =0;
+
+  animationSpeed = 300;
 }
 
 function draw() {
@@ -94,7 +95,7 @@ function draw() {
 		rect(0,0,110,height);
 		rect(111,0,160,height);
 		drawColorButtons();
-    	drawOtherButtons();
+    drawOtherButtons();
 	}
 
 
@@ -128,7 +129,7 @@ class Stencil{
 
 	display(){
 		noFill();
-		strokeWeight(1);
+		strokeWeight(2);
 		//ellipse(this.x, this.y, this.diameter, this.diameter);
 	}
 }

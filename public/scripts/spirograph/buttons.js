@@ -20,21 +20,21 @@ let startHeight = 15;
 
 
 function createOtherButtons(){
-    
+
 	textSize(15);
 	penSizeUp = new Clickable();
-    penSizeUp.locate(220,startHeight+10);
+  penSizeUp.locate(220,startHeight+10);
 	penSizeUp.cornerRadius = 0;
 	penSizeUp.strokeWeight = 1;
 	penSizeUp.width = 40;
 	penSizeUp.height = 40;
 	penSizeUp.text = ">";
 	penSizeUp.onPress = function(){
-		penSize += 1;
+	   penSize += 1;
 	}
 
 	penSizeDown = new Clickable();
-    penSizeDown.locate(120,startHeight+10);
+  penSizeDown.locate(120,startHeight+10);
 	penSizeDown.cornerRadius = 0;
 	penSizeDown.strokeWeight = 1;
 	penSizeDown.width = 40;
@@ -48,7 +48,7 @@ function createOtherButtons(){
 
 
 	outerRadiusDown = new Clickable();
-    outerRadiusDown.locate(120,startHeight+100);
+  outerRadiusDown.locate(120,startHeight+100);
 	outerRadiusDown.cornerRadius = 0;
 	outerRadiusDown.strokeWeight = 1;
 	outerRadiusDown.width = 40;
@@ -168,8 +168,8 @@ function createOtherButtons(){
 	}
 
 
-    makeBlank = new Clickable();
-    makeBlank.locate(120,startHeight+450);
+  makeBlank = new Clickable();
+  makeBlank.locate(120,startHeight+450);
 	makeBlank.cornerRadius = 0;
 	makeBlank.strokeWeight = 1;
 	makeBlank.width = 140;
@@ -177,7 +177,22 @@ function createOtherButtons(){
 	makeBlank.text = "Clear Canvas";
 	makeBlank.onPress = function(){
 		fill('#ffffff');
-	    rect(242,0,width-237,height);
+	    rect(272,0,width-272,height);
+
+	    stencil.diameter = stencil.diameterTarget;
+	    mover.diameter = mover.diameterTarget;
+	}
+
+  makeBlank = new Clickable();
+  makeBlank.locate(120,startHeight+450);
+	makeBlank.cornerRadius = 0;
+	makeBlank.strokeWeight = 1;
+	makeBlank.width = 140;
+	makeBlank.height = 40;
+	makeBlank.text = "Clear Canvas";
+	makeBlank.onPress = function(){
+		fill('#ffffff');
+	    rect(272,0,width-272,height);
 
 	    stencil.diameter = stencil.diameterTarget;
 	    mover.diameter = mover.diameterTarget;
@@ -216,41 +231,41 @@ function drawOtherButtons(){
 
 
 	penSizeUp.draw();
-    penSizeDown.draw();
+  penSizeDown.draw();
 
-    outerRadiusDown.draw();
-    outerRadiusUp.draw();
+  outerRadiusDown.draw();
+  outerRadiusUp.draw();
 
-    innerRadiusDown.draw();
-    innerRadiusUp.draw();
+  innerRadiusDown.draw();
+  innerRadiusUp.draw();
 
-    speedDown.draw();
-    speedUp.draw();
-    stop.draw();
+  speedDown.draw();
+  speedUp.draw();
+  stop.draw();
 
-    randomiser.draw();
-    makeBlank.draw();
+  randomiser.draw();
+  makeBlank.draw();
 
 	fill('#000000');
-    textAlign(LEFT, CENTER);
+  textAlign(LEFT, CENTER);
 	text('Pen Size', 120, startHeight);
 	textAlign(CENTER, CENTER);
 	text(penSize, 190, startHeight+30);
 
 
-    textAlign(LEFT, CENTER);
+  textAlign(LEFT, CENTER);
 	text('Outer Radius', 120, startHeight+90);
-    textAlign(CENTER, CENTER);
+  textAlign(CENTER, CENTER);
 	text(int((stencil.diameterTarget)/2), 190, startHeight+120);
 
-    textAlign(LEFT, CENTER);
-    text('Inner Radius', 120, startHeight+180);
-    textAlign(CENTER, CENTER);
+  textAlign(LEFT, CENTER);
+  text('Inner Radius', 120, startHeight+180);
+  textAlign(CENTER, CENTER);
 	text(int((mover.diameterTarget)/2), 190, startHeight+210);
-    
-    textAlign(LEFT, CENTER);
+
+  textAlign(LEFT, CENTER);
 	text('Speed', 120, startHeight+270);
-	 textAlign(CENTER, CENTER);
+	textAlign(CENTER, CENTER);
 	text(nf(stencil.speed,1,4), 190, startHeight+300);
 
 }
