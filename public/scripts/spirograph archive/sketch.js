@@ -5,7 +5,6 @@ let stencil
 let mover;
 let penColor;
 let penSize;
-let canvasColor;
 let animationSpeed;
 let playing = true;
 let rainbow = false;
@@ -14,18 +13,11 @@ let hue;
 // Do multiple points per frame to get around browser slowness
 let perFrame;
 
-function preload() {
-  moonBold = loadFont('../fonts/Moon Bold.otf');
-	moonLight = loadFont('../fonts/Moon Light.otf');
-}
 
 function setup() {
 
 	colorMode(HSB, 255);
 	frameRate(60);
-
-
-  textFont(moonLight);
 
 	let theWidth = int(windowWidth);
 	let theHeight = int(windowHeight);
@@ -69,12 +61,9 @@ function setup() {
   hue =0;
 
   animationSpeed = 300;
-
-
 }
 
 function draw() {
-
 
     if (playing){
    		for (let i = 0; i<perFrame; i++){
@@ -108,7 +97,6 @@ function draw() {
 		drawColorButtons();
     drawOtherButtons();
 	}
-
 
 
     //text(windowWidth, 10, 400);
@@ -195,6 +183,6 @@ class Mover{
 }
 
 function windowResized() {
-  resizeCanvas(int(windowWidth), int(windowHeight));
-  background(color(canvasColor));
+  resizeCanvas(windowWidth, windowHeight);
+  background('#fffffff');
 }

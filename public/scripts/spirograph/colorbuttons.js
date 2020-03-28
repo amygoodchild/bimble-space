@@ -1,129 +1,119 @@
 // Color Buttons
 let colorButtons = [];
-
+let canvasColorButtons = [];
 
 function createColorButtons(){
 
-	for (let i = 0; i<9; i++){
+	for (let i = 0; i<17; i++){
 		colorButtons[i] = new Clickable();
-		colorButtons[i].locate(10,45*i+10);
-		colorButtons[i].textColor = "#ffffff";
-		colorButtons[i].cornerRadius = 0;
+		colorButtons[i].locate(10,45*i+30);
+		colorButtons[i].text = "";
+		colorButtons[i].cornerRadius = 4;
 		colorButtons[i].strokeWeight = 1;
 		colorButtons[i].height = 40;
-		colorButtons[i].width = 90;
+		colorButtons[i].width = 40;
+		colorButtons[i].textColor = "#000000";
+
+		colorButtons[i].onPress = function(){
+			penColor = colorButtons[i].color;
+			rainbow = false;
+			for (let j = 0; j<colorButtons.length; j++){
+					colorButtons[j].strokeWeight = 1;
+			}
+			this.strokeWeight = 3;
+		}
+	}
+
+	for (let i = 9; i<17; i++){
+		colorButtons[i].locate(55, (45*i+30) - 405);
 	}
 
 
 	colorButtons[0].color = "#f54b42";
-	colorButtons[0].text = "Red";
-	colorButtons[0].onPress = function(){
-		penColor = "#f54b42";
-		rainbow = false;
-		for (let j = 0; j<9; j++){
-				colorButtons[j].strokeWeight = 1;
-		}
-		this.strokeWeight = 3;
-	}
-
 	colorButtons[1].color = "#f79736";
-	colorButtons[1].text = "Orange";
-	colorButtons[1].onPress = function(){
-		penColor = "#f79736";
-		rainbow = false;
-		for (let j = 0; j<9; j++){
-				colorButtons[j].strokeWeight = 1;
-		}
-		this.strokeWeight = 3;
-	}
-
 	colorButtons[2].color = "#f7f300";
-	colorButtons[2].text = "Yellow";
-	colorButtons[2].textColor = "#000000";
-	colorButtons[2].onPress = function(){
-		penColor = "#f7f300";
-		rainbow = false;
-		for (let j = 0; j<9; j++){
-				colorButtons[j].strokeWeight = 1;
-		}
-		this.strokeWeight = 3;
-	}
-
 	colorButtons[3].color = "#6ec955";
-	colorButtons[3].text = "Green";
-	colorButtons[3].textColor = "#000000";
-	colorButtons[3].onPress = function(){
-		penColor = "#6ec955";
-		rainbow = false;
-		for (let j = 0; j<9; j++){
-				colorButtons[j].strokeWeight = 1;
-		}
-		this.strokeWeight = 3;
-	}
-
 	colorButtons[4].color = "#55bfc9";
-	colorButtons[4].text = "Cyan";
-	colorButtons[4].textColor = "#000000";
-	colorButtons[4].onPress = function(){
-		penColor = "#55bfc9";
-		rainbow = false;
-		for (let j = 0; j<9; j++){
-				colorButtons[j].strokeWeight = 1;
-		}
-		this.strokeWeight = 3;
-	}
-
-    colorButtons[5].color = "#2641c7";
-	colorButtons[5].text = "Blue";
-	colorButtons[5].textColor = "#ffffff";
-	colorButtons[5].onPress = function(){
-		penColor = "#2641c7";
-		rainbow = false;
-		for (let j = 0; j<9; j++){
-				colorButtons[j].strokeWeight = 1;
-		}
-		this.strokeWeight = 3;
-	}
-
+  colorButtons[5].color = "#2641c7";
 	colorButtons[6].color = "#500063";
-	colorButtons[6].text = "Purple";
-	colorButtons[6].textColor = "#ffffff";
-	colorButtons[6].onPress = function(){
-		penColor = "#500063";
-		rainbow = false;
-		for (let j = 0; j<9; j++){
-				colorButtons[j].strokeWeight = 1;
-		}
-		this.strokeWeight = 3;
-	}
-
 	colorButtons[7].color = "#000000";
-	colorButtons[7].text = "Black";
-	colorButtons[7].textColor = "#ffffff";
-	colorButtons[7].onPress = function(){
-		penColor = "#000000";
-		rainbow = false;
-		for (let j = 0; j<9; j++){
-				colorButtons[j].strokeWeight = 1;
-		}
-		this.strokeWeight = 3;
-	}
+
+	colorButtons[9].color = "#d9367b";
+	colorButtons[10].color = "#ff7777";
+	colorButtons[11].color = "#ffcd77";
+	colorButtons[12].color = "#aad888";
+	colorButtons[13].color = "#44a8fc";
+
+	colorButtons[14].color = "#191473";
+	colorButtons[15].color = "#8f62bd";
+	colorButtons[16].color = "#ffffff";
 
 	colorButtons[8].color = "#ffffff";
 	colorButtons[8].text = "Rainbow";
-	colorButtons[8].textColor = "#000000";
+	colorButtons[8].width = 85;
 	colorButtons[8].onPress = function(){
 		rainbow = true;
-		for (let j = 0; j<9; j++){
+		for (let j = 0; j<colorButtons.length; j++){
 				colorButtons[j].strokeWeight = 1;
 		}
 		this.strokeWeight = 3;
 	}
+
+
+
+	for (let i = 0; i<8; i++){
+		canvasColorButtons[i] = new Clickable();
+		canvasColorButtons[i].locate(10,45*i+470);
+		canvasColorButtons[i].text = "";
+		canvasColorButtons[i].cornerRadius = 4;
+		canvasColorButtons[i].strokeWeight = 1;
+		canvasColorButtons[i].height = 40;
+		canvasColorButtons[i].width = 40;
+		canvasColorButtons[i].textColor = "#000000";
+
+		canvasColorButtons[i].onPress = function(){
+			canvasColor = canvasColorButtons[i].color;
+			fill(color(canvasColor));
+		  rect(272,0,width-272,height);
+			for (let j = 0; j<canvasColorButtons.length; j++){
+					canvasColorButtons[j].strokeWeight = 1;
+			}
+			this.strokeWeight = 3;
+		}
+	}
+
+
+	for (let i = 4; i<8; i++){
+		canvasColorButtons[i].locate(55,(45*i)+470-180);
+	}
+
+
+	canvasColorButtons[4].color = "#ffffff";
+	canvasColorButtons[0].color = "#000000";
+	canvasColorButtons[5].color = "#a3a3a3";
+	canvasColorButtons[1].color = "#303030";
+	canvasColorButtons[6].color = "#c7b4d0";
+	canvasColorButtons[2].color = "#3c1346";
+	canvasColorButtons[7].color = "#c3d1e9";
+	canvasColorButtons[3].color = "#16315c";
 
 }
 
 function drawColorButtons(){
-	for (let i = 0; i<9; i++){
+	fill('#000000');
+  textAlign(LEFT, CENTER);
+	textSize(13.5);
+	text('Pen Colour', 10, startHeight);
+
+	text('BG Colour', 10, 455);
+
+
+
+	for (let i = 0; i<colorButtons.length; i++){
 		colorButtons[i].draw();
+	}
+
+	for (let i = 0; i<canvasColorButtons.length; i++){
+		canvasColorButtons[i].draw();
 	}
 }

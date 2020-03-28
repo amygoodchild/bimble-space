@@ -1,44 +1,26 @@
 // Other buttons
 
-let outerRadiusDown;
-let outerRadiusUp;
-let innerRadiusDown;
-let innerRadiusUp;
 
-let penSizeUp;
-let penSizeDown;
-
-let speedDown;
-let speedUp;
-let stop;
-let saveSpeed;
-
-let makeBlank;
-let randomiser;
-
-let startHeight = 15;
-
-
-function createOtherButtons(){
-
+function createOtherButtonsMobile(){
+    
 	textSize(15);
 	penSizeUp = new Clickable();
-  penSizeUp.locate(220,startHeight+10);
+    penSizeUp.locate(280,height - 205);
 	penSizeUp.cornerRadius = 0;
 	penSizeUp.strokeWeight = 1;
-	penSizeUp.width = 40;
-	penSizeUp.height = 40;
+	penSizeUp.width = 35;
+	penSizeUp.height = 35;
 	penSizeUp.text = ">";
 	penSizeUp.onPress = function(){
-	   penSize += 1;
+		penSize += 1;
 	}
 
 	penSizeDown = new Clickable();
-  penSizeDown.locate(120,startHeight+10);
+    penSizeDown.locate(220,height - 205);
 	penSizeDown.cornerRadius = 0;
 	penSizeDown.strokeWeight = 1;
-	penSizeDown.width = 40;
-	penSizeDown.height = 40;
+	penSizeDown.width = 35;
+	penSizeDown.height = 35;
 	penSizeDown.text = "<";
 	penSizeDown.onPress = function(){
 		if (penSize >1){
@@ -48,11 +30,11 @@ function createOtherButtons(){
 
 
 	outerRadiusDown = new Clickable();
-  outerRadiusDown.locate(120,startHeight+100);
+    outerRadiusDown.locate(220,height - 165);
 	outerRadiusDown.cornerRadius = 0;
 	outerRadiusDown.strokeWeight = 1;
-	outerRadiusDown.width = 40;
-	outerRadiusDown.height = 40;
+	outerRadiusDown.width = 35;
+	outerRadiusDown.height = 35;
 	outerRadiusDown.text = "<";
 	outerRadiusDown.onPress = function(){
 		if (stencil.diameterTarget >10){
@@ -65,11 +47,11 @@ function createOtherButtons(){
 	}
 
 	outerRadiusUp = new Clickable();
-    outerRadiusUp.locate(220,startHeight+100);
+    outerRadiusUp.locate(280,height - 165);
 	outerRadiusUp.cornerRadius = 0;
 	outerRadiusUp.strokeWeight = 1;
-	outerRadiusUp.width = 40;
-	outerRadiusUp.height = 40;
+	outerRadiusUp.width = 35;
+	outerRadiusUp.height = 35;
 	outerRadiusUp.text = ">";
 	outerRadiusUp.onPress = function(){
 		if (stencil.diameterTarget <width){
@@ -84,11 +66,11 @@ function createOtherButtons(){
 
 
 	innerRadiusDown = new Clickable();
-    innerRadiusDown.locate(120,startHeight+190);
+    innerRadiusDown.locate(220,height - 125);
 	innerRadiusDown.cornerRadius = 0;
 	innerRadiusDown.strokeWeight = 1;
-	innerRadiusDown.width = 40;
-	innerRadiusDown.height = 40;
+	innerRadiusDown.width = 35;
+	innerRadiusDown.height = 35;
 	innerRadiusDown.text = "<";
 	innerRadiusDown.onPress = function(){
 		if (mover.diameterTarget >10){
@@ -101,11 +83,11 @@ function createOtherButtons(){
 	}
 
 	innerRadiusUp = new Clickable();
-    innerRadiusUp.locate(220,startHeight+190);
+    innerRadiusUp.locate(280,height - 125);
 	innerRadiusUp.cornerRadius = 0;
 	innerRadiusUp.strokeWeight = 1;
-	innerRadiusUp.width = 40;
-	innerRadiusUp.height = 40;
+	innerRadiusUp.width = 35;
+	innerRadiusUp.height = 35;
 	innerRadiusUp.text = ">";
 	innerRadiusUp.onPress = function(){
 		if (mover.diameterTarget < width){
@@ -114,42 +96,45 @@ function createOtherButtons(){
 			if(!playing){
 				mover.diameter = mover.diameterTarget;
 			}
+
 		}
 	}
 
 
 	speedDown = new Clickable();
-    speedDown.locate(120,startHeight+280);
+    speedDown.locate(220,height - 85);
 	speedDown.cornerRadius = 0;
 	speedDown.strokeWeight = 1;
-	speedDown.width = 40;
-	speedDown.height = 40;
+	speedDown.width = 35;
+	speedDown.height = 35;
 	speedDown.text = "<";
 	speedDown.onPress = function(){
 		if (stencil.speed >0.0005){
-			stencil.speed -= 0.0005;
+			stencil.speed -= 0.0015;
 		}
 	}
 
 	speedUp = new Clickable();
-    speedUp.locate(220,startHeight+280);
+    speedUp.locate(280,height - 85);
 	speedUp.cornerRadius = 0;
 	speedUp.strokeWeight = 1;
-	speedUp.width = 40;
-	speedUp.height = 40;
+	speedUp.width = 35;
+	speedUp.height = 35;
 	speedUp.text = ">";
 	speedUp.onPress = function(){
 		if (stencil.speed <0.1){
-			stencil.speed += 0.0005;
+			stencil.speed += 0.0015;
 		}
 	}
 
+
+
 	stop = new Clickable();
-    stop.locate(120,startHeight+330);
+    stop.locate(10, height - 40);
 	stop.cornerRadius = 0;
 	stop.strokeWeight = 1;
-	stop.width = 140;
-	stop.height = 40;
+	stop.width = 70;
+	stop.height = 35;
 	stop.text = "Pause";
 	stop.onPress = function(){
 
@@ -167,17 +152,22 @@ function createOtherButtons(){
 
 	}
 
-
-  makeBlank = new Clickable();
-  makeBlank.locate(120,startHeight+450);
+    makeBlank = new Clickable();
+    makeBlank.locate(90,height-40);
 	makeBlank.cornerRadius = 0;
 	makeBlank.strokeWeight = 1;
-	makeBlank.width = 140;
-	makeBlank.height = 40;
-	makeBlank.text = "Clear Canvas";
+	makeBlank.width = 70;
+	makeBlank.height = 35;
+	makeBlank.text = "Clear";
 	makeBlank.onPress = function(){
-		fill(color(canvasColor));
-	  rect(272,0,width-272,height);
+		fill('#ffffff');
+	    
+		if (windowWidth < 900){
+			rect(0,46,width,height-258);
+		}
+		else{
+	    	rect(242,0,width-237,height);
+	    }
 
 	    stencil.diameter = stencil.diameterTarget;
 	    mover.diameter = mover.diameterTarget;
@@ -185,17 +175,17 @@ function createOtherButtons(){
 
 
 	randomiser = new Clickable();
-	randomiser.locate(120,startHeight+400);
+	randomiser.locate(170,height-40);
 	randomiser.cornerRadius = 0;
 	randomiser.strokeWeight = 1;
-	randomiser.width = 140;
-	randomiser.height = 40;
-	randomiser.text = "Randomise Pattern";
+	randomiser.width = 70;
+	randomiser.height = 35;
+	randomiser.text = "Random";
 	randomiser.onPress = function(){
 		//fill('#ffffff');
 	   // rect(242,0,width-237,height);
 		penSize = int(random(1,10));
-		stencil.diameter = random(40, width-300);
+		stencil.diameter = random(10, width);
 		stencil.diameterTarget = stencil.diameter;
 		mover.diameter = random(10,stencil.diameter);
 		mover.diameterTarget = mover.diameter;
@@ -212,45 +202,37 @@ function createOtherButtons(){
 
 
 
-function drawOtherButtons(){
+function drawOtherButtonsMobile(){
 
 
 	penSizeUp.draw();
-  penSizeDown.draw();
+    penSizeDown.draw();
 
-  outerRadiusDown.draw();
-  outerRadiusUp.draw();
+    outerRadiusDown.draw();
+    outerRadiusUp.draw();
 
-  innerRadiusDown.draw();
-  innerRadiusUp.draw();
+    innerRadiusDown.draw();
+    innerRadiusUp.draw();
 
-  speedDown.draw();
-  speedUp.draw();
-  stop.draw();
+    speedDown.draw();
+    speedUp.draw();
+    stop.draw();
 
-  randomiser.draw();
-  makeBlank.draw();
+    randomiser.draw();
+    makeBlank.draw();
 
 	fill('#000000');
-  textAlign(LEFT, CENTER);
-	text('Pen Size', 120, startHeight);
-	textAlign(CENTER, CENTER);
-	text(penSize, 190, startHeight+30);
+    textAlign(LEFT, CENTER);
+	text('Pen Size', 10, windowHeight - 225);
+	text(penSize, 125, windowHeight - 225);
 
+	text('Outer Radius', 10, windowHeight - 185);
+	text(int((stencil.diameterTarget)/2), 125, windowHeight - 185);
 
-  textAlign(LEFT, CENTER);
-	text('Outer Radius', 120, startHeight+90);
-  textAlign(CENTER, CENTER);
-	text(int((stencil.diameterTarget)/2), 190, startHeight+120);
+    text('Inner Radius', 10, windowHeight - 145);
+	text(int((mover.diameterTarget)/2), 125, windowHeight - 145);
 
-  textAlign(LEFT, CENTER);
-  text('Inner Radius', 120, startHeight+180);
-  textAlign(CENTER, CENTER);
-	text(int((mover.diameterTarget)/2), 190, startHeight+210);
-
-  textAlign(LEFT, CENTER);
-	text('Speed', 120, startHeight+270);
-	textAlign(CENTER, CENTER);
-	text(nf(stencil.speed,1,4), 190, startHeight+300);
+	text('Speed', 10, windowHeight - 105);
+	text(nf(stencil.speed,2,4), 125, windowHeight - 105);
 
 }

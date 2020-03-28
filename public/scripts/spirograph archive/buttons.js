@@ -176,8 +176,23 @@ function createOtherButtons(){
 	makeBlank.height = 40;
 	makeBlank.text = "Clear Canvas";
 	makeBlank.onPress = function(){
-		fill(color(canvasColor));
-	  rect(272,0,width-272,height);
+		fill('#ffffff');
+	    rect(272,0,width-272,height);
+
+	    stencil.diameter = stencil.diameterTarget;
+	    mover.diameter = mover.diameterTarget;
+	}
+
+  makeBlank = new Clickable();
+  makeBlank.locate(120,startHeight+450);
+	makeBlank.cornerRadius = 0;
+	makeBlank.strokeWeight = 1;
+	makeBlank.width = 140;
+	makeBlank.height = 40;
+	makeBlank.text = "Clear Canvas";
+	makeBlank.onPress = function(){
+		fill('#ffffff');
+	    rect(272,0,width-272,height);
 
 	    stencil.diameter = stencil.diameterTarget;
 	    mover.diameter = mover.diameterTarget;
