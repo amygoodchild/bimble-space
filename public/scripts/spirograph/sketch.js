@@ -204,4 +204,6 @@ function drawHelp(){
 	rect( 321, 50, 500, 600);
 	noStroke();
 
+
+
 }
