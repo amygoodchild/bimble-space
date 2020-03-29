@@ -47,8 +47,16 @@ $(document).ready(function(){
   });
 
 
-  $(".fullScreenButton").click(function(){
+  $(".fullScreenButtonOpen").click(function(){
     openFullScreen();
+    $(".fullScreenButtonClose").css("display", "inline-block");
+    $(".fullSCreenButtonOpen").css("display", "none");
+  });
+
+  $(".fullScreenButtonClose").click(function(){
+    exitFullScreen();
+    $(".fullScreenButtonOpen").css("display", "inline-block");
+    $(".fullSCreenButtonClose").css("display", "none");
   });
 
 
@@ -64,6 +72,20 @@ $(document).ready(function(){
       elem.webkitRequestFullscreen();
     } else if (elem.msRequestFullscreen) { /* IE/Edge */
       elem.msRequestFullscreen();
+    }
+    resizeCanvas(windowWidth, windowHeight);
+    background('#fffffff');
+  }
+
+  function closeFullScreen() {
+    if (elem.requestFullscreen) {
+      elem.exitFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+      elem.mozExitFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+      elem.webkitExitFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+      elem.msExitFullscreen();
     }
     resizeCanvas(windowWidth, windowHeight);
     background('#fffffff');

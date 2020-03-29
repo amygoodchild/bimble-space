@@ -96,6 +96,7 @@ $light: #b9befa;
   display: none;
 }
 
+
 #menuContents{
   width: 80vw;
   margin-left: 90px;
@@ -337,11 +338,19 @@ $light: #b9befa;
   .fullScreenButton{
     float: right;
     margin-right: 10px;
-    margin-top: 10px;
+    margin-top: 5px;
     width: 40px;
     height: 40px;
-    border: 1px solid #ffffff;
     display: inline-block;
+  }
+
+  .fullScreenButtonOpen{
+    background-image: url("../images/gobig.png");
+  }
+
+  .fullScreenButtonClose{
+    background-image: url("../images/gohome.png");
+    display: none;
   }
 
   #nav{
