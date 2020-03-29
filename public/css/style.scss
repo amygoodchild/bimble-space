@@ -92,6 +92,10 @@ $light: #b9befa;
   max-width: 900px;
 }
 
+.fullScreenButton{
+  display: none;
+}
+
 #menuContents{
   width: 80vw;
   margin-left: 90px;
@@ -314,7 +318,7 @@ $light: #b9befa;
     width: 45px;
     height: 45px;
     cursor: pointer;
-    display: block;
+    display: inline-block;
   }
 
   .menuButton{
@@ -328,6 +332,16 @@ $light: #b9befa;
   .menuButtonOpenMobile{
     background-image: url("../images/close.png");
     display: none;
+  }
+
+  .fullScreenButton{
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ffffff;
+    display: inline-block;
   }
 
   #nav{

@@ -4,7 +4,7 @@ $(document).ready(function(){
     if ($( window ).height() < $( window ).width()){
       $("#menu").css("width", "55px");
       $("#menu").css("height", "100%");
-      $(".menuButtonClosed").css("display", "block");
+      $(".menuButtonClosed").css("display", "inline-block");
       $(".menuButtonOpen").css("display", "none");
       $(".menuButtonClosedMobile").css("display", "none");
       $(".menuButtonOpenMobile").css("display", "none");
@@ -12,7 +12,7 @@ $(document).ready(function(){
     else{
       $("#menu").css("height", "55px");
       $("#menu").css("width", "100%");
-      $(".menuButtonClosedMobile").css("display", "block");
+      $(".menuButtonClosedMobile").css("display", "inline-block");
       $(".menuButtonOpenMobile").css("display", "none");
       $(".menuButtonClosed").css("display", "none");
       $(".menuButtonOpen").css("display", "none");
@@ -20,18 +20,16 @@ $(document).ready(function(){
   });
 
 
-
-
   $(".menuButtonClosed").click(function(){
     $("#menu").animate({width: "80%"}, 400);
     $(".menuButtonClosed").css("display", "none");
-    $(".menuButtonOpen").css("display", "block");
+    $(".menuButtonOpen").css("display", "inline-block");
   });
 
 
   $(".menuButtonOpen").click(function(){
     $("#menu").animate({width: "55px"}, 400);
-    $(".menuButtonClosed").css("display", "block");
+    $(".menuButtonClosed").css("display", "inline-block");
     $(".menuButtonOpen").css("display", "none");
   });
 
@@ -39,15 +37,34 @@ $(document).ready(function(){
   $(".menuButtonClosedMobile").click(function(){
     $("#menu").animate({height: "100%"}, 400);
     $(".menuButtonClosedMobile").css("display", "none");
-    $(".menuButtonOpenMobile").css("display", "block");
+    $(".menuButtonOpenMobile").css("display", "inline-block");
   });
 
   $(".menuButtonOpenMobile").click(function(){
     $("#menu").animate({height: "55px"}, 400);
-    $(".menuButtonClosedMobile").css("display", "block");
+    $(".menuButtonClosedMobile").css("display", "inline-block");
     $(".menuButtonOpenMobile").css("display", "none");
   });
 
+
+  $(".fullScreenButton").click(function(){
+    openFullScreen();
+  });
+
+  var elem = document.documentElement;
+
+
+  function openFullScreen() {
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+      elem.msRequestFullscreen();
+    }
+  }
 
 
 
