@@ -51,6 +51,7 @@ $(document).ready(function(){
     openFullScreen();
   });
 
+
   var elem = document.documentElement;
 
 
@@ -64,6 +65,8 @@ $(document).ready(function(){
     } else if (elem.msRequestFullscreen) { /* IE/Edge */
       elem.msRequestFullscreen();
     }
+    resizeCanvas(windowWidth, windowHeight);
+    background('#fffffff');
   }
 
 
