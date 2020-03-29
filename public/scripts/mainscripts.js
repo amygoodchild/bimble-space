@@ -77,15 +77,15 @@ $(document).ready(function(){
     background('#fffffff');
   }
 
-  function closeFullScreen() {
+  function exitFullScreen() {
     if (elem.requestFullscreen) {
-      elem.exitFullscreen();
+      document.exitFullscreen();
     } else if (elem.mozRequestFullScreen) { /* Firefox */
-      elem.mozExitFullScreen();
+      document.mozExitFullScreen();
     } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-      elem.webkitExitFullscreen();
+      document.webkitExitFullscreen();
     } else if (elem.msRequestFullscreen) { /* IE/Edge */
-      elem.msExitFullscreen();
+      document.msExitFullscreen();
     }
     resizeCanvas(windowWidth, windowHeight);
     background('#fffffff');
