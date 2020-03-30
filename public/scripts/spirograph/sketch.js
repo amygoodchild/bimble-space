@@ -16,7 +16,7 @@ let blueHue = blueHueMin;
 
 
 let pinkRainbow = false;
-let pinkHueMin = 230;
+let pinkHueMin = 210;
 let pinkHueMax = 255;
 let pinkHue = pinkHueMin;
 
