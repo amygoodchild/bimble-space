@@ -3,43 +3,53 @@ extends toy.pug
   
 block content
   #colorButtons
-    p Pen
-    - for (var i = 0; i < 18; i++)
-      div(id='color' + i).colorButton
+    .colorHolder.someButtons
+      p Pen
+      - for (var i = 0; i < 19; i++)
+        div(id='color' + i).colorButton
+    #colorCloser.closer Close
+    #colorOpener.opener Open Colours
       
   #backgroundColorButtons
-    p Background
-    - for (var i = 0; i < 15; i++)
-      div(id='bgcolor' + i).bgColorButton   
+    .colorHolder.someButtons
+      p Background
+      - for (var i = 0; i < 15; i++)
+        div(id='bgcolor' + i).bgColorButton  
+    #backgroundColorCloser.closer Close
+    #backgroundColorOpener.opener Open Background Colours
+       
   #otherButtons
-    .setting.firstSetting
-        p Pen size
-        #penDown.upDownButton -
-        input(type='text')#penSizeDisplay.settingDisplay
-        #penUp.upDownButton +
-    .setting
-      p Outer circle size
-      #outerCircleDown.upDownButton -
-      input(type='text')#outerCircleDisplay.settingDisplay
-      #outerCircleUp.upDownButton +  
-    .setting
-      p Inner circle size
-      #innerCircleDown.upDownButton -
-      input(type='text')#innerCircleDisplay.settingDisplay
-      #innerCircleUp.upDownButton +
-      
-    #randomizeButton.longButton Random
-    .divider
-    .setting.firstSettingAfterDivider
-      p Drawing speed
-      #speedDown.UpDownButton -
-      input(type='text')#speedDisplay.settingDisplay
-      #speedUp.upDownButton + 
-      #playButton.longButton Pause
-    .divider
-    #clearButton.longButton.utilButton Reset
-    #saveButton.longButton.utilButton Save image
-    #helpButton.longButton.utilButton Help
+    .otherButtonHolder.someButtons
+      .setting.firstSetting
+          p Pen size
+          #penDown.upDownButton -
+          input(type='text')#penSizeDisplay.settingDisplay
+          #penUp.upDownButton +
+      .setting
+        p Outer circle size
+        #outerCircleDown.upDownButton -
+        input(type='text')#outerCircleDisplay.settingDisplay
+        #outerCircleUp.upDownButton +  
+      .setting
+        p Inner circle size
+        #innerCircleDown.upDownButton -
+        input(type='text')#innerCircleDisplay.settingDisplay
+        #innerCircleUp.upDownButton +
+        
+      #randomizeButton.longButton Random
+      .divider
+      .setting.firstSettingAfterDivider
+        p Drawing speed
+        #speedDown.UpDownButton -
+        input(type='text')#speedDisplay.settingDisplay
+        #speedUp.upDownButton + 
+        #playButton.longButton Pause
+      .divider
+      #clearButton.longButton.utilButton New
+      #saveButton.longButton.utilButton Save image
+      #helpButton.longButton.utilButton Help
+    #otherButtonCloser.closer Close
+    #otherButtonOpener.opener Open Settings
     
   #theToyContainer 
       

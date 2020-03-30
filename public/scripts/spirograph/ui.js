@@ -22,6 +22,7 @@ $(document).ready(function(){
     penColor = $(this).css('background-color');
     rainbow = false;
     blueRainbow = false;
+    pinkRainbow = false;
     $(".colorButton").css("border", "1px solid #000000");
     $(this).css("border", "3px solid #000000");
   });
@@ -30,12 +31,22 @@ $(document).ready(function(){
     penColor = $(this).css('background-color');
     rainbow = true;
     blueRainbow = false;
+    pinkRainbow = false;
   });
 
   $("#color17").click(function(){
     penColor = $(this).css('background-color');
     rainbow = false;
     blueRainbow = true;
+    pinkRainbow = false;
+    console.log("this");
+  });
+
+  $("#color18").click(function(){
+    penColor = $(this).css('background-color');
+    rainbow = false;
+    blueRainbow = false;
+    pinkRainbow = true;
     console.log("this");
   });
 
@@ -211,9 +222,9 @@ $(document).ready(function(){
     stencil.diameterTarget = stencil.diameter;
     $("#outerCircleDisplay").val(stencil.diameter);
 
-    // outer circle
+    // inner circle
     min = 1;
-    max = $("#theToyContainer").width()/1.5;
+    max = stencil.diameter+50;
     mover.diameter = round5(Math.floor(Math.random() * (+max - +min)) + +min);
     mover.diameterTarget = mover.diameter;
     $("#innerCircleDisplay").val(mover.diameter);
@@ -236,10 +247,90 @@ $(document).ready(function(){
     }
     else{
       playing = true;
+      stencil.diameter = stencil.diameterTarget;
+      mover.diameter = mover.diameterTarget;
       $("#playButton").html("Pause");
     }
 
   });
 
 
+
+  // Closers
+
+  $("#colorCloser").click(function() {
+    var newToyWidth = $("#theToyContainer").width() + 80;
+    //$("#colorButtons").css({ 'overflow': 'hidden' });
+    $("#colorButtons").animate({width: "35px"}, 200);
+    console.log("asalsdhals");
+    $("#theToyContainer").animate({width: newToyWidth}, 220);
+    $(this).css("display", "none");
+    $("#colorOpener").css("display", "block");
+    $("#colorOpener").animate({ 'background-color': 'rgba(45, 45, 45, 0.9)' },200);
+  });
+
+  $("#backgroundColorCloser").click(function() {
+    var newToyWidth = $("#theToyContainer").width() + 80;
+
+    //$("#backgroundColorButtons").css({ 'overflow': 'hidden' });
+    $("#backgroundColorButtons").animate({width: "35px"}, 200);
+    $("#theToyContainer").animate({width: newToyWidth}, 220);
+    $(this).css("display", "none");
+    $("#backgroundColorOpener").css("display", "block");
+    $("#backgroundColorOpener").animate({ 'background-color': 'rgba(45, 45, 45, 0.9)' },200);
+  });
+
+  $("#otherButtonCloser").click(function() {
+    var newToyWidth = $("#theToyContainer").width() + 125;
+    //$("#otherButtons").css({ 'overflow': 'hidden' });
+    $("#otherButtons").animate({width: "35px"}, 200);
+    $("#theToyContainer").animate({width: newToyWidth}, 220);
+    $("#otherButtonOpener").css("display", "block");
+    $("#otherButtonOpener").animate({ 'background-color': 'rgba(45, 45, 45, 0.9)' },200);
+  });
+
+
+  // Openers
+
+  $("#colorOpener").click(function() {
+    var newToyWidth = $("#theToyContainer").width() - 80;
+    //$("#colorButtons").css({ 'overflow-y': 'scroll' });
+    $("#theToyContainer").animate({width: newToyWidth}, 200);
+    $("#colorButtons").animate({width: "115px"}, 220);
+    $(this).css("display", "none");
+    $("#colorCloser").css("display", "block");
+    $("#colorButtons").css("overflow-y", "scroll");
+  });
+
+  $("#backgroundColorOpener").click(function() {
+    var newToyWidth = $("#theToyContainer").width() - 80;
+    //$("#backgroundColorButtons").css({ 'overflow-y': 'scroll' });
+    $("#theToyContainer").animate({width: newToyWidth}, 200);
+    $("#backgroundColorButtons").animate({width: "115px"}, 220);
+    $(this).css("display", "none");
+    $("#backgroundColorCloser").css("display", "block");
+  });
+
+  $("#otherButtonOpener").click(function() {
+    var newToyWidth = $("#theToyContainer").width() - 125;
+    //$("#otherButtons").css({ 'overflow-y': 'scroll' });
+    $("#theToyContainer").animate({width: newToyWidth}, 200);
+    $("#otherButtons").animate({width: "160px"}, 220);
+    $(this).css("display", "none");
+    $("#otherButtonCloser").css("display", "block");
+  });
+
+
+
 });
+
+
+  function windowResized() {
+    console.log("resize");
+    var newToyWidth =  $(window).width()
+                        - $("#colorButtons").width()
+                        - $("#backgroundColorButtons").width()
+                        - $("#otherButtons").width()
+                        - 79;
+    $("#theToyContainer").css({ 'width': newToyWidth });
+  }

@@ -13,6 +13,13 @@ let blueRainbow = false;
 let blueHueMin = 130;
 let blueHueMax = 180;
 let blueHue = blueHueMin;
+
+
+let pinkRainbow = false;
+let pinkHueMin = 230;
+let pinkHueMax = 255;
+let pinkHue = pinkHueMin;
+
 let shortHuesDirection = true;
 let hue;
 let helpOpen = false;
@@ -107,6 +114,25 @@ function draw() {
     }
 
     penColor = color(blueHue,200,250);
+  }
+
+
+  if (pinkRainbow){
+    console.log("bluerainbow");
+    if (shortHuesDirection){
+      pinkHue = pinkHue+0.5;
+      if (pinkHue > pinkHueMax){
+        shortHuesDirection = !shortHuesDirection;
+      }
+    }
+    else{
+      pinkHue = pinkHue - 0.5;
+      if (pinkHue < pinkHueMin){
+        shortHuesDirection = !shortHuesDirection;
+      }
+    }
+
+    penColor = color(pinkHue,130,255);
   }
 
 
