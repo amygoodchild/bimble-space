@@ -1,0 +1,48 @@
+extends toy.pug
+  
+  
+block content
+  #colorButtons
+    p Pen Colour
+    - for (var i = 0; i < 17; i++)
+      div(id='color' + i).colorButton
+      
+  #backgroundColorButtons
+    p Bg Colour
+    - for (var i = 0; i < 26; i++)
+      div(id='bgcolor' + i).bgColorButton
+              
+  #otherButtons
+    p Settings
+    .setting.firstSetting
+        p Pen size
+        #penDown.upDownButton -
+        input(type='text')#penSizeDisplay.settingDisplay
+        #penUp.upDownButton +
+    .setting
+      p Outer circle size
+      #outerCircleDown.upDownButton -
+      input(type='text')#outerCircleDisplay.settingDisplay
+      #outerCircleUp.upDownButton +  
+    .setting
+      p Inner circle size
+      #innerCircleDown.upDownButton -
+      input(type='text')#innerCircleDisplay.settingDisplay
+      #innerCircleUp.upDownButton +
+      
+    #randomizeButton.longButton Random
+    .divider
+    .setting.firstSettingAfterDivider
+      p Drawing speed
+      #speedDown.UpDownButton -
+      input(type='text')#speedDisplay.settingDisplay
+      #speedUp.upDownButton + 
+      #playButton.longButton Pause
+    .divider
+    #clearButton.longButton.utilButton Reset
+    #saveButton.longButton.utilButton Save image
+    #helpButton.longButton.utilButton Help
+    
+  #theToyContainer 
+      
+  

@@ -3,12 +3,13 @@ body {
   background: linear-gradient(180deg, #16184f 0%, rgba(50,4,64,1) 61%, rgba(83,1,49,1) 100%);
   color: #ffffff;
   font-family: moonLight;
-  overflow: hidden;
-  margin: 0px}
+  //overflow: hidden;
+  margin: 0px
+}
 
 #everything{
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
   position: fixed;
 }
@@ -55,7 +56,7 @@ $light: #b9befa;
 
 #menu{
   width: 55px;
-  height: 100%;
+  height: 100vh;
   background: #1b0522;
   position: absolute;
   top: 0;
@@ -199,17 +200,6 @@ $light: #b9befa;
      -moz-border-radius: 5px;
           border-radius: 5px;
 
-}
-
-/*
-*
-* Toy page
-*
-*/
-
-.theToyContainer{
-  width: 99.5%;
-  height: 99.5%;
 }
 
 /*

@@ -43,7 +43,6 @@ function createColorButtons(){
 	colorButtons[11].color = "#ffcd77";
 	colorButtons[12].color = "#aad888";
 	colorButtons[13].color = "#44a8fc";
-
 	colorButtons[14].color = "#191473";
 	colorButtons[15].color = "#8f62bd";
 	colorButtons[16].color = "#ffffff";

@@ -4,9 +4,9 @@
 let stencil
 let mover;
 let penColor;
-let penSize;
+let penSize = 3;
 let canvasColor = "#ffffff";
-let animationSpeed;
+let animationSpeed = 300;
 let playing = true;
 let rainbow = false;
 let hue;
@@ -25,20 +25,19 @@ function setup() {
 	colorMode(HSB, 255);
 	frameRate(60);
 
-
   textFont(moonBold);
 
 	let theWidth = int(windowWidth);
 	let theHeight = int(windowHeight);
 
 	if (windowWidth > windowHeight){
-  	var canvas = createCanvas(theWidth-55, theHeight);
+  	var canvas = createCanvas(theWidth-470, theHeight);
 	}
 	else{
 		var canvas = createCanvas(theWidth, theHeight-55);
 	}
 	canvas.parent('theToyContainer');
-	background('#ffffff');
+	//background('#ffffff');
 
 	stencil = new Stencil();
   mover = new Mover();
@@ -63,20 +62,14 @@ function setup() {
   	perFrame = 40;
   }
 
-
-
   penColor = color(0,0,0);
-  penSize = 3.0;
+  penSize = 3;
   hue =0;
 
   animationSpeed = 300;
-
-
-
 }
 
 function draw() {
-
 
     if (playing){
    		for (let i = 0; i<perFrame; i++){
@@ -93,23 +86,21 @@ function draw() {
 	}
 
 
+	//if (windowWidth < windowHeight){
+	//	fill('#ffffff');
+	//	rect(0,0,width,45);
+	//	rect(0,height-210,width,210);
 
-
-	if (windowWidth < windowHeight){
-		fill('#ffffff');
-		rect(0,0,width,45);
-		rect(0,height-210,width,210);
-
-		drawColorButtonsMobile();
-		drawOtherButtonsMobile();
-	}
-	else{
-		fill('#ffffff');
-		rect(0,0,110,height);
-		rect(111,0,160,height);
-		drawColorButtons();
-    drawOtherButtons();
-	}
+	//	drawColorButtonsMobile();
+	//	drawOtherButtonsMobile();
+	//}
+	//else{
+	//	fill('#ffffff');
+	//	rect(0,0,110,height);
+	//	rect(111,0,160,height);
+	//	drawColorButtons();
+  //  drawOtherButtons();
+	//}
 
 
 	if (helpOpen){
@@ -121,15 +112,15 @@ class Stencil{
 	constructor(){
 		this.x = width/2;
 		this.y = height/2;
-		this.diameter = width/2;
-		this.diameterTarget = width/2;
+		this.diameter = parseInt($("#outerCircleDisplay").val());
+		this.diameterTarget = parseInt($("#outerCircleDisplay").val());
 		this.angle = 0;
 
 		if (windowWidth < 1200){
-			this.speed = 0.005;
+			this.speed = parseFloat($("#speedDisplay").val()/10000);
 		}
 		else{
-			this.speed = 0.001;
+			this.speed = parseFloat($("#speedDisplay").val()/10000);
 		}
 	}
 
@@ -152,8 +143,8 @@ class Mover{
 	constructor(){
 		this.x = width/2;
 		this.y = height/2;
-		this.diameter = random(0,stencil.diameter);
-		this.diameterTarget = this.diameter;
+		this.diameter = parseInt($("#innerCircleDisplay").val());
+		this.diameterTarget = parseInt($("#innerCircleDisplay").val());
 		this.angle= 0;
 		this.speed = 0.01;
 		this.xOffset = -10;
@@ -172,11 +163,11 @@ class Mover{
 	display(){
 		push();
 
-		if (windowWidth < 900){
+		if (windowWidth < windowHeight){
 			translate(width/2, height/2-100);
 		}
 		else{
-			translate(((width-271)/2)+271, height/2);
+			translate(width/2, height/2);
 		}
 
 
@@ -203,5 +194,4 @@ function drawHelp(){
 	strokeWeight(1);
 	rect( 321, 50, 500, 600);
 	noStroke();
-
 }

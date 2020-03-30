@@ -227,7 +227,6 @@ function createOtherButtons(){
 	stop.onPress = function(){
 
 		if(playing){
-			print("hi");
 			playing = false;
 		    this.text = "Go";
 		    stencil.diameter = stencil.diameterTarget;

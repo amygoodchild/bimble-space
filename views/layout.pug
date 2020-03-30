@@ -8,13 +8,15 @@ html
       script(src='scripts/mainscripts.js')
       script(src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js")
       
+    block animationScripts 
+      script(src='scripts/animation.js')
+      
     block toyscripts
       
     block styles  
       link(rel='stylesheet', href='css/style.css')
         
   body
-    
     #everything
       block backgroundanimation
         .stars
@@ -25,38 +27,39 @@ html
         .clouds
           - for (var i = 0; i < 50; i++)
             .cloud
-
-      #menu 
-        .menuButton.menuButtonClosed
-        .menuButton.menuButtonOpen
-        .menuButtonMobile.menuButtonClosedMobile
-        .menuButtonMobile.menuButtonOpenMobile
-          
-        .fullScreenButton.fullScreenButtonOpen
-        .fullScreenButton.fullScreenButtonClose
               
-        #menuContents
-          #nav
-            if (title=="home")
-                a.selected(href="/") home
-            else
-                a(href="/") home
-            each page in ["about", "contact"]
-              if (title==page)
-                a.selected(href="/" + page)= page
-              else
-                a(href="/" + page)= page
+      block menu
+        #menu 
+          .menuButton.menuButtonClosed
+          .menuButton.menuButtonOpen
+          .menuButtonMobile.menuButtonClosedMobile
+          .menuButtonMobile.menuButtonOpenMobile
+          
+          .fullScreenButton.fullScreenButtonOpen
+          .fullScreenButton.fullScreenButtonClose
                 
-          #toymenu 
-            .toyMenuHeader Browse toys:
-            each page in ["spirograph"]
-              if (title==page)
-                a.toyLink(href="/" + page)
-                  img(src="/images/toythumbs/" + page + ".jpg")
+          #menuContents
+            #nav
+              if (title=="home")
+                  a.selected(href="/") home
               else
-                a.gameLink(href="/" + page)
-                  img(src="/images/toythumbs/" + page + ".jpg")
-                
-      #content
+                  a(href="/") home
+              each page in ["about", "contact"]
+                if (title==page)
+                  a.selected(href="/" + page)= page
+                else
+                  a(href="/" + page)= page
+                  
+            #toymenu 
+              .toyMenuHeader Browse toys:
+              each page in ["spirograph"]
+                if (title==page)
+                  a.toyLink(href="/" + page)
+                    img(src="/images/toythumbs/" + page + ".jpg")
+                else
+                  a.gameLink(href="/" + page)
+                    img(src="/images/toythumbs/" + page + ".jpg")
+                  
         block content
-      
+          #content
+        
