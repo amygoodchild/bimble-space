@@ -3,17 +3,15 @@ extends toy.pug
   
 block content
   #colorButtons
-    p Pen Colour
-    - for (var i = 0; i < 17; i++)
+    p Pen
+    - for (var i = 0; i < 18; i++)
       div(id='color' + i).colorButton
       
   #backgroundColorButtons
-    p Bg Colour
-    - for (var i = 0; i < 26; i++)
-      div(id='bgcolor' + i).bgColorButton
-              
+    p Background
+    - for (var i = 0; i < 15; i++)
+      div(id='bgcolor' + i).bgColorButton   
   #otherButtons
-    p Settings
     .setting.firstSetting
         p Pen size
         #penDown.upDownButton -

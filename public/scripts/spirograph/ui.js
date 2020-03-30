@@ -21,6 +21,7 @@ $(document).ready(function(){
   $(".colorButton").click(function(){
     penColor = $(this).css('background-color');
     rainbow = false;
+    blueRainbow = false;
     $(".colorButton").css("border", "1px solid #000000");
     $(this).css("border", "3px solid #000000");
   });
@@ -28,6 +29,14 @@ $(document).ready(function(){
   $("#color16").click(function(){
     penColor = $(this).css('background-color');
     rainbow = true;
+    blueRainbow = false;
+  });
+
+  $("#color17").click(function(){
+    penColor = $(this).css('background-color');
+    rainbow = false;
+    blueRainbow = true;
+    console.log("this");
   });
 
 
@@ -119,7 +128,21 @@ $(document).ready(function(){
 
   // Outer circle change
   $("#outerCircleDisplay").change(function() {
-    stencil.diameterTarget = parseInt(($(this).val()));
+    if ($("#outerCircleDisplay").val() > 900){
+      stencil.diameter = parseInt(900);
+      stencil.diameterTarget = stencil.diameter;
+      $("#outerCircleDisplay").val(900);
+    }
+    else if ($("#outerCircleDisplay").val() > 0){
+      stencil.diameter = parseInt($(this).val());
+      stencil.diameterTarget = stencil.diameter;
+      $("#outerCircleDisplay").val(stencil.diameter);
+    }
+    else{
+      stencil.diameter = parseInt(1);
+      stencil.diameterTarget = stencil.diameter;
+      $("#outerCircleDisplay").val(1);
+    }
   });
 
   $("#outerCircleDown").click(function() {
@@ -140,7 +163,21 @@ $(document).ready(function(){
 
   // Inner circle change
   $("#innerCircleDisplay").change(function() {
-    mover.diameterTarget = parseInt(($(this).val()));
+    if ($("#innerCircleDisplay").val() > 900){
+      mover.diameter = parseInt(900);
+      mover.diameterTarget = mover.diameter;
+      $("#innerCircleDisplay").val(900);
+    }
+    else if ($("#innerCircleDisplay").val() > 0){
+      mover.diameter = parseInt(($(this).val()));
+      mover.diameterTarget = mover.diameter;
+      $("#innerCircleDisplay").val(mover.diameter);
+    }
+    else{
+      mover.diameter = parseInt(1);
+      mover.diameterTarget = mover.diameter;
+      $("#innerCircleDisplay").val(1);
+    }
   });
 
   $("#innerCircleDown").click(function() {
@@ -203,12 +240,6 @@ $(document).ready(function(){
     }
 
   });
-
-
-
-
-
-
 
 
 });

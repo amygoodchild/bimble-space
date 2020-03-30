@@ -9,6 +9,11 @@ let canvasColor = "#ffffff";
 let animationSpeed = 300;
 let playing = true;
 let rainbow = false;
+let blueRainbow = false;
+let blueHueMin = 130;
+let blueHueMax = 180;
+let blueHue = blueHueMin;
+let shortHuesDirection = true;
 let hue;
 let helpOpen = false;
 
@@ -80,10 +85,29 @@ function draw() {
 		}
 	}
 
-	hue= (hue+0.5)%255;
+
 	if (rainbow){
-	    penColor = color(hue,200,250);
+    hue= (hue+0.5)%255;
+	  penColor = color(hue,200,250);
 	}
+
+  if (blueRainbow){
+    console.log("bluerainbow");
+    if (shortHuesDirection){
+      blueHue = blueHue+0.5;
+      if (blueHue > blueHueMax){
+        shortHuesDirection = !shortHuesDirection;
+      }
+    }
+    else{
+      blueHue = blueHue - 0.5;
+      if (blueHue < blueHueMin){
+        shortHuesDirection = !shortHuesDirection;
+      }
+    }
+
+    penColor = color(blueHue,200,250);
+  }
 
 
 	//if (windowWidth < windowHeight){
