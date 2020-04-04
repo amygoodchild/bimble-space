@@ -479,6 +479,21 @@ var speedDisplay = false;
     $(".setting").removeClass("selected");
   });
 
+
+  $(".upDownButtonHolder").click(function() {
+    $(".upDownButtonHolder").css("display", "none");
+    penSizeDisplay = false;
+    innerSizeDisplay = false;
+    outerSizeDisplay = false;
+    speedDisplay = false;
+    $(".setting").removeClass("selected");
+  });
+
+
+$('.upDownButton').click(function(e){
+    e.stopPropagation();
+});
+
 });
 
 
