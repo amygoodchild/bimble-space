@@ -274,7 +274,7 @@ var otherButtonsMobileHeight = 120;
 
     if($('#otherButtons').height() == 120 ){
 
-      $(".randomSetting").animate({"background-color": "#2672ac"}, 50);
+      $(".randomSetting").animate({"background-color": "#1e5d8e"}, 50);
       $(".randomSetting").animate({"background-color": "#3887c4"}, 200);
 
     }
