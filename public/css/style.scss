@@ -15,6 +15,11 @@ body {
 }
 
 $light: #b9befa;
+$darkPurple: rgba(101, 0, 107, 1);
+$lightPurple: rgba(80, 63, 135, 1);
+$darkBlue: rgba(56, 135, 196, 1);
+$lightBlue: rgba(134, 187, 216, 1);
+$pink: rgba(232, 0, 119, 1);
 
 @mixin leftcircle($width, $color, $left, $bottom) {
   width: $width+px;

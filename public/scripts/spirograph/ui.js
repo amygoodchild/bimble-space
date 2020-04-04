@@ -1,5 +1,8 @@
 $(document).ready(function(){
 
+var otherButtonsMobileHeight = 120;
+
+
   // util
   function round5(x)
   {
@@ -57,10 +60,17 @@ $(document).ready(function(){
 
   //Pen Size initialise
   $("#penSizeDisplay").val(penSize);
+  $("#penSizeDisplayMobile").html(penSize);
 
-  // Speed initialise
-  var printSpeed = parseInt(10);
+    // Speed initialise
+  if($('#otherButtons').height() == otherButtonsMobileHeight ){
+    var printSpeed = parseInt(80);
+  }
+  else{
+    var printSpeed = parseInt(10);
+  }
   $("#speedDisplay").val(printSpeed);
+  $("#speedDisplayMobile").html(printSpeed);
 
   // Outer circle init
   if ($("#theToyContainer").width() < $("#theToyContainer").height()){
@@ -70,10 +80,12 @@ $(document).ready(function(){
     var printOuterSize = round5(parseInt($("#theToyContainer").height()-100));
   }
   $("#outerCircleDisplay").val(printOuterSize);
+  $("#outerCircleDisplayMobile").html(printOuterSize);
 
   // Inner circle init
   var printInnerSize = round5(parseInt(Math.random()*printOuterSize)+20);
   $("#innerCircleDisplay").val(printInnerSize);
+  $("#innerCircleDisplayMobile").html(printInnerSize);
 
 
   // Pen size change
@@ -81,14 +93,17 @@ $(document).ready(function(){
     if ($("#penSizeDisplay").val() > 500){
       penSize = 500;
       $("#penSizeDisplay").val(500);
+      $("#penSizeDisplayMobile").html(500);
     }
     else if ($("#penSizeDisplay").val() > 0){
       penSize = parseInt($("#penSizeDisplay").val());
       $("#penSizeDisplay").val(parseInt($("#penSizeDisplay").val()));
+      $("#penSizeDisplayMobile").html(parseInt($("#penSizeDisplay").val()));
     }
     else{
       penSize = 1;
       $("#penSizeDisplay").val(1);
+      $("#penSizeDisplayMobile").html(1);
     }
   });
 
@@ -96,6 +111,7 @@ $(document).ready(function(){
     if (penSize > 1){
       penSize -= 1;
       $("#penSizeDisplay").val(penSize);
+      $("#penSizeDisplayMobile").html(penSize);
     }
   });
 
@@ -103,6 +119,7 @@ $(document).ready(function(){
     if (penSize < 500){
       penSize += 1;
       $("#penSizeDisplay").val(penSize);
+      $("#penSizeDisplayMobile").html(penSize);
     }
   });
 
@@ -111,14 +128,17 @@ $(document).ready(function(){
     if ($("#speedDisplay").val() > 300){
       stencil.speed = parseFloat(300/10000);
       $("#speedDisplay").val(300);
+      $("#speedDisplayMobile").html(300);
     }
     else if ($("#speedDisplay").val() > 0){
       stencil.speed = parseFloat(($("#speedDisplay").val()/10000));
       $("#speedDisplay").val(parseInt($("#speedDisplay").val()));
+      $("#speedDisplayMobile").html(parseInt($("#speedDisplay").val()));
     }
     else{
       stencil.speed = parseFloat(1/10000);
       $("#speedDisplay").val(1);
+      $("#speedDisplayMobile").html(1);
     }
   });
 
@@ -126,6 +146,7 @@ $(document).ready(function(){
     if (stencil.speed*10000 > 1){
       stencil.speed -= 0.0001;
       $("#speedDisplay").val(parseInt(stencil.speed*10000));
+      $("#speedDisplayMobile").html(parseInt(stencil.speed*10000));
     }
   });
 
@@ -133,6 +154,7 @@ $(document).ready(function(){
     if (stencil.speed*10000 < 300){
       stencil.speed += 0.0001;
       $("#speedDisplay").val(parseInt(stencil.speed*10000));
+      $("#speedDisplayMobile").html(parseInt(stencil.speed*10000));
     }
   });
 
@@ -143,16 +165,19 @@ $(document).ready(function(){
       stencil.diameter = parseInt(900);
       stencil.diameterTarget = stencil.diameter;
       $("#outerCircleDisplay").val(900);
+      $("#outerCircleDisplayMobile").html(900);
     }
     else if ($("#outerCircleDisplay").val() > 0){
       stencil.diameter = parseInt($(this).val());
       stencil.diameterTarget = stencil.diameter;
       $("#outerCircleDisplay").val(stencil.diameter);
+      $("#outerCircleDisplayMobile").html(stencil.diameter);
     }
     else{
       stencil.diameter = parseInt(1);
       stencil.diameterTarget = stencil.diameter;
       $("#outerCircleDisplay").val(1);
+      $("#outerCircleDisplayMobile").html(1);
     }
   });
 
@@ -160,6 +185,7 @@ $(document).ready(function(){
     if (stencil.diameterTarget > 5){
       stencil.diameterTarget -= 5;
       $("#outerCircleDisplay").val(parseInt(stencil.diameterTarget));
+      $("#outerCircleDisplayMobile").html(parseInt(stencil.diameterTarget));
     }
   });
 
@@ -167,6 +193,7 @@ $(document).ready(function(){
     if (stencil.diameterTarget < 1000){
       stencil.diameterTarget += 5;
       $("#outerCircleDisplay").val(parseInt(stencil.diameterTarget));
+      $("#outerCircleDisplayMobile").html(parseInt(stencil.diameterTarget));
     }
   });
 
@@ -178,16 +205,19 @@ $(document).ready(function(){
       mover.diameter = parseInt(900);
       mover.diameterTarget = mover.diameter;
       $("#innerCircleDisplay").val(900);
+      $("#innerCircleDisplayMobile").html(900);
     }
     else if ($("#innerCircleDisplay").val() > 0){
       mover.diameter = parseInt(($(this).val()));
       mover.diameterTarget = mover.diameter;
       $("#innerCircleDisplay").val(mover.diameter);
+      $("#innerCircleDisplayMobile").html(mover.diameter);
     }
     else{
       mover.diameter = parseInt(1);
       mover.diameterTarget = mover.diameter;
       $("#innerCircleDisplay").val(1);
+      $("#innerCircleDisplayMobile").html(1);
     }
   });
 
@@ -195,6 +225,7 @@ $(document).ready(function(){
     if (mover.diameterTarget > 5){
       mover.diameterTarget -= 5;
       $("#innerCircleDisplay").val(parseInt(mover.diameterTarget));
+      $("#innerCircleDisplayMobile").html(parseInt(mover.diameterTarget));
     }
   });
 
@@ -202,6 +233,7 @@ $(document).ready(function(){
     if (mover.diameterTarget < 1000){
       mover.diameterTarget += 5;
       $("#innerCircleDisplay").val(parseInt(mover.diameterTarget));
+      $("#innerCircleDisplayMobile").html(parseInt(mover.diameterTarget));
     }
   });
 
@@ -214,6 +246,7 @@ $(document).ready(function(){
     var max = 10;
     penSize = Math.floor(Math.random() * (+max - +min)) + +min;
     $("#penSizeDisplay").val(penSize);
+    $("#penSizeDisplayMobile").html(penSize);
 
     // outer circle
     min = 1;
@@ -221,6 +254,7 @@ $(document).ready(function(){
     stencil.diameter = round5(Math.floor(Math.random() * (+max - +min)) + +min);
     stencil.diameterTarget = stencil.diameter;
     $("#outerCircleDisplay").val(stencil.diameter);
+    $("#outerCircleDisplayMobile").html(stencil.diameter);
 
     // inner circle
     min = 1;
@@ -228,6 +262,7 @@ $(document).ready(function(){
     mover.diameter = round5(Math.floor(Math.random() * (+max - +min)) + +min);
     mover.diameterTarget = mover.diameter;
     $("#innerCircleDisplay").val(mover.diameter);
+    $("#innerCircleDisplayMobile").html(mover.diameter);
 
   });
 
@@ -320,6 +355,93 @@ $(document).ready(function(){
     $("#otherButtonCloser").css("display", "block");
   });
 
+
+
+
+
+var penSizeDisplay = false;
+var innerSizeDisplay = false;
+var outerSizeDisplay = false;
+var speedDisplay = false;
+
+// Mobile stuff
+
+  $("#penSizeClick").click(function() {
+    if (!penSizeDisplay){
+      $(".upDownButtonHolder").css("display", "none");
+      $("#penSizeUpDown").css("display", "block");
+      penSizeDisplay = true;
+      innerSizeDisplay = false;
+      outerSizeDisplay = false;
+      speedDisplay = false;
+      $(".setting").removeClass("selected");
+      $("#penSizeSetting").addClass("selected");
+    }
+    else{
+      $("#penSizeUpDown").css("display", "none");
+      $("#penSizeSetting").removeClass("selected");
+      penSizeDisplay = false;
+    }
+  });
+
+
+  $("#outerSizeClick").click(function() {
+    if (!outerSizeDisplay){
+      $(".upDownButtonHolder").css("display", "none");
+      $("#outerCircleUpDown").css("display", "block");
+      penSizeDisplay = false;
+      innerSizeDisplay = false;
+      outerSizeDisplay = true;
+      speedDisplay = false;
+      $(".setting").removeClass("selected");
+      $("#outerSizeSetting").addClass("selected");
+    }
+    else{
+      $("#outerCircleUpDown").css("display", "none");
+      $("#outerSizeSetting").removeClass("selected");
+      outerSizeDisplay = false;
+    }
+  });
+
+
+
+  $("#innerSizeClick").click(function() {
+    if (!innerSizeDisplay){
+      $(".upDownButtonHolder").css("display", "none");
+      $("#innerCircleUpDown").css("display", "block");
+      penSizeDisplay = false;
+      innerSizeDisplay = true;
+      outerSizeDisplay = false;
+      speedDisplay = false;
+      $(".setting").removeClass("selected");
+      $("#innerSizeSetting").addClass("selected");
+    }
+    else{
+      $("#innerCircleUpDown").css("display", "none");
+      $("#innerSizeSetting").removeClass("selected");
+      innerSizeDisplay = false;
+    }
+  });
+
+
+
+  $("#speedClick").click(function() {
+    if (!speedDisplay){
+      $(".upDownButtonHolder").css("display", "none");
+      $("#speedUpDown").css("display", "block");
+      penSizeDisplay = false;
+      innerSizeDisplay = false;
+      outerSizeDisplay = false;
+      speedDisplay = true;
+      $(".setting").removeClass("selected");
+      $("#speedSetting").addClass("selected");
+    }
+    else{
+      $("#speedUpDown").css("display", "none");
+      $("#speedSetting").removeClass("selected");
+      speedDisplay = false;
+    }
+  });
 
 
 });

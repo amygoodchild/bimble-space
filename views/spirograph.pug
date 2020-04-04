@@ -19,36 +19,48 @@ block content
     #backgroundColorOpener.opener Open Background Colours
        
   #otherButtons
+    #penSizeClick.clicker
+    #outerSizeClick.clicker
+    #innerSizeClick.clicker
+    #speedClick.clicker
     .otherButtonHolder.someButtons
-      .setting.firstSetting
-          p Pen size
-          #penDown.upDownButton -
+      #penSizeSetting.setting.firstSetting
+        p Pen size
+        #penSizeDisplayMobile.displayMobile 10
+        #penSizeUpDown.upDownButtonHolder
+          button#penDown.upDownButton
           input(type='text')#penSizeDisplay.settingDisplay
-          #penUp.upDownButton +
-      .setting
-        p Outer circle size
-        #outerCircleDown.upDownButton -
-        input(type='text')#outerCircleDisplay.settingDisplay
-        #outerCircleUp.upDownButton +  
-      .setting
-        p Inner circle size
-        #innerCircleDown.upDownButton -
-        input(type='text')#innerCircleDisplay.settingDisplay
-        #innerCircleUp.upDownButton +
-        
-      #randomizeButton.longButton Random
+          button#penUp.upDownButton.upButton
+      #outerSizeSetting.setting
+        p Outer
+        #outerCircleDisplayMobile.displayMobile 100
+        #outerCircleUpDown.upDownButtonHolder
+          button#outerCircleDown.upDownButton
+          input(type='text')#outerCircleDisplay.settingDisplay
+          button#outerCircleUp.upDownButton.upButton
+      #innerSizeSetting.setting
+        p Inner
+        #innerCircleDisplayMobile.displayMobile 888
+        #innerCircleUpDown.upDownButtonHolder
+          button#innerCircleDown.upDownButton 
+          input(type='text')#innerCircleDisplay.settingDisplay
+          button#innerCircleUp.upDownButton.upButton 
+      button#randomizeButton.longButton Random
       .divider
-      .setting.firstSettingAfterDivider
-        p Drawing speed
-        #speedDown.UpDownButton -
-        input(type='text')#speedDisplay.settingDisplay
-        #speedUp.upDownButton + 
-        #playButton.longButton Pause
+      #speedSetting.setting.firstSettingAfterDivider
+        p Speed
+        #speedDisplayMobile.displayMobile 10
+        #speedUpDown.upDownButtonHolder
+          button#speedDown.UpDownButton 
+          input(type='text')#speedDisplay.settingDisplay
+          button#speedUp.upDownButton.upButton 
+      button#playButton.longButton Pause
       .divider
-      #clearButton.longButton.utilButton New
-      #saveButton.longButton.utilButton Save image
-      #helpButton.longButton.utilButton Help
+      #utilButtonHolder  
+        button#saveButton.longButton.utilButton Save
+        button#clearButton.longButton.utilButton New
     #otherButtonCloser.closer Close
+    #otherButtonCloserMobile.closerMobile V
     #otherButtonOpener.opener Open Settings
     
   #theToyContainer 
