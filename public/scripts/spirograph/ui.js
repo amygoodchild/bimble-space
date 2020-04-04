@@ -264,6 +264,20 @@ var otherButtonsMobileHeight = 120;
     $("#innerCircleDisplay").val(mover.diameter);
     $("#innerCircleDisplayMobile").html(mover.diameter);
 
+    // close mobile stuff
+    $(".upDownButtonHolder").css("display", "none");
+    penSizeDisplay = false;
+    innerSizeDisplay = false;
+    outerSizeDisplay = false;
+    speedDisplay = false;
+    $(".setting").removeClass("selected");
+
+    if($('#otherButtons').height() == 120 ){
+      $(".setting").addClass("selected").delay(800).removeClass("selected");
+
+
+    }
+
   });
 
   // Clear button
@@ -459,10 +473,11 @@ var speedDisplay = false;
     if($('#otherButtons').height() == 120 ){
       newToyWidth =  $(window).width();
       newToyHeight = $(window).height()
-                      - $("#colorButtons").height()
-                      - $("#backgroundColorButtons").height()
+
                       - $("#otherButtons").height()
-                      - 79;
+                      - 50;
+                      //- $("#colorButtons").height()
+                      //- $("#backgroundColorButtons").height()
     }
     else{
       newToyWidth =  $(window).width()
