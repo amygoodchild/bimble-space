@@ -430,6 +430,10 @@ button:focus {outline:0;}
 
 @media (max-width: 500px) {
 
+  #everything{
+    height: 100%;
+  }
+
   #theToyContainer{
     width: 100%;
     height: calc(100% - 120px);
