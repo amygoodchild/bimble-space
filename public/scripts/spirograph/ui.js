@@ -9,6 +9,12 @@ var otherButtonsMobileHeight = 120;
     return Math.ceil(x/5)*5;
   }
 
+  if($('#otherButtons').height() == 120 ){
+    $("#backgroundTitle").html("bg");
+  }
+
+
+
 
   // Color Settings
 
@@ -386,6 +392,7 @@ var speedDisplay = false;
 
 // Mobile stuff
 
+
   $("#penSizeClick").click(function() {
     if (!penSizeDisplay){
       $(".upDownButtonHolder").css("display", "none");
@@ -463,6 +470,14 @@ var speedDisplay = false;
     }
   });
 
+  $("#theToyContainer").click(function() {
+    $(".upDownButtonHolder").css("display", "none");
+    penSizeDisplay = false;
+    innerSizeDisplay = false;
+    outerSizeDisplay = false;
+    speedDisplay = false;
+    $(".setting").removeClass("selected");
+  });
 
 });
 
@@ -476,6 +491,8 @@ var speedDisplay = false;
     var newToyWidth;
     var newToyHeight;
 
+
+
     if($('#otherButtons').height() == 120 ){
       newToyWidth =  $(window).width();
       newToyHeight = $(window).height()
@@ -484,8 +501,10 @@ var speedDisplay = false;
                       - 50;
                       //- $("#colorButtons").height()
                       //- $("#backgroundColorButtons").height()
+      $("#backgroundTitle").html("bg");
     }
     else{
+        $("#backgroundTitle").html("background");
       newToyWidth =  $(window).width()
                         - $("#colorButtons").width()
                         - $("#backgroundColorButtons").width()

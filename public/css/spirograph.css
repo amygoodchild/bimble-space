@@ -507,11 +507,85 @@ button:focus {
   }
 
   #colorButtons {
-    display: none;
+    width: 100%;
+    height: 50px;
+    margin: 0px;
+    position: fixed;
+    left: 0;
+    bottom: 170;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-right: 5px solid #f9f9f9;
+    border-bottom: 1px solid #515151;
+    border-top: 1px solid #515151;
+  }
+
+  #colorButtons p {
+    display: inline-block;
+    float: left;
+    width: 40px;
+    margin: 0px;
+    padding: 15px 0px 0px 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
+
+  #penColorScrollerOuter {
+    margin-left: 40px;
+    width: calc(100% - 40px);
+    height: 50px;
+    overflow-x: scroll;
+  }
+
+  #penColorScrollerInner {
+    width: 1000px;
+    float: left;
+    display: inline-block;
+  }
+
+  #bgColorScrollerOuter {
+    margin-left: 40px;
+    width: calc(100% - 40px);
+    height: 50px;
+    overflow-x: scroll;
+  }
+
+  #bgColorScrollerInner {
+    width: 1000px;
+    float: left;
+    display: inline-block;
+  }
+
+  .someButtons {
+    margin-top: 0px;
+    width: 100%;
+    height: 50px;
+    overflow-y: hidden;
+    overflow-y: hidden;
   }
 
   #backgroundColorButtons {
-    display: none;
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    left: 0;
+    bottom: 120;
+    margin: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-right: 5px solid #f9f9f9;
+  }
+
+  #backgroundColorButtons p {
+    display: inline-block;
+    float: left;
+    width: 40px;
+    margin: 0px;
+    padding: 15px 0px 0px 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
   }
 
   #otherButtons {
@@ -555,20 +629,17 @@ button:focus {
     display: none;
     float: left;
     position: absolute;
-    bottom: 130px;
+    bottom: 120px;
     left: 0;
-    width: 90%;
-    margin-left: 5%;
-    border-radius: 13px;
-    height: 80px;
-    background: white;
-    border: 1px solid #000000;
+    width: 100%;
+    height: 99px;
+    background: #ffffffe3;
   }
 
   .upDownButton {
     width: 80px;
-    height: 45px;
-    margin-top: 25px;
+    height: 80;
+    margin-top: 8px;
     margin-left: calc((100% - 180px) / 2);
     border-radius: 10px;
     border-width: 0px;
@@ -576,12 +647,16 @@ button:focus {
     padding-top: 0;
     padding-left: 4px;
     color: #1b2d54;
-    background: #3887c4 url("../images/minus.png") no-repeat top center;
+    background: #3887c4 url(../images/minus.png) no-repeat center center;
   }
 
   .upButton {
     margin-left: 20px;
-    background: #3887c4 url("../images/plus.png") no-repeat top center;
+    background: #3887c4 url("../images/plus.png") no-repeat center center;
+  }
+
+  .upDownButton:hover {
+    background-color: #3887c4;
   }
 
   #randomizeButton {

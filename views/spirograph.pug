@@ -5,16 +5,20 @@ block content
   #colorButtons
     .colorHolder.someButtons
       p Pen
-      - for (var i = 0; i < 19; i++)
-        div(id='color' + i).colorButton
+      #penColorScrollerOuter
+        #penColorScrollerInner
+          - for (var i = 0; i < 19; i++)
+            div(id='color' + i).colorButton
     #colorCloser.closer Close
     #colorOpener.opener Open Colours
       
   #backgroundColorButtons
     .colorHolder.someButtons
-      p Background
-      - for (var i = 0; i < 15; i++)
-        div(id='bgcolor' + i).bgColorButton  
+      p#backgroundTitle Background
+      #bgColorScrollerOuter
+        #bgColorScrollerInner
+          - for (var i = 0; i < 15; i++)
+            div(id='bgcolor' + i).bgColorButton  
     #backgroundColorCloser.closer Close
     #backgroundColorOpener.opener Open Background Colours
        
