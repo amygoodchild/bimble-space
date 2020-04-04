@@ -495,6 +495,10 @@ button:focus {
   cursor: pointer;
 }
 
+.upDownTitle {
+  display: none;
+}
+
 @media (max-width: 500px) {
   #everything {
     height: 100%;
@@ -624,7 +628,7 @@ button:focus {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     border: 1px solid #ffffff;
-    background: #3887c4;
+    background: #3887c4 url("../images/edit.png") no-repeat right bottom;
     border-radius: 0px;
   }
 
@@ -642,15 +646,15 @@ button:focus {
     bottom: 120px;
     left: 0;
     width: 100%;
-    height: 99px;
+    height: 115px;
     background: #ffffffe3;
   }
 
   .upDownButton {
     width: 80px;
-    height: 80;
-    margin-top: 8px;
-    margin-left: calc((100% - 180px) / 2);
+    height: 80px;
+    margin-top: 16px;
+    margin-left: calc((100% - 270px) / 2);
     border-radius: 10px;
     border-width: 0px;
     font-size: 55px;
@@ -661,12 +665,24 @@ button:focus {
   }
 
   .upButton {
-    margin-left: 20px;
+    margin-left: 0px;
     background: #3887c4 url("../images/plus.png") no-repeat center center;
   }
 
   .upDownButton:hover {
     background-color: #3887c4;
+  }
+
+  .upDownTitle {
+    width: 100px;
+    height: 80px;
+    float: left;
+    margin: 16px 5px;
+    display: inline-block;
+    color: #272727;
+    text-align: center;
+    padding-top: 20px;
+    font-family: moonBold;
   }
 
   #randomizeButton {
@@ -728,7 +744,10 @@ button:focus {
   }
 
   .selected {
-    background: #86bbd8 !important;
+    background-color: #86bbd8 !important;
+    background-image: url("../images/close.png");
+    background-size: 23px 23px;
+    background-position: 60px 27px;
   }
 
   .clicker {
