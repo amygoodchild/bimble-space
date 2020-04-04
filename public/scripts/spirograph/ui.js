@@ -273,8 +273,9 @@ var otherButtonsMobileHeight = 120;
     $(".setting").removeClass("selected");
 
     if($('#otherButtons').height() == 120 ){
-      $(".setting").addClass("selected").delay(800).removeClass("selected");
 
+      $(".randomSetting").animate({"background-color": "#2672ac"}, 50);
+      $(".randomSetting").animate({"background-color": "#3887c4"}, 200);
 
     }
 
