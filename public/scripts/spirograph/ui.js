@@ -250,7 +250,12 @@ var otherButtonsMobileHeight = 120;
 
     // outer circle
     min = 1;
-    max = $("#theToyContainer").width()/1.5;
+    if($('#otherButtons').height() == 120 ){
+      max = $("#theToyContainer").width()-20;
+    }
+    else {
+      max = $("#theToyContainer").width()/1.5;
+    }
     stencil.diameter = round5(Math.floor(Math.random() * (+max - +min)) + +min);
     stencil.diameterTarget = stencil.diameter;
     $("#outerCircleDisplay").val(stencil.diameter);
@@ -258,7 +263,7 @@ var otherButtonsMobileHeight = 120;
 
     // inner circle
     min = 1;
-    max = stencil.diameter+50;
+    max = stencil.diameter+100;
     mover.diameter = round5(Math.floor(Math.random() * (+max - +min)) + +min);
     mover.diameterTarget = mover.diameter;
     $("#innerCircleDisplay").val(mover.diameter);
