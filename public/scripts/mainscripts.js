@@ -77,8 +77,8 @@ $(".redButton").click(function(){
     } else if (elem.msRequestFullscreen) { /* IE/Edge */
       elem.msRequestFullscreen();
     }
-    resizeCanvas(windowWidth, windowHeight);
-    background('#fffffff');
+    //resizeCanvas(windowWidth, windowHeight);
+    //background('#fffffff');
   }
 
   function exitFullScreen() {
@@ -91,8 +91,8 @@ $(".redButton").click(function(){
     } else if (elem.msRequestFullscreen) { /* IE/Edge */
       document.msExitFullscreen();
     }
-    resizeCanvas(windowWidth, windowHeight);
-    background('#fffffff');
+    //resizeCanvas(windowWidth, windowHeight);
+    //background('#fffffff');
   }
 
 
