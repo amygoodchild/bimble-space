@@ -502,7 +502,8 @@ button:focus {
 
   #theToyContainer {
     width: 100%;
-    height: calc(100% - 120px);
+    margin-top: 55px;
+    height: calc(100% - 175px);
   }
 
   #colorButtons {

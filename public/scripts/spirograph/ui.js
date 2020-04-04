@@ -449,10 +449,30 @@ var speedDisplay = false;
 
   function windowResized() {
     console.log("resize");
-    var newToyWidth =  $(window).width()
+    sortOutWindowResize();
+  }
+
+  function sortOutWindowResize(){
+    var newToyWidth;
+    var newToyHeight;
+
+    if($('#otherButtons').height() == 120 ){
+      newToyWidth =  $(window).width();
+      newToyHeight = $(window).height()
+                      - $("#colorButtons").height()
+                      - $("#backgroundColorButtons").height()
+                      - $("#otherButtons").height()
+                      - 79;
+    }
+    else{
+      newToyWidth =  $(window).width()
                         - $("#colorButtons").width()
                         - $("#backgroundColorButtons").width()
                         - $("#otherButtons").width()
                         - 79;
+      newToyHeight = $(window).width();
+    }
+
     $("#theToyContainer").css({ 'width': newToyWidth });
+    $("#theToyContainer").css({ 'height': newToyHeight });
   }
