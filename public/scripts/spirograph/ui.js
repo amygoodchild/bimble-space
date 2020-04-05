@@ -508,7 +508,7 @@ function makeScreenshot(){
 
   $('canvas').remove();
   //post to php
-  $.post('save.php',{data: data, iname });
+  $.post('scripts/save.php',{data: data, iname });
   // update counter
   index++;
 }
