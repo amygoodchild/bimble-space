@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+var index = 1;
 var otherButtonsMobileHeight = 120;
 
 
@@ -493,6 +493,28 @@ var speedDisplay = false;
 $('.upDownButton').click(function(e){
     e.stopPropagation();
 });
+
+$('#saveButton').click(function(e){
+    makeScreenshot();
+});
+
+
+function makeScreenshot(){
+  var canvas = $('canvas')[0];
+  var data = canvas.toDataURL('image/png').replace(/data:image\/png;base64,/, '');
+
+  // make names  eg "img_1.png", "img_2.png"......etc"
+  var iname = 'img_' + index + '.png';
+
+  $('canvas').remove();
+  //post to php
+  $.post('save.php',{data: data, iname });
+  // update counter
+  index++;
+}
+
+
+
 
 });
 
