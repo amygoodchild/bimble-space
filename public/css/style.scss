@@ -15,11 +15,11 @@ body {
 }
 
 $light: #b9befa;
-$darkPurple: rgba(101, 0, 107, 1);
+$darkPurple: #65006b;
 $lightPurple: rgba(80, 63, 135, 1);
-$darkBlue: rgba(56, 135, 196, 1);
-$lightBlue: rgba(134, 187, 216, 1);
-$pink: rgba(232, 0, 119, 1);
+$darkBlue: #3887c4;
+$lightBlue: #86bbd8;
+$pink: #e80077;
 
 @mixin leftcircle($width, $color, $left, $bottom) {
   width: $width+px;
@@ -60,7 +60,7 @@ $pink: rgba(232, 0, 119, 1);
 
 
 #menu{
-  width: 55px;
+  width: 180px;
   height: 100vh;
   background: #1b0522;
   position: absolute;
@@ -76,7 +76,7 @@ $pink: rgba(232, 0, 119, 1);
   width: 45px;
   height: 45px;
   cursor: pointer;
-  display: inline-block;
+  display: none;
   float: left;
 }
 
