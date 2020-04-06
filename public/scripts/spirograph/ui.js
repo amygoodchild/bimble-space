@@ -470,12 +470,15 @@ var speedDisplay = false;
   });
 
   $("#theToyContainer").click(function() {
-    $(".upDownButtonHolder").css("display", "none");
-    penSizeDisplay = false;
-    innerSizeDisplay = false;
-    outerSizeDisplay = false;
-    speedDisplay = false;
-    $(".setting").removeClass("selected");
+
+    if($('#otherButtons').height() == 120 ){
+      $(".upDownButtonHolder").css("display", "none");
+      penSizeDisplay = false;
+      innerSizeDisplay = false;
+      outerSizeDisplay = false;
+      speedDisplay = false;
+      $(".setting").removeClass("selected");
+    }
   });
 
 
@@ -521,6 +524,8 @@ var speedDisplay = false;
                       //- $("#colorButtons").height()
                       //- $("#backgroundColorButtons").height()
       $("#backgroundTitle").html("bg");
+      $(".randomSetting").css({ "background": " rgba(56, 135, 196, 1)" });
+      $(".upDownButtonHolder").css("display", "none");
     }
     else{
         $("#backgroundTitle").html("background");
@@ -530,6 +535,9 @@ var speedDisplay = false;
                         - $("#otherButtons").width()
                         - 79;
       newToyHeight = $(window).width();
+      $(".upDownButtonHolder").css("display", "inline-block");
+      $(".setting").removeClass("selected");
+      $(".randomSetting").css({ "background": "none" });
     }
 
     $("#theToyContainer").css({ 'width': newToyWidth });
