@@ -733,6 +733,10 @@ button:focus {
     margin: 0px;
   }
 
+  .utilButton:hover {
+    background: #dddddd;
+  }
+
   .closer {
     display: none;
   }

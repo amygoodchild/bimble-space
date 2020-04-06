@@ -667,6 +667,10 @@ button:focus {outline:0;}
     margin: 0px;
   }
 
+  .utilButton:hover{
+    background: $lightGrey;
+  }
+
   .closer{
     display: none;
   }

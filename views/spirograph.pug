@@ -1,6 +1,6 @@
 extends toy.pug
-  
-  
+
+
 block content
   #colorButtons
     .colorHolder.someButtons
@@ -11,17 +11,17 @@ block content
             div(id='color' + i).colorButton
     #colorCloser.closer Close
     #colorOpener.opener Open Colours
-      
+
   #backgroundColorButtons
     .colorHolder.someButtons
       p#backgroundTitle Background
       #bgColorScrollerOuter
         #bgColorScrollerInner
           - for (var i = 0; i < 15; i++)
-            div(id='bgcolor' + i).bgColorButton  
+            div(id='bgcolor' + i).bgColorButton
     #backgroundColorCloser.closer Close
     #backgroundColorOpener.opener Open Background Colours
-       
+
   #otherButtons
     #penSizeClick.clicker
     #outerSizeClick.clicker
@@ -48,29 +48,27 @@ block content
         p Inner
         #innerCircleDisplayMobile.displayMobile 888
         #innerCircleUpDown.upDownButtonHolder
-          button#innerCircleDown.upDownButton 
+          button#innerCircleDown.upDownButton
           .upDownTitle Inner Stencil
           input(type='text')#innerCircleDisplay.settingDisplay
-          button#innerCircleUp.upDownButton.upButton 
+          button#innerCircleUp.upDownButton.upButton
       button#randomizeButton.longButton Random
       .divider
       #speedSetting.setting.firstSettingAfterDivider
         p Speed
         #speedDisplayMobile.displayMobile 10
         #speedUpDown.upDownButtonHolder
-          button#speedDown.UpDownButton 
+          button#speedDown.UpDownButton
           .upDownTitle Pen <br> Speed
           input(type='text')#speedDisplay.settingDisplay
-          button#speedUp.upDownButton.upButton 
+          button#speedUp.upDownButton.upButton
       button#playButton.longButton Pause
       .divider
-      #utilButtonHolder  
+      #utilButtonHolder
         button#saveButton.longButton.utilButton Save
         button#clearButton.longButton.utilButton New
     #otherButtonCloser.closer Close
     #otherButtonCloserMobile.closerMobile V
     #otherButtonOpener.opener Open Settings
-    
-  #theToyContainer 
-      
-  
+
+  #theToyContainer

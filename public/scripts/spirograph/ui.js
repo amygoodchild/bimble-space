@@ -276,15 +276,14 @@ var otherButtonsMobileHeight = 120;
     $("#innerCircleDisplayMobile").html(mover.diameter);
 
     // close mobile stuff
-    $(".upDownButtonHolder").css("display", "none");
-    penSizeDisplay = false;
-    innerSizeDisplay = false;
-    outerSizeDisplay = false;
-    speedDisplay = false;
-    $(".setting").removeClass("selected");
 
     if($('#otherButtons').height() == 120 ){
-
+      $(".upDownButtonHolder").css("display", "none");
+      penSizeDisplay = false;
+      innerSizeDisplay = false;
+      outerSizeDisplay = false;
+      speedDisplay = false;
+      $(".setting").removeClass("selected");
       $(".randomSetting").animate({"background-color": "#1e5d8e"}, 50);
       $(".randomSetting").animate({"background-color": "#3887c4"}, 200);
 
@@ -490,31 +489,14 @@ var speedDisplay = false;
   });
 
 
-$('.upDownButton').click(function(e){
+  $('.upDownButton').click(function(e){
     e.stopPropagation();
-});
+  });
 
-$('#saveButton').click(function(e){
-    makeScreenshot();
-});
-
-
-function makeScreenshot(){
-  var canvas = $('canvas')[0];
-  var data = canvas.toDataURL('image/png').replace(/data:image\/png;base64,/, '');
-
-  // make names  eg "img_1.png", "img_2.png"......etc"
-  var iname = 'img_' + index + '.png';
-
-  $('canvas').remove();
-  //post to php
-  $.post('scripts/save.php',{data: data, iname });
-  // update counter
-  index++;
-}
-
-
-
+  $('#saveButton').click(function(){
+    var filename = "spirograph" + parseInt(Math.random()*100) + parseInt(millis());
+    saveCanvas(filename, 'png');
+  });
 
 });
 

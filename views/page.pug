@@ -1,6 +1,10 @@
 extends layout.pug
 
+block pagescripts 
+  link(rel='stylesheet', href='css/pages.css')
+
 block content
-  h1= title
-  p this is a content page
+  #pageContent
+    h1= title
+    p this is a content page
   
