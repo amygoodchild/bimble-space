@@ -23,8 +23,6 @@ html
     block toyscripts
     block pagescripts
       
-
-        
   body
     #everything
       block backgroundanimation
@@ -46,20 +44,23 @@ html
           
           .fullScreenButton.fullScreenButtonOpen
           .fullScreenButton.fullScreenButtonClose
+          
+          #bimbleLogo Bimble Space
                 
           #menuContents
             #nav
-              if (title=="home")
-                  a.selected(href="/") home
+              if (title=="Home")
+                a.selected(href="/") Home
               else
-                  a(href="/") home
-              each page in ["about", "contact"]
+                a(href="/") Home
+                
+              each page in ["toys", "about"]
                 if (title==page)
                   a.selected(href="/" + page)= page
                 else
                   a(href="/" + page)= page
                   
-            #toymenu 
+            //#toymenu 
               .toyMenuHeader Browse toys:
               each page in ["spirograph"]
                 if (title==page)

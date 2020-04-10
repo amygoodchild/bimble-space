@@ -20,11 +20,11 @@ app.get('/spirograph', function (req, res) {
 
 // Content Pages
 app.get('/about', function (req, res) {
-  res.render('page', { title: 'About' })
+  res.render('page', { title: 'about' })
 })
 
 app.get('/contact', function (req, res) {
-  res.render('page', { title: 'Contact' })
+  res.render('page', { title: 'contact' })
 })
 
 app.listen(process.env.PORT || 3000, function(){

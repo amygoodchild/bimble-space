@@ -58,17 +58,34 @@ $pink: #e80077;
 
 
 
-
 #menu{
-  width: 180px;
+  width: 150px;
   height: 100vh;
-  background: #1b0522;
+  background: #00000069;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 10;
   border-right: 1px solid #5f5f5f;
   overflow-x:hidden;
+}
+
+
+#bimbleLogo{
+  width: 80px;
+  height: 85px;
+  background: url(../images/bimblespace.png);
+  background-size: 45px;
+  background-repeat: no-repeat;
+  margin: 20px 0px 0px 20px;
+  padding-top: 38px;
+  float: left;
+  font-size: 27px;
+  float: left;
+  display: inline-block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
 
 .menuButton{
@@ -104,26 +121,30 @@ $pink: #e80077;
 
 
 #menuContents{
-  width: 80vw;
-  margin-left: 90px;
-  margin-top: 25px;
+  width: 140px;
+  margin-left: 20px;
+  margin-top: 40px;
+  float: left;
 }
 
 #nav{
+  width: 140px;
   display: inline-block;
   float: left;
 }
 
 #nav a{
-  color: #ffffff;
+  color: #c1c1c1;
   margin-right: 30px;
-  font-family: MoonLight;
+  margin-top: 20px;
+  font-family: moonLight;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 18px;
+  float: left;
 }
 
 #nav a.selected{
-  text-decoration: underline;
+  font-family: moonBold;
 }
 
 #toymenu{
@@ -169,15 +190,20 @@ $pink: #e80077;
 
 
 #homepage > .definition{
-  position: absolute;
-  left: 10%;
-  top: 35vh;
-  width: 70%;
+  position: fixed;
+  left: 25%;
+  top: 140px;
+  width: 60%;
+  max-width: 600px;
+  text-align: left;
+  background: #00000030;
+  padding: 40px 40px 50px 40px;
 }
 
 #homepage > .definition > h1 {
-  font-size: 45px;
+  font-size: 30px;
   margin: 10px 0px 0px 0px;
+  color: #a3839f;
 }
 
 #homepage > .definition > .pronunciation{
@@ -185,21 +211,23 @@ $pink: #e80077;
   font-style: italic;
   margin:0px;
   padding: 0px;
-  color: #bcbcbc;
+  color:#907792;
 }
 
 #homepage > .definition > .theDefinition{
   font-size: 20px;
   margin:0px;
   padding: 8px 0px 30px;
-  color: #ffffff;
+  color: #a3839f;
 }
 
 #homepage > .definition > .playLink{
-  border: 2px solid #ffffff;
+  border: 2px solid #a3839f;
   margin: 40px 0px 0px 0px;
   padding: 10px 30px;
-  color: #ffffff;
+  color: #e63f8c;
+  font-family: moonBold;
+  background: #00000026;
   text-decoration: none;
   -webkit-border-radius: 5px;
      -moz-border-radius: 5px;
@@ -301,6 +329,7 @@ $pink: #e80077;
 }
 
 
+// Mobile
 
 @media (orientation: portrait) {
   #menu{
@@ -310,11 +339,12 @@ $pink: #e80077;
   }
 
   .menuButtonMobile{
-    margin: 5px 5px;
+    margin: 2px 5px;
     width: 45px;
     height: 45px;
     cursor: pointer;
     display: inline-block;
+    float: left;
   }
 
   .menuButton{
@@ -333,7 +363,7 @@ $pink: #e80077;
   .fullScreenButton{
     float: right;
     margin-right: 10px;
-    margin-top: 5px;
+    margin-top: 2px;
     width: 40px;
     height: 40px;
     display: inline-block;
@@ -383,7 +413,39 @@ $pink: #e80077;
   }
 
   #homepage > .definition{
-    width: 80%;
-    top: 20vh;
+    width: 100%;
+    top: 15%;
+    left: 0%;
+    padding: 30px 30px 50px 30px;
+    text-align: left;
+    color: #ffffff;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
   }
+
+  #homepage > .definition > h1{
+    color: #c1c1c1;
+    font-size: 25px;
+  }
+
+  #homepage > .definition > .theDefinition{
+    color: #c1c1c1;
+    font-size: 17px;
+  }
+
+  #bimbleLogo{
+    padding-top: 5px;
+    padding-left: 49px;
+    margin-top: 6px;
+    margin-left: calc((100% - 230px) / 2);
+    width: 110px;
+    font-size: 16px;
+    text-align: left;
+    color: #ffffff;
+    height: 55px;
+    line-height: 15px;
+  }
+
+
 }

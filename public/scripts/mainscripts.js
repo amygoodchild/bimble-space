@@ -2,7 +2,7 @@ $(document).ready(function(){
 
   $( window ).resize(function() {
     if ($( window ).height() < $( window ).width()){
-      $("#menu").css("width", "55px");
+      $("#menu").css("width", "150px");
       $("#menu").css("height", "100%");
       $(".menuButtonClosed").css("display", "inline-block");
       $(".menuButtonOpen").css("display", "none");
