@@ -97,5 +97,9 @@ p a{
     height: calc(100vh - 50px);
   }
 
+  .endPadding{
+    height: 40px;
+  }
+
 
 }
