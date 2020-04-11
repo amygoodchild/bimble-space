@@ -116,6 +116,18 @@ button:focus {
   letter-spacing: -0.5px;
 }
 
+.buttonsKeeper {
+  width: 100px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.wideButtonsKeeper {
+  width: 155px;
+  height: 100%;
+  overflow: hidden;
+}
+
 .colorButton {
   width: 40px;
   height: 40px;
@@ -274,47 +286,42 @@ button:focus {
 }
 
 #bgcolor8 {
-  background: linear-gradient(90deg, #06beb6 0%, #237883 100%);
-  width: 85px;
-}
-
-#bgcolor9 {
   background: radial-gradient(circle, #444444 0%, black 100%);
   width: 85px;
 }
 
+#bgcolor9 {
+  background: linear-gradient(90deg, #06beb6 0%, #237883 100%);
+  width: 85px;
+}
+
 #bgcolor10 {
-  background: linear-gradient(90deg, #ffafbd 0%, #ffc3a0 100%);
+  background: #b1afff;
+  background: linear-gradient(34deg, #b1afff 0%, #cbffc3 100%);
   width: 85px;
 }
 
 #bgcolor11 {
-  background: linear-gradient(90deg, #42275a 0%, #734b6d 100%);
+  background: #ebafff;
+  background: linear-gradient(34deg, #ebafff 0%, #9a99ff 100%);
   width: 85px;
 }
 
 #bgcolor12 {
-  background: linear-gradient(to bottom, #ff0084, #33001b);
+  background: #ffdfe7;
+  background: radial-gradient(circle, #ffdfe7 0%, #d2bcff 100%);
   width: 85px;
 }
 
 #bgcolor13 {
-  background: #feac5e;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #feac5e, #c779d0, #4bc0c8);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #fffce4;
+  background: linear-gradient(34deg, #fffce4 0%, #ffbfaf 100%);
   width: 85px;
 }
 
 #bgcolor14 {
-  background: #43cea2;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #185a9d, #43cea2);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #185a9d, #43cea2);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #c6f6ff;
+  background: linear-gradient(34deg, #c6f6ff 0%, #cdffaf 100%);
   width: 85px;
 }
 
@@ -522,6 +529,18 @@ button:focus {
     border-right: 5px solid #f9f9f9;
     border-bottom: 1px solid #515151;
     border-top: 1px solid #515151;
+  }
+
+  .buttonsKeeper {
+    width: 100%;
+    height: 58px;
+    overflow: hidden;
+  }
+
+  .wideButtonsKeeper {
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
   }
 
   #colorButtons p {

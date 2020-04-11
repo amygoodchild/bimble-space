@@ -3,72 +3,75 @@ extends toy.pug
 
 block content
   #colorButtons
-    .colorHolder.someButtons
-      p Pen
-      #penColorScrollerOuter
-        #penColorScrollerInner
-          - for (var i = 0; i < 19; i++)
-            div(id='color' + i).colorButton
-    #colorCloser.closer Close
-    #colorOpener.opener Open Colours
+    .buttonsKeeper
+      .colorHolder.someButtons
+        p Pen
+        #penColorScrollerOuter
+          #penColorScrollerInner
+            - for (var i = 0; i < 19; i++)
+              div(id='color' + i).colorButton
+      #colorCloser.closer Close
+      #colorOpener.opener Open Colours
 
   #backgroundColorButtons
-    .colorHolder.someButtons
-      p#backgroundTitle Background
-      #bgColorScrollerOuter
-        #bgColorScrollerInner
-          - for (var i = 0; i < 15; i++)
-            div(id='bgcolor' + i).bgColorButton
-    #backgroundColorCloser.closer Close
-    #backgroundColorOpener.opener Open Background Colours
+    .buttonsKeeper
+      .colorHolder.someButtons
+        p#backgroundTitle Background
+        #bgColorScrollerOuter
+          #bgColorScrollerInner
+            - for (var i = 0; i < 15; i++)
+              div(id='bgcolor' + i).bgColorButton
+      #backgroundColorCloser.closer Close
+      #backgroundColorOpener.opener Open Background Colours
 
   #otherButtons
-    #penSizeClick.clicker
-    #outerSizeClick.clicker
-    #innerSizeClick.clicker
-    #speedClick.clicker
-    .otherButtonHolder.someButtons
-      #penSizeSetting.setting.firstSetting.randomSetting
-        p Pen size
-        #penSizeDisplayMobile.displayMobile 10
-        #penSizeUpDown.upDownButtonHolder
-          button#penDown.upDownButton
-          .upDownTitle Pen <br> size
-          input(type='text')#penSizeDisplay.settingDisplay
-          button#penUp.upDownButton.upButton
-      #outerSizeSetting.setting.randomSetting
-        p Outer
-        #outerCircleDisplayMobile.displayMobile 100
-        #outerCircleUpDown.upDownButtonHolder
-          button#outerCircleDown.upDownButton
-          .upDownTitle Outer Stencil
-          input(type='text')#outerCircleDisplay.settingDisplay
-          button#outerCircleUp.upDownButton.upButton
-      #innerSizeSetting.setting.randomSetting
-        p Inner
-        #innerCircleDisplayMobile.displayMobile 888
-        #innerCircleUpDown.upDownButtonHolder
-          button#innerCircleDown.upDownButton
-          .upDownTitle Inner Stencil
-          input(type='text')#innerCircleDisplay.settingDisplay
-          button#innerCircleUp.upDownButton.upButton
-      button#randomizeButton.longButton Random
-      .divider
-      #speedSetting.setting.firstSettingAfterDivider
-        p Speed
-        #speedDisplayMobile.displayMobile 10
-        #speedUpDown.upDownButtonHolder
-          button#speedDown.UpDownButton
-          .upDownTitle Pen <br> Speed
-          input(type='text')#speedDisplay.settingDisplay
-          button#speedUp.upDownButton.upButton
-      button#playButton.longButton Pause
-      .divider
-      #utilButtonHolder
-        button#saveButton.longButton.utilButton Save
-        button#clearButton.longButton.utilButton New
-    #otherButtonCloser.closer Close
-    #otherButtonCloserMobile.closerMobile V
-    #otherButtonOpener.opener Open Settings
+    .wideButtonsKeeper
+      #penSizeClick.clicker
+      #outerSizeClick.clicker
+      #innerSizeClick.clicker
+      #speedClick.clicker
+      .otherButtonHolder.someButtons
+        #penSizeSetting.setting.firstSetting.randomSetting
+          p Pen size
+          #penSizeDisplayMobile.displayMobile 10
+          #penSizeUpDown.upDownButtonHolder
+            button#penDown.upDownButton
+            .upDownTitle Pen <br> size
+            input(type='text')#penSizeDisplay.settingDisplay
+            button#penUp.upDownButton.upButton
+        #outerSizeSetting.setting.randomSetting
+          p Outer
+          #outerCircleDisplayMobile.displayMobile 100
+          #outerCircleUpDown.upDownButtonHolder
+            button#outerCircleDown.upDownButton
+            .upDownTitle Outer Stencil
+            input(type='text')#outerCircleDisplay.settingDisplay
+            button#outerCircleUp.upDownButton.upButton
+        #innerSizeSetting.setting.randomSetting
+          p Inner
+          #innerCircleDisplayMobile.displayMobile 888
+          #innerCircleUpDown.upDownButtonHolder
+            button#innerCircleDown.upDownButton
+            .upDownTitle Inner Stencil
+            input(type='text')#innerCircleDisplay.settingDisplay
+            button#innerCircleUp.upDownButton.upButton
+        button#randomizeButton.longButton Random
+        .divider
+        #speedSetting.setting.firstSettingAfterDivider
+          p Speed
+          #speedDisplayMobile.displayMobile 10
+          #speedUpDown.upDownButtonHolder
+            button#speedDown.UpDownButton
+            .upDownTitle Pen <br> Speed
+            input(type='text')#speedDisplay.settingDisplay
+            button#speedUp.upDownButton.upButton
+        button#playButton.longButton Pause
+        .divider
+        #utilButtonHolder
+          button#saveButton.longButton.utilButton Save
+          button#clearButton.longButton.utilButton New
+      #otherButtonCloser.closer Close
+      #otherButtonCloserMobile.closerMobile V
+      #otherButtonOpener.opener Open Settings
 
   #theToyContainer
