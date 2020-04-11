@@ -505,10 +505,6 @@ var speedDisplay = false;
     e.stopPropagation();
   });
 
-  $('#saveButton').click(function(){
-    var filename = "spirograph" + parseInt(Math.random()*100) + parseInt(millis());
-    saveCanvas(filename, 'png');
-  });
 
 });
 

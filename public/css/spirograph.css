@@ -1,3 +1,9 @@
+#img-out {
+  position: absolute;
+  right: 0;
+  z-index: -10;
+}
+
 #colorButtons {
   width: 115px;
   height: 100vh;
