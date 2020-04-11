@@ -19,6 +19,7 @@ var otherButtonsMobileHeight = 120;
   // Color Settings
 
   $("#color0").css("border", "3px solid #cccccc");
+  $("#color1").css("border", "1px solid #cccccc");
   $("#bgcolor1").css("border", "3px solid #000000");
 
   $(".bgColorButton").click(function(){

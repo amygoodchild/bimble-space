@@ -20,7 +20,7 @@ app.get('/spirograph', function (req, res) {
 
 // Toy pages
 app.get('/blobs', function (req, res) {
-  res.render('blobs', { title: 'Blobs', path: 'blobs',  theScripts: ["buttons", "buttonsmobile", "colorbuttons", "colorbuttonsmobile"]})
+  res.render('blobs', { title: 'Blobs', path: 'blobs', theScripts:[]})
 })
 
 // Content Pages
