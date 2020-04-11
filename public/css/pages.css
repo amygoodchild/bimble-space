@@ -26,6 +26,19 @@
   overflow-y: scroll;
 }
 
+
+#pageContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+#pageContent::-webkit-scrollbar-thumb {
+  background: #e2e2e2;
+}
+
+#pageContent::-webkit-scrollbar-thumb:hover {
+  background: #e2e2e2;
+}
+
 h1{
   margin-top: 0px;
   margin-bottom: 40px;
