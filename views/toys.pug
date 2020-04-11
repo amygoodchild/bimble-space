@@ -1,0 +1,22 @@
+extends layout.pug
+
+block pagescripts 
+  link(rel='stylesheet', href='css/pages.css')
+  script(src='scripts/pagescripts.js')
+
+block content
+  #page
+    #pageContent
+      h1= title
+      each page in ["spirograph"]
+        if (title==page)
+          a.toyLink(href="/" + page)
+            img(src="/images/toythumbs/" + page + ".jpg")
+            .toyTitle= page
+        else
+          a.gameLink(href="/" + page)
+            img(src="/images/toythumbs/" + page + ".jpg")
+            .toyTitle= page
+              
+      p.temporaryMessage More toys coming soon
+  

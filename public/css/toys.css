@@ -100,3 +100,127 @@ h1{
   border: 1px solid #ffffff;
   float: left;
 }
+
+#menuBarContents{
+  width: 400px;
+}
+
+
+#bimbleLogo{
+  width: 220px;
+  height: 135px;
+  background: url(../images/bimblespace.png);
+  background-size: 85px;
+  background-repeat: no-repeat;
+  margin: 20px 0px 0px 36px;
+  padding-top: 73px;
+  float: left;
+  font-size: 27px;
+  float: left;
+  display: inline-block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+
+@media (orientation: portrait) {
+  #menu{
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #5f5f5f;
+  }
+
+  .menuButtonMobile{
+    margin: 2px 5px;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+  }
+
+  .menuButton{
+    display: none;
+  }
+
+  .menuButtonClosedMobile{
+    background: url("../images/hamburger.png");
+  }
+
+  .menuButtonOpenMobile{
+    background-image: url("../images/close.png");
+    display: none;
+  }
+
+  .fullScreenButton{
+    float: right;
+    margin-right: 10px;
+    margin-top: 2px;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+  }
+
+  .fullScreenButtonOpen{
+    background-image: url("../images/gobig.png");
+  }
+
+  .fullScreenButtonClose{
+    background-image: url("../images/gohome.png");
+    display: none;
+  }
+
+  #nav{
+    position: absolute;
+    top: 80;
+    left: 0;
+    width: 100%;
+  }
+
+  #nav a{
+    margin-right: 0px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+    display:block;
+    font-size: 25px;
+  }
+
+  #toymenu{
+    position: absolute;
+    top: 300;
+  }
+
+  #content{
+    position: absolute;
+    top: 55;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: calc(100% - 50px);
+  }
+
+
+  #bimbleLogo{
+    background-size: 45px;
+    padding-top: 5px;
+    padding-left: 49px;
+    margin-top: 6px;
+    margin-left: calc((100% - 230px) / 2);
+    width: 110px;
+    font-size: 16px;
+    text-align: left;
+    color: #ffffff;
+    height: 55px;
+    line-height: 15px;
+  }
+
+  #menuBarContents{
+    width: 100%;
+  }
+
+
+}

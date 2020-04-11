@@ -1,18 +1,101 @@
 
+#page{
+  position: absolute;
+  top: 0;
+  left: 65;
+  z-index: 1;
+  width: calc(100% - 65px);
+}
+
+
 #pageContent{
   float: left;
   display: inline-block;
-  margin-left: 190px;
+  margin-left: 130px;
   margin-top: 30px;
   width: 50%;
+  max-width: 580px;
+  min-width: 500px;
   height: 90%;
   background: rgba(0, 0, 0, 0.25);
   padding: 40px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  z-index: 500;
+  overflow-y: scroll;
 }
 
 h1{
   margin-top: 0px;
+  margin-bottom: 40px;
+}
+
+
+p{
+  font-family: robotoLight;
+  line-height: 25px;
+}
+
+p a{
+  color: #ffffff;
+}
+
+.gameLink{
+  text-decoration: none;
+}
+
+#toymenu{
+  float: left;
+  clear: both;
+  display: inline-block;
+
+}
+
+.toyMenuHeader{
+  margin: 20px 0px 10px;
+  font-size: 15px;
+  color: #bcbcbc;
+}
+
+.toyLink{
+  border: 1px solid #ffffff;
+  float: left;
+}
+
+.gameLink img{
+  border: 1px solid #ffffff;
+  width: 145px;
+}
+
+.toyTitle{
+  color: #ffffff;
+  text-decoration: none;
+  margin-top: 5px;
+}
+
+.temporaryMessage{
+  margin-top: 50px;
+}
+
+
+@media (orientation: portrait) {
+
+  #page{
+    left: 0;
+    width: 100%;
+    top: 50px;
+
+  }
+
+  #pageContent{
+    margin: 0px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    padding: 40px 20px;
+    height: calc(100vh - 50px);
+  }
+
+
 }

@@ -7,13 +7,14 @@ block toyscripts
 
   script(src='scripts/p5js/p5.sound.js')
   
-  script(src='scripts/' + title + '/sketch.js')
-  script(src='scripts/' + title + '/ui.js')
+  script(src='scripts/' + path + '/sketch.js')
+  script(src='scripts/' + path + '/ui.js')
+  script(src='scripts/toyscripts.js')
   link(rel='stylesheet', href='css/toys.css')
-  link(rel='stylesheet', href='css/' + title + '.css')
+  link(rel='stylesheet', href='css/' + path + '.css')
 
   each val in theScripts
-    script(src='scripts/' + title + '/'+ val +'.js')
+    script(src='scripts/' + path + '/'+ val +'.js')
   
 block animationScripts
   
