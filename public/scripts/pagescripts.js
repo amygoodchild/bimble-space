@@ -10,7 +10,7 @@ $(document).ready(function(){
       $(".menuButtonOpenMobile").css("display", "none");
     }
     else{
-      $("#menu").css("height", "55px");
+      $("#menu").css("height", "50px");
       $("#menu").css("width", "100%");
       $(".menuButtonClosedMobile").css("display", "inline-block");
       $(".menuButtonOpenMobile").css("display", "none");
