@@ -194,7 +194,7 @@ $pink: #e80077;
   max-width: 600px;
   text-align: left;
   background: #00000030;
-  padding: 40px 40px 50px 40px;
+  padding: 40px 40px 55px 40px;
 }
 
 #homepage > .definition > h1 {
@@ -219,17 +219,21 @@ $pink: #e80077;
 }
 
 #homepage > .definition > .playLink{
-  border: 2px solid #a3839f;
+  //border: 2px solid #a3839f;
   margin: 40px 0px 0px 0px;
   padding: 10px 30px;
-  color: #e63f8c;
+  color: #a20087;
   font-family: moonBold;
-  background: #00000026;
+  background: #ffffffdb;
   text-decoration: none;
   -webkit-border-radius: 5px;
      -moz-border-radius: 5px;
           border-radius: 5px;
 
+}
+
+#homepage > .definition > .playLink:hover{
+  background: #ffffff;
 }
 
 /*
@@ -412,9 +416,9 @@ $pink: #e80077;
   }
 
   #homepage > .definition{
-    width: 100%;
-    top: 15%;
-    left: 0%;
+    width: 90%;
+    top: 20%;
+    left: 5%;
     padding: 30px 30px 50px 30px;
     text-align: left;
     color: #ffffff;
