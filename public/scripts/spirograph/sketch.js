@@ -99,7 +99,6 @@ function draw() {
 	}
 
   if (blueRainbow){
-    console.log("bluerainbow");
     if (shortHuesDirection){
       blueHue = blueHue+0.5;
       if (blueHue > blueHueMax){
@@ -118,7 +117,6 @@ function draw() {
 
 
   if (pinkRainbow){
-    console.log("bluerainbow");
     if (shortHuesDirection){
       pinkHue = pinkHue+0.5;
       if (pinkHue > pinkHueMax){

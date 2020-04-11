@@ -499,7 +499,7 @@ button:focus {
   display: none;
 }
 
-@media (max-width: 500px) {
+@media (orientation: portrait) {
   #everything {
     height: 100%;
   }
@@ -542,8 +542,20 @@ button:focus {
     overflow-x: scroll;
   }
 
+  #penColorScrollerOuter::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  #penColorScrollerOuter::-webkit-scrollbar-thumb {
+    background: #bdbdbd;
+  }
+
+  #penColorScrollerOuter::-webkit-scrollbar-thumb:hover {
+    background: #666666;
+  }
+
   #penColorScrollerInner {
-    width: 1000px;
+    width: 1150px;
     float: left;
     display: inline-block;
   }
@@ -556,9 +568,21 @@ button:focus {
   }
 
   #bgColorScrollerInner {
-    width: 1000px;
+    width: 1100px;
     float: left;
     display: inline-block;
+  }
+
+  #bgColorScrollerOuter::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  #bgColorScrollerOuter::-webkit-scrollbar-thumb {
+    background: #bdbdbd;
+  }
+
+  #bgColorScrollerOuter::-webkit-scrollbar-thumb:hover {
+    background: #666666;
   }
 
   .someButtons {

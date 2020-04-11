@@ -18,12 +18,13 @@ var otherButtonsMobileHeight = 120;
 
   // Color Settings
 
-  $("#color0").css("border", "3px solid #ffffff");
+  $("#color0").css("border", "3px solid #cccccc");
   $("#bgcolor1").css("border", "3px solid #000000");
 
   $(".bgColorButton").click(function(){
     $("#theToyContainer").css("background", $(this).css('background'));
-    $(".bgColorButton").css("border", "1px solid #000000");
+    $(".bgColorButton").css("border", "1px solid #ffffff");
+    $("#bgcolor1").css("border", "1px solid #cccccc");
     $(this).css("border", "3px solid #000000");
   });
 
@@ -32,8 +33,17 @@ var otherButtonsMobileHeight = 120;
     rainbow = false;
     blueRainbow = false;
     pinkRainbow = false;
-    $(".colorButton").css("border", "1px solid #000000");
+    $(".colorButton").css("border", "1px solid #ffffff");
+    $("#color1").css("border", "1px solid #cccccc");
     $(this).css("border", "3px solid #000000");
+  });
+
+  $("#color0").click(function(){
+    $(this).css("border", "3px solid #cccccc");
+  });
+
+  $("#bgcolor0").click(function(){
+    $(this).css("border", "3px solid #cccccc");
   });
 
   $("#color16").click(function(){
@@ -48,7 +58,6 @@ var otherButtonsMobileHeight = 120;
     rainbow = false;
     blueRainbow = true;
     pinkRainbow = false;
-    console.log("this");
   });
 
   $("#color18").click(function(){
@@ -56,7 +65,6 @@ var otherButtonsMobileHeight = 120;
     rainbow = false;
     blueRainbow = false;
     pinkRainbow = true;
-    console.log("this");
   });
 
 
@@ -514,7 +522,6 @@ var speedDisplay = false;
     var newToyHeight;
 
 
-
     if($('#otherButtons').height() == 120 ){
       newToyWidth =  $(window).width();
       newToyHeight = $(window).height()
@@ -528,13 +535,14 @@ var speedDisplay = false;
       $(".upDownButtonHolder").css("display", "none");
     }
     else{
-        $("#backgroundTitle").html("background");
+
+      $("#backgroundTitle").html("background");
       newToyWidth =  $(window).width()
                         - $("#colorButtons").width()
                         - $("#backgroundColorButtons").width()
                         - $("#otherButtons").width()
                         - 79;
-      newToyHeight = $(window).width();
+      newToyHeight = $(window).height();
       $(".upDownButtonHolder").css("display", "inline-block");
       $(".setting").removeClass("selected");
       $(".randomSetting").css({ "background": "none" });
