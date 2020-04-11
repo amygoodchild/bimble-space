@@ -18,6 +18,11 @@ app.get('/spirograph', function (req, res) {
   res.render('spirograph', { title: 'Spirograph', path: 'spirograph',  theScripts: ["buttons", "buttonsmobile", "colorbuttons", "colorbuttonsmobile"]})
 })
 
+// Toy pages
+app.get('/blobs', function (req, res) {
+  res.render('blobs', { title: 'Blobs', path: 'blobs',  theScripts: ["buttons", "buttonsmobile", "colorbuttons", "colorbuttonsmobile"]})
+})
+
 // Content Pages
 app.get('/about', function (req, res) {
   res.render('about', { title: 'About', path: 'about' })

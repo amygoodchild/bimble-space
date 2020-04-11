@@ -294,7 +294,6 @@ var otherButtonsMobileHeight = 120;
       $(".setting").removeClass("selected");
       $(".randomSetting").animate({"background-color": "#1e5d8e"}, 50);
       $(".randomSetting").animate({"background-color": "#3887c4"}, 200);
-
     }
 
   });
@@ -491,12 +490,14 @@ var speedDisplay = false;
 
 
   $(".upDownButtonHolder").click(function() {
-    $(".upDownButtonHolder").css("display", "none");
-    penSizeDisplay = false;
-    innerSizeDisplay = false;
-    outerSizeDisplay = false;
-    speedDisplay = false;
-    $(".setting").removeClass("selected");
+    if($('#otherButtons').height() == 120 ){
+      $(".upDownButtonHolder").css("display", "none");
+      penSizeDisplay = false;
+      innerSizeDisplay = false;
+      outerSizeDisplay = false;
+      speedDisplay = false;
+      $(".setting").removeClass("selected");
+    }
   });
 
 
