@@ -323,6 +323,11 @@ var otherButtonsMobileHeight = 120;
   });
 
 
+  $("#stencilButton").click(function() {
+    showStencils = !showStencils;
+  });
+
+
 
   // Closers
 

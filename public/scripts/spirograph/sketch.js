@@ -13,6 +13,7 @@ let blueRainbow = false;
 let blueHueMin = 130;
 let blueHueMax = 180;
 let blueHue = blueHueMin;
+let showStencils = false;
 
 
 let pinkRainbow = false;
@@ -183,7 +184,9 @@ class Stencil{
 	display(){
 		noFill();
 		strokeWeight(2);
-		//ellipse(this.x, this.y, this.diameter, this.diameter);
+    if (showStencils){
+		    ellipse(this.x, this.y, this.diameter, this.diameter);
+    }
 	}
 }
 
@@ -226,7 +229,9 @@ class Mover{
 
 		noFill();
 		strokeWeight(1);
-		//ellipse(0, 0, this.diameter, this.diameter);
+    if (showStencils){
+      ellipse(0, 0, this.diameter, this.diameter);
+    }
 
 		stroke(penColor);
 		strokeWeight(penSize);
