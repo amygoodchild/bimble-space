@@ -8,14 +8,16 @@ const pewpewSketch = ( p ) => {
     p.noStroke();
     p.colorMode(p.HSB,255);
 
-    p.theWidth = p.int(p.windowWidth) - 55;
-    p.theHeight = p.int(p.windowHeight);
 
-    if (p.theWidth > p.theHeight){
+    if (p.int(p.windowWidth) > p.int(p.windowHeight){
+      p.theWidth = p.int(p.windowWidth) - 55;
+      p.theHeight = p.int(p.windowHeight);
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
     }
     else{
-      p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight-50);
+      p.theWidth = p.int(p.windowWidth);
+      p.theHeight = p.int(p.windowHeight) - 50;
+      p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
     }
 
     p.rippleCanvas.parent('theToyContainer');
