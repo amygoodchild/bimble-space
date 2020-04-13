@@ -20,6 +20,7 @@ canvas {
     height: calc(100% - 50px);
     margin-left: 0px;
     margin-top: 50px;
+    overscroll-behavior-y: contain;
   }
 }
 
