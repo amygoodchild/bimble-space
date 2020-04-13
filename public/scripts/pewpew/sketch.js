@@ -9,7 +9,7 @@ const pewpewSketch = ( p ) => {
     p.colorMode(p.HSB,255);
 
 
-    if (p.int(p.windowWidth) > p.int(p.windowHeight){
+    if (p.int(p.windowWidth) > p.int(p.windowHeight)){
       p.theWidth = p.int(p.windowWidth) - 55;
       p.theHeight = p.int(p.windowHeight);
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
