@@ -2,7 +2,7 @@
 const blobSketch = ( b ) => {
   b.x = 0;
   b.blobs = [];
-  b.numBlobs = 100;
+  b.numBlobs = 50;
 
   b.setup = () => {
 
@@ -29,8 +29,6 @@ const blobSketch = ( b ) => {
     //b.x = i % b.cols;
     //b.y = b.int(i / b.cols);
 
-
-
   };
 
   b.draw = () => {
@@ -48,15 +46,19 @@ const blobSketch = ( b ) => {
 
   class Blob{
   	constructor(){
-  		this.x = b.random(0,b.width);
-  		this.y = b.random(-50,b.height+50);
-      this.diameter = b.random(10,45);
+  		this.x = b.int(b.random(0,b.width));
+  		this.y = b.int(b.random(-50,b.height+50));
+      this.diameter = b.int(b.random(5,20))*2;
+
+      //this.x = 0;
+      //this.y = 0;
+      //this.diameter = 10;
       //this.speed = b.random(0.2,1.2);
       this.speed = 1;
       this.bottomPosition = b.createVector(this.x, this.y + (this.diameter / 2));
       this.index = b.int((this.bottomPosition.y * b.width) + this.bottomPosition.x);
       this.bump = false;
-
+      console.log("x: " + this.x + " y: " + this.y + " diam: " + this.diameter);
   	}
 
   	move(){
@@ -65,40 +67,46 @@ const blobSketch = ( b ) => {
       this.index = b.int((this.bottomPosition.y * b.width) + this.bottomPosition.x);
 
       if(this.y > b.height + 50){
-        this.x = b.random(0,b.width);
-    		this.y = b.random(-100,-50);
-        this.diameter = b.random(10,45);
+        this.x = b.int(b.random(0,b.width));
+    		this.y = b.int(b.random(-100,-50));
+        this.diameter = b.int(b.random(5,20))*2;
+
+        console.log("x: " + this.x + " y: " + this.y + " diam: " + this.diameter);
+
         //this.speed = b.random(0.2,1.2);
       }
 
       if (ls.platforms[this.index] > 0){
         this.bump = true;
-        console.log("bump");
+        //console.log("bump: " + this.index);
       }
       else{
+        //console.log("no bump: " + this.bump);
         this.bump = false;
       }
   	}
 
     debug(){
-      //console.log("index: " + this.index + " this pixel: " + ls.platforms[0] );
+      //console.log("index: " + this.index + " this pixel: " + ls.platforms[this.index] );
 
-      b.fill(30,100,255);
-      b.ellipse(this.bottomPosition.x, this.bottomPosition.y, 40, 40);
-      console.log(this.index);
+      //b.fill(30,100,255);
+      //b.ellipse(this.bottomPosition.x, this.bottomPosition.y, 40, 40);
+      //console.log("tracked: " + this.index);
     }
 
   	display(){
       b.fill(0,0,0);
   		b.ellipse(this.x, this.y, this.diameter, this.diameter);
 
-      if (this.bump){
+      if (this.bump == true){
         b.fill(255,255,255);
+        console.log("a bump found!!");
       }
       else{
         b.fill(100,100,255);
+        //console.log("no bump found!!");
       }
-      b.ellipse(this.bottomPosition.x, this.bottomPosition.y, 10, 10);
+      b.ellipse(this.bottomPosition.x, this.bottomPosition.y, 15, 15);
   	}
   }
 
@@ -138,13 +146,14 @@ const lineSketch = ( l ) => {
   l.draw = () => {
 
     if (l.mouseIsPressed){
-      l.fill(20, 255,255);
-      l.rect(l.mouseX,l.mouseY, 20, 20);
-
-      for (let i = l.mouseX; i < l.mouseX+20; i++){
-        for (let j = l.mouseY; j < l.mouseY+20; j++){
+      l.fill(180, 200,200);
+      l.rect(l.mouseX,l.mouseY, 10, 10);
+      var count = 0;
+      for (let i = l.mouseX; i < l.mouseX+10; i++){
+        for (let j = l.mouseY; j < l.mouseY+10; j++){
           l.index = l.int((j * l.width) + i);
           l.platforms[l.index] = 1;
+          //console.log("count: " + count + " x: " + i + " y: " + j + " index: " + l.index);
         }
       }
 

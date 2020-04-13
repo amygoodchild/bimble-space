@@ -23,6 +23,10 @@ app.get('/rainyblobs', function (req, res) {
   res.render('blobs', { title: 'Rainy blobs', path: 'blobs', theScripts:[]})
 })
 
+app.get('/ripple', function (req, res) {
+  res.render('ripple', { title: 'Ripple', path: 'ripple', theScripts:[]})
+})
+
 // Content Pages
 app.get('/about', function (req, res) {
   res.render('about', { title: 'About', path: 'about' })
