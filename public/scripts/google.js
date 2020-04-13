@@ -8,6 +8,7 @@ gtag('config', 'UA-162297893-1');
 
 $(document).ready(function(){
 
+  // Spirograph events
 
   $("#randomizeButton").click(function() {
     gtag('event', "Toy click", {

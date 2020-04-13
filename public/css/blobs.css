@@ -1,0 +1,17 @@
+#img-out {
+  position: absolute;
+  right: 0;
+  z-index: -10;
+}
+
+#theToyContainer {
+  width: calc(100% - 55px);
+  height: 100%;
+  margin-left: 55px;
+}
+
+canvas {
+  position: absolute;
+}
+
+/*# sourceMappingURL=blobs.css.map */

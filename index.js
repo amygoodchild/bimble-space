@@ -15,12 +15,12 @@ app.get('/', function (req, res) {
 
 // Toy pages
 app.get('/spirograph', function (req, res) {
-  res.render('spirograph', { title: 'Spirograph', path: 'spirograph',  theScripts: ["buttons", "buttonsmobile", "colorbuttons", "colorbuttonsmobile"]})
+  res.render('spirograph', { title: 'Spirograph', path: 'spirograph',  theScripts: []})
 })
 
 // Toy pages
-app.get('/blobs', function (req, res) {
-  res.render('blobs', { title: 'Blobs', path: 'blobs', theScripts:[]})
+app.get('/rainyblobs', function (req, res) {
+  res.render('blobs', { title: 'Rainy blobs', path: 'blobs', theScripts:[]})
 })
 
 // Content Pages

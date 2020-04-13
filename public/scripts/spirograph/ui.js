@@ -167,7 +167,7 @@ var otherButtonsMobileHeight = 120;
 
   $("#speedUp").click(function() {
     if (stencil.speed*10000 < 300){
-      stencil.speed += 0.0001;
+      stencil.speed += 0.0002;
       $("#speedDisplay").val(parseInt(stencil.speed*10000));
       $("#speedDisplayMobile").html(parseInt(stencil.speed*10000));
     }

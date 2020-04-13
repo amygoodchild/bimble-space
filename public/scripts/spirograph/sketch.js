@@ -55,15 +55,6 @@ function setup() {
 	stencil = new Stencil();
   mover = new Mover();
 
-	if (windowWidth < windowHeight){
-		createColorButtonsMobile();
-		createOtherButtonsMobile();
-	}
-	else{
-		createColorButtons();
-		createOtherButtons();
-	}
-
 
   if(windowWidth<900){
     perFrame = 4;
