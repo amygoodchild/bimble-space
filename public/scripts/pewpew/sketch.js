@@ -95,8 +95,13 @@ const pewpewSketch = ( p ) => {
       this.diameter = 5;
       this.diameterGrowing = true;
       this.maxDiameter = p.random(p.minSize,p.maxSize);
-      //this.hue = p.random(230,350);
-      this.hue = p.map(this.position.x, 0, p.theWidth, 0, 360);
+      if (p.random(0,1)<= 0.9){
+        this.hue = p.random(230,320);
+      }
+      else{
+        this.hue = p.random(150,170);
+      }
+      //this.hue = p.map(this.position.x, 0, p.theWidth, 0, 360);
       this.age = 0;
 
   	}
@@ -124,7 +129,7 @@ const pewpewSketch = ( p ) => {
         this.diameter += 2;
       }
       else{
-        this.diameter -= 0.1;
+        this.diameter -= 0.3;
       }
 
       if (this.diameter > this.maxDiameter){
