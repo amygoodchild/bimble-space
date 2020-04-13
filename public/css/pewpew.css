@@ -14,4 +14,12 @@ canvas {
   position: absolute;
 }
 
+@media (orientation: portrait) {
+  #theToyContainer {
+    width: 100%;
+    height: calc(100% - 50px);
+    margin-left: 0px;
+  }
+}
+
 /*# sourceMappingURL=pewpew.css.map */
