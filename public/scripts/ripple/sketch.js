@@ -75,6 +75,7 @@ const rippleSketch = ( r ) => {
 
   	move(){
       this.x += r.random(-1,1);
+      this.y += r.random(-1,1);
   	}
 
 

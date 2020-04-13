@@ -13,20 +13,6 @@ app.get('/', function (req, res) {
   res.render('home', { title: 'Home', path: 'home' })
 })
 
-// Toy pages
-app.get('/spirograph', function (req, res) {
-  res.render('spirograph', { title: 'Spirograph', path: 'spirograph',  theScripts: []})
-})
-
-// Toy pages
-app.get('/rainyblobs', function (req, res) {
-  res.render('blobs', { title: 'Rainy blobs', path: 'blobs', theScripts:[]})
-})
-
-app.get('/ripple', function (req, res) {
-  res.render('ripple', { title: 'Ripple', path: 'ripple', theScripts:[]})
-})
-
 // Content Pages
 app.get('/about', function (req, res) {
   res.render('about', { title: 'About', path: 'about' })
@@ -39,6 +25,28 @@ app.get('/contact', function (req, res) {
 app.get('/toys', function (req, res) {
   res.render('toys', { title: 'Toys', path: 'toys' })
 })
+
+
+// Toy pages
+app.get('/spirograph', function (req, res) {
+  res.render('spirograph', { title: 'Spirograph', path: 'spirograph',  theScripts: []})
+})
+
+app.get('/rainyblobs', function (req, res) {
+  res.render('blobs', { title: 'Rainy blobs', path: 'blobs', theScripts:[]})
+})
+
+app.get('/ripple', function (req, res) {
+  res.render('ripple', { title: 'Ripple', path: 'ripple', theScripts:[]})
+})
+
+app.get('/pewpew', function (req, res) {
+  res.render('pewpew', { title: 'PewPew', path: 'pewpew', theScripts:[]})
+})
+
+
+
+
 
 app.listen(process.env.PORT || 3000, function(){
   console.log('Server is running');
