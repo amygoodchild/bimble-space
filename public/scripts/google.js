@@ -110,4 +110,35 @@ $(document).ready(function(){
     });
   });
 
+  $("#penSizeDisplay").change(function(){
+    gtag('event', "Toy click", {
+      'event_category': "Spirograph",
+      'event_label': "Pen aize change"
+    });
+  });
+
+  $("#outerCircleDisplay").change(function(){
+    gtag('event', "Toy click", {
+      'event_category': "Spirograph",
+      'event_label': "Outer circle change"
+    });
+  });
+
+  $("#innerCircleDisplay").change(function(){
+    gtag('event', "Toy click", {
+      'event_category': "Spirograph",
+      'event_label': "Inner circle change"
+    });
+  });
+
+  $("#speedDisplay").change(function(){
+    gtag('event', "Toy click", {
+      'event_category': "Spirograph",
+      'event_label': "Speed change"
+    });
+  });
+
+
+
+
 });
