@@ -57,7 +57,7 @@ const rippleSketch = ( r ) => {
     }
 
     r.fill(255,255,255);
-    r.text(r.frameRate(), 50, 30);
+    r.text(r.frameRate(), 10, 200);
 
   };
 
