@@ -2,9 +2,17 @@
 const pewpewSketch = ( p ) => {
 
   p.pews = [];
-  p.spawnProbability= 1.0;
+  p.spawnProbability= 0.5;
+  p.duplicates= 10;
+
+  p.maxSize = 20;
+  p.minSize = 8;
+
   p.previousMouseX = 0;
   p.previousMouseY = 0;
+
+  p.spawnRandomness = 20;
+
 
   p.setup = () => {
 
@@ -44,8 +52,12 @@ const pewpewSketch = ( p ) => {
     //console.log("previousMouseY:" + p.previousMouseY + " mouseY: " + p.mouseY + " y direction: " + p.mouseDirection.y);
 
     if (p.mouseIsPressed){
-      if (p.random(0,1)<= p.spawnProbability){
-        p.pews.push(new Dot(p.mouseX, p.mouseY, p.mouseDirection.x, p.mouseDirection.y));
+      for (var i = 0; i < p.duplicates; i++){
+        if (p.random(0,1)<= p.spawnProbability){
+          p.pews.push(new Dot(p.random(p.mouseX - p.spawnRandomness, p.mouseX + p.spawnRandomness),
+                              p.random(p.mouseY - p.spawnRandomness, p.mouseY + p.spawnRandomness),
+                              p.mouseDirection.x, p.mouseDirection.y));
+        }
       }
     }
 
@@ -54,9 +66,9 @@ const pewpewSketch = ( p ) => {
       p.pews[i].display();
     }
 
-    //while (p.pews.length > 600){
-    //  p.pews.splice(0,1);
-    //}
+    while (p.pews.length > 1000){
+      p.pews.splice(0,1);
+    }
 
     for (var i = p.pews.length; i > 0; i--){
 
@@ -82,8 +94,9 @@ const pewpewSketch = ( p ) => {
       this.direction = p.createVector(dx,dy);
       this.diameter = 5;
       this.diameterGrowing = true;
-      this.maxDiameter = p.random(10,40);
-      this.hue = p.random(230,350);
+      this.maxDiameter = p.random(p.minSize,p.maxSize);
+      //this.hue = p.random(230,350);
+      this.hue = p.map(this.position.x, 0, p.theWidth, 0, 360);
       this.age = 0;
 
   	}
@@ -111,7 +124,7 @@ const pewpewSketch = ( p ) => {
         this.diameter += 2;
       }
       else{
-        this.diameter -= 0.3;
+        this.diameter -= 0.1;
       }
 
       if (this.diameter > this.maxDiameter){
