@@ -22,6 +22,14 @@ canvas {
     margin-top: 50px;
     overscroll-behavior-y: contain;
   }
+
+  canvas {
+    overscroll-behavior-y: contain;
+  }
+
+  body {
+    overscroll-behavior-y: contain;
+  }
 }
 
 /*# sourceMappingURL=pewpew.css.map */
