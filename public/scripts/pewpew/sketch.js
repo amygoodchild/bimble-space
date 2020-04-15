@@ -26,6 +26,7 @@ const pewpewSketch = ( p ) => {
       socket = io.connect('http://localhost:3000');
     }
     else{
+      console.log("local!");
       socket = io.connect('https://tranquil-fjord-57972.herokuapp.com');
     }
 
