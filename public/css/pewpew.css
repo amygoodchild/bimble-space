@@ -4,6 +4,22 @@
   z-index: -10;
 }
 
+#options {
+  width: 100px;
+  height: 100vh;
+  float: left;
+  display: inline-block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding-left: 10px;
+  padding-top: 10px;
+  position: absolute;
+  left: 55px;
+  top: 0px;
+  z-index: 1;
+}
+
 #theToyContainer {
   width: calc(100% - 55px);
   height: 100%;
@@ -12,6 +28,52 @@
 
 canvas {
   position: absolute;
+}
+
+.colorButton {
+  width: 50px;
+  height: 50px;
+  padding: 0px;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  float: left;
+  outline: 0;
+  background: #cccccc;
+  margin-bottom: 10px;
+}
+
+#color0 {
+  background: linear-gradient(34deg, #ffB53C 0%, #f3553C 51%, #eeb313 100%);
+}
+
+#color1 {
+  background: linear-gradient(34deg, #d74126 0%, #50a0c3 51%, #ffd84f 100%);
+}
+
+#color2 {
+  background: linear-gradient(34deg, #aee0dd 0%, #01acbd 51%, #e6aecf 100%);
+}
+
+#color3 {
+  background: linear-gradient(34deg, #84c0e9 0%, #37419a 51%, #ebd6e8 100%);
+}
+
+#color4 {
+  background: linear-gradient(34deg, #7ccaae 0%, #a299ca 51%, #ecec84 100%);
+}
+
+#color5 {
+  background: linear-gradient(34deg, #416eb6 0%, #715ca8 51%, #efc638 100%);
+}
+
+#color6 {
+  background: linear-gradient(34deg, #85cfb4 0%, #ffb312 51%, #ed186b 100%);
+}
+
+#color7 {
+  background: linear-gradient(34deg, #b7dde0 0%, #ffd0d6 51%, #fee19f 100%);
 }
 
 @media (orientation: portrait) {

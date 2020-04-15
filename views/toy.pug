@@ -1,9 +1,11 @@
 extends layout.pug
 
 block toyscripts 
+  block thisToyScripts
+    
   script(src='scripts/p5js/p5.js')
   script(src='scripts/p5js/p5.dom.js')
-  
+    
   script(src='scripts/screenshots/blob.js')
   script(src='scripts/screenshots/html2canvas.js')
   script(src='scripts/screenshots/screenshot.js')
@@ -13,6 +15,10 @@ block toyscripts
   script(src='scripts/toyscripts.js')
   link(rel='stylesheet', href='css/toys.css')
   link(rel='stylesheet', href='css/' + path + '.css')
+    
+  
+    
+  
 
   each val in theScripts
     script(src='scripts/' + path + '/'+ val +'.js')

@@ -47,16 +47,8 @@ app.get('/pewpew', function (req, res) {
 // Server stuff
 
 var socket = require('socket.io');
-
-var server = app.listen(process.env.PORT || 3000, function(){
-  console.log('Server is running');
-});
-
 var io = socket(server);
 
-io.sockets.on('connection', newConnection);
-
-function newConnection(socket){
-  console.log('new connection: ' + socket.id);
-
-}
+app.listen(process.env.PORT || 3000, function(){
+  console.log('Server is running');
+});
