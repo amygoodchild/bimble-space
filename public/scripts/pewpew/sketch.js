@@ -2,6 +2,7 @@
 const pewpewSketch = ( p ) => {
 
   p.pews = [];
+  p.otherPews = [];
   p.spawnProbability= 0.5;
   p.duplicates= 10;
 
@@ -23,11 +24,11 @@ const pewpewSketch = ( p ) => {
 
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       console.log("local!");
-      socket = io.connect('http://localhost:3000');
+      p.socket = io.connect('http://localhost:3000');
     }
     else{
       console.log("not local!");
-      socket = io.connect('https://desolate-dusk-28350.herokuapp.com/');
+      p.socket = io.connect('https://desolate-dusk-28350.herokuapp.com/');
     }
 
     //p.noStroke();
@@ -61,8 +62,18 @@ const pewpewSketch = ( p ) => {
     p.colorCollections[6] = new ColorCollection( p.color('#ffb312'), p.color('#85cfb4'), p.color('#ed186b') );
     p.colorCollections[7] = new ColorCollection( p.color('#ffd0d6'), p.color('#b7dde0'), p.color('#fee19f') );
 
+    p.socket.on('aNewDot', p.otherUserDraws);
 
   };
+
+  p.otherUserDraws = (data) =>{
+    //p.fill('#bb66bb');
+    //p.ellipse(data.x,data.y,15,15);
+
+    var newDot = new OtherDot(data.x, data.y, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
+                              data.maxDiameter, data.hue, data.sat, data.bri);
+    p.otherPews.push(newDot);
+  }
 
   p.draw = () => {
     //p.clear();
@@ -78,13 +89,35 @@ const pewpewSketch = ( p ) => {
     //console.log("previousMouseY:" + p.previousMouseY + " mouseY: " + p.mouseY + " y direction: " + p.mouseDirection.y);
 
     if (p.mouseIsPressed && p.mouseX > 100){
+
+      var data;
+
       for (var i = 0; i < p.duplicates; i++){
         if (p.random(0,1)<= p.spawnProbability){
-          p.pews.push(new Dot(p.random(p.mouseX - p.spawnRandomness, p.mouseX + p.spawnRandomness),
+          var newDot = new Dot(p.random(p.mouseX - p.spawnRandomness, p.mouseX + p.spawnRandomness),
                               p.random(p.mouseY - p.spawnRandomness, p.mouseY + p.spawnRandomness),
-                              p.mouseDirection.x, p.mouseDirection.y));
+                              p.mouseDirection.x, p.mouseDirection.y)
+          p.pews.push(newDot);
+
+          data = {
+            x : newDot.position.x,
+            y : newDot.position.y,
+            xoff : newDot.xoff,
+            yoff : newDot.yoff,
+            speed : newDot.speed,
+            directionx : newDot.direction.x,
+            directiony : newDot.direction.y,
+            diameter : newDot.diameter,
+            maxDiameter : newDot.maxDiameter,
+            hue : newDot.hue,
+            sat : newDot.sat,
+            bri : newDot.bri
+          }
+
+          p.socket.emit('aNewDot', data);
         }
       }
+
     }
 
     for (var i = 0; i < p.pews.length; i++){
@@ -105,10 +138,87 @@ const pewpewSketch = ( p ) => {
       }
     }
 
+
+
+    for (var i = 0; i < p.otherPews.length; i++){
+      p.otherPews[i].update();
+      p.otherPews[i].display();
+    }
+
+    while (p.otherPews.length > 1000){
+      p.otherPews.splice(0,1);
+    }
+
+    for (var i = p.otherPews.length; i > 0; i--){
+      if (p.otherPews[i-1].diameter < 0){
+        p.otherPews.splice(i-1,1);
+      }
+      else if(p.otherPews[i-1].position.x < 0 || p.otherPews[i-1].position.x > p.theWidth || p.otherPews[i-1].position.y < 0 || p.otherPews[i-1].position.y > p.theHeight){
+          p.otherPews.splice(i-1,1);
+      }
+    }
+
     p.previousMouseX = p.mouseX;
     p.previousMouseY = p.mouseY;
     p.huePicker = (p.huePicker + 2) % 360;
   };
+
+
+
+  class OtherDot{
+    constructor(x, y, xoff, yoff, speed, dx, dy, diameter, maxDiameter, hue, sat, bri){
+      this.position = p.createVector(x, y);
+      this.xoff = xoff;
+      this.yoff = yoff;
+      this.speed = speed;
+      this.direction = p.createVector(dx,dy);
+      this.diameter = diameter;
+      this.diameterGrowing = true;
+      this.maxDiameter = maxDiameter;
+      this.hue = hue;
+      this.sat = sat;
+      this.bri = bri;
+      this.age = 0;
+  	}
+
+    update(){
+      //this.direction.x += p.map(p.noise(this.xoff), 0, 1, -1, 1);
+      //this.direction.y += p.map(p.noise(this.yoff), 0, 1, -1, 1);
+
+      this.xoff += this.speed;
+      this.yoff += this.speed;
+
+      this.position.x += this.direction.x;
+      this.position.y += this.direction.y;
+
+
+      //console.log(p.map(p.noise(this.xoff), 0, 1, -5, 5));
+      this.position.x += p.map(p.noise(this.xoff), 0, 1, -5, 5);
+      this.position.y += p.map(p.noise(this.yoff), 0, 1, -5, 5);
+
+
+
+      this.age++;
+
+      if (this.diameterGrowing){
+        this.diameter += 2;
+      }
+      else{
+        this.diameter -= 0.2;
+      }
+
+      if (this.diameter > this.maxDiameter){
+        this.diameterGrowing = false;
+      }
+  	}
+
+  	display(){
+      p.fill(this.hue, this.sat, this.bri, 60);
+      //p.stroke(this.hue,70,90,50);
+  		p.ellipse(this.position.x, this.position.y, this.diameter, this.diameter);
+  	}
+
+  }
 
 
   class Dot{
