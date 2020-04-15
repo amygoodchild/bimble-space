@@ -126,9 +126,9 @@ const pewpewSketch = ( p ) => {
     }
 
     console.log(p.pews.length);
-    //while (p.pews.length > 300){
-    //  p.pews.splice(0,1);
-    //}
+    while (p.pews.length > 100){
+      p.pews.splice(0,1);
+    }
 
     for (var i = p.pews.length; i > 0; i--){
       if (p.pews[i-1].diameter < 0){
