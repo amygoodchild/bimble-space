@@ -27,7 +27,7 @@ const pewpewSketch = ( p ) => {
     }
     else{
       console.log("not local!");
-      socket = io.connect('https://tranquil-fjord-57972.herokuapp.com');
+      socket = io.connect('https://desolate-dusk-28350.herokuapp.com/');
     }
 
     //p.noStroke();
