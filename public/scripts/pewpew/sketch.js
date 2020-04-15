@@ -125,7 +125,7 @@ const pewpewSketch = ( p ) => {
       p.pews[i].display();
     }
 
-    console.log(p.pews.length);
+    //console.log(p.pews.length);
     while (p.pews.length > 100){
       p.pews.splice(0,1);
     }
@@ -146,7 +146,7 @@ const pewpewSketch = ( p ) => {
       p.otherPews[i].display();
     }
 
-    while (p.otherPews.length > 1000){
+    while (p.otherPews.length > 150){
       p.otherPews.splice(0,1);
     }
 
