@@ -62,7 +62,7 @@ function newConnection(socket){
   socket.on('aNewDot',
       function(data) {
         // Data comes in as whatever was sent, including objects
-        console.log("Received: 'new dot' " + data.x + " " + data.y);
+        //console.log("Received: 'new dot' " + data.x + " " + data.y);
 
         // Send it to all other clients
         socket.broadcast.emit('aNewDot', data);
