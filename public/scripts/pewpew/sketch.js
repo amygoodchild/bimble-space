@@ -4,7 +4,7 @@ const pewpewSketch = ( p ) => {
   p.pews = [];
   p.otherPews = [];
   p.spawnProbability= 0.5;
-  p.duplicates= 10;
+  p.duplicates= 8;
 
   p.maxSize = 20;
   p.minSize = 8;
@@ -125,7 +125,7 @@ const pewpewSketch = ( p ) => {
       p.pews[i].display();
     }
 
-    while (p.pews.length > 1000){
+    while (p.pews.length > 600){
       p.pews.splice(0,1);
     }
 
