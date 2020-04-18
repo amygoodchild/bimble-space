@@ -28,43 +28,47 @@ const pewpewSketch = ( p ) => {
 
   let myFont;
 
-  p.preload = () => {
-    console.log("preload");
-    myFont = p.loadFont('../../fonts/Moon Bold.otf');
-  }
+  //p.preload = () => {
+  //  console.log("preload");
+  //  myFont = p.loadFont('../../fonts/Moon Bold.otf');
+  //}
 
 
   p.setup = () => {
 
 
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
-      console.log("local!");
       p.socket = io.connect('http://localhost:3000');
+      console.log("local!");
     }
     else{
-      console.log("not local!");
       p.socket = io.connect('https://desolate-dusk-28350.herokuapp.com/');
+      console.log("not local!");
     }
-
-
 
     //p.noStroke();
     p.colorMode(p.HSB,360,100,100, 100);
     p.noStroke();
-    p.textFont(myFont, 20);
+    //p.textFont(myFont, 20);
+
 
     if (p.int(p.windowWidth) > p.int(p.windowHeight)){
+
       p.theWidth = p.int(p.windowWidth) - 55;
       p.theHeight = p.int(p.windowHeight);
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
+
     }
     else{
+
       p.theWidth = p.int(p.windowWidth);
       p.theHeight = p.int(p.windowHeight) - 50;
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
+
     }
 
     p.rippleCanvas.parent('theToyContainer');
+
 
     //p.x = i % p.cols;
     //p.y = p.int(i / p.cols);
@@ -79,6 +83,8 @@ const pewpewSketch = ( p ) => {
     p.colorCollections[5] = new ColorCollection( p.color('#715ca8'), p.color('#416eb6'), p.color('#efc638') );
     p.colorCollections[6] = new ColorCollection( p.color('#ffb312'), p.color('#85cfb4'), p.color('#ed186b') );
     p.colorCollections[7] = new ColorCollection( p.color('#ffd0d6'), p.color('#b7dde0'), p.color('#fee19f') );
+
+
 
     p.socket.on('aNewDot', p.otherUserDraws);
 
@@ -95,10 +101,11 @@ const pewpewSketch = ( p ) => {
 
   p.draw = () => {
 
-    p.textFont(myFont, 20);
+
+    //p.textFont(myFont, 20);
     //p.clear();
     //p.blendMode(p.ADD);
-    p.background(0,0,5,30);
+    p.background(0,0,5,100);
     //p.blendMode(p.BLEND);
 
     p.fill(0,0,0);
@@ -107,10 +114,20 @@ const pewpewSketch = ( p ) => {
     p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 0.06);
     p.text(p.int(p.frameRateLerp), 83, 20);
 
-    p.maxCircles = p.map(p.frameRate(), 20, 75, 50, 400);
+
+    if (p.frameRate() < 20){
+      p.maxCircles = 10;
+    }
+    else{
+      p.maxCircles = p.map(p.frameRate(), 20, 75, 50, 400);
+    }
     p.text(p.int(p.maxCircles), 83, 40);
 
+
     p.text( p.pews.length, 83, 60);
+    //console.log("max circles worked out");
+
+
 
     p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -50,50), p.map(p.mouseY - p.previousMouseY, -300, 300, -50, 50));
     //console.log("previousMouseX:" + p.previousMouseX + " mouseX: " + p.mouseX + " x direction: " + p.mouseDirection.x);
@@ -160,6 +177,7 @@ const pewpewSketch = ( p ) => {
       for (var i = 0; i < p.pews.length; i++){
         p.pews[i].update();
         p.pews[i].display();
+
       }
 
       //let elapsed = p.nf(p.millis() - start, 2, 4);
