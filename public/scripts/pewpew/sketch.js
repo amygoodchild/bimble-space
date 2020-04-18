@@ -24,6 +24,13 @@ const pewpewSketch = ( p ) => {
 
   p5.disableFriendlyErrors = true;
 
+  let myFont;
+
+  p.preload = () => {
+    console.log("preload");
+    myFont = p.loadFont('../../fonts/Moon Bold.otf');
+  }
+
 
   p.setup = () => {
 
@@ -37,19 +44,22 @@ const pewpewSketch = ( p ) => {
       p.socket = io.connect('https://desolate-dusk-28350.herokuapp.com/');
     }
 
+
+
     //p.noStroke();
     p.colorMode(p.HSB,360,100,100, 100);
     p.noStroke();
+    p.textFont(myFont, 20);
 
     if (p.int(p.windowWidth) > p.int(p.windowHeight)){
       p.theWidth = p.int(p.windowWidth) - 55;
       p.theHeight = p.int(p.windowHeight);
-      p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
+      p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight, p.WEBGL);
     }
     else{
       p.theWidth = p.int(p.windowWidth);
       p.theHeight = p.int(p.windowHeight) - 50;
-      p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
+      p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight, p.WEBGL);
     }
 
     p.rippleCanvas.parent('theToyContainer');
@@ -82,6 +92,8 @@ const pewpewSketch = ( p ) => {
   }
 
   p.draw = () => {
+
+    p.textFont(myFont, 20);
     //p.clear();
     //p.blendMode(p.ADD);
     p.background(0,0,5,30);
