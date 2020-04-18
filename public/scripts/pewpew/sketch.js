@@ -118,8 +118,11 @@ const pewpewSketch = ( p ) => {
     if (p.frameRate() < 5){
       p.maxCircles = 10;
     }
+    if (p.frameRate() > 65){
+      p.maxCircles = 300;
+    }
     else{
-      p.maxCircles = p.map(p.frameRate(), 5, 75, 30, 400);
+      p.maxCircles = p.lerp(p.maxCircles, p.map(p.frameRate(), 5, 65, 30, 300), 0.2);
     }
     p.text(p.int(p.maxCircles), 83, 40);
 
