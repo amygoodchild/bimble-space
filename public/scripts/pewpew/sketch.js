@@ -168,7 +168,7 @@ const pewpewSketch = ( p ) => {
         p.otherPews[i].display();
       }
       let elapsed = p.nf(p.millis() - start, 2, 4);
-      console.log("Drawing " + p.pews.length + "other circles took: " + elapsed);
+      console.log("Drawing " + p.otherPews.length + "other circles took: " + elapsed);
     }
 
     while (p.otherPews.length > 150){
