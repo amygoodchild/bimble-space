@@ -107,7 +107,7 @@ const pewpewSketch = ( p ) => {
     p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 0.06);
     p.text(p.int(p.frameRateLerp), 83, 20);
 
-    p.maxCircles = p.map(p.frameRateLerp, 20, 75, 50, 400);
+    p.maxCircles = p.map(p.frameRate(), 20, 75, 50, 400);
     p.text(p.int(p.maxCircles), 83, 40);
 
     p.text( p.pews.length, 83, 60);
@@ -167,9 +167,13 @@ const pewpewSketch = ( p ) => {
     //}
 
     //console.log(p.pews.length);
+    var spliced = 0;
     while (p.pews.length > p.maxCircles){
       p.pews.splice(0,1);
+      spliced++;
     }
+
+    console.log("spliced: " + spliced);
 
     for (var i = p.pews.length; i > 0; i--){
       if (p.pews[i-1].diameter < 0){
