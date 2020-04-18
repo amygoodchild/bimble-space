@@ -135,7 +135,7 @@ const pewpewSketch = ( p ) => {
     }
 
     //console.log(p.pews.length);
-    while (p.pews.length > 100){
+    while (p.pews.length > 200){
       p.pews.splice(0,1);
     }
 
