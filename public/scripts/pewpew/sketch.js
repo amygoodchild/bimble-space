@@ -115,11 +115,11 @@ const pewpewSketch = ( p ) => {
     p.text(p.int(p.frameRateLerp), 83, 20);
 
 
-    if (p.frameRate() < 20){
+    if (p.frameRate() < 5){
       p.maxCircles = 10;
     }
     else{
-      p.maxCircles = p.map(p.frameRate(), 20, 75, 50, 400);
+      p.maxCircles = p.map(p.frameRate(), 5, 75, 30, 400);
     }
     p.text(p.int(p.maxCircles), 83, 40);
 
@@ -184,15 +184,6 @@ const pewpewSketch = ( p ) => {
       //console.log("Drawing " + p.pews.length + " circles took: " + elapsed);
     //}
 
-    //console.log(p.pews.length);
-    var spliced = 0;
-    while (p.pews.length > p.maxCircles){
-      p.pews.splice(0,1);
-      spliced++;
-    }
-
-    console.log("spliced: " + spliced);
-
     for (var i = p.pews.length; i > 0; i--){
       if (p.pews[i-1].diameter < 0){
         p.pews.splice(i-1,1);
@@ -212,9 +203,20 @@ const pewpewSketch = ( p ) => {
       //console.log("Drawing " + p.otherPews.length + "other circles took: " + elapsed);
     //}
 
-    while (p.otherPews.length > p.maxCircles){
-      p.otherPews.splice(0,1);
+    //console.log(p.pews.length);
+    var spliced = 0;
+    while ((p.pews.length + p.otherPews.length) > p.maxCircles){
+      if (p.pews.length > 0){
+        p.pews.splice(0,1);
+        spliced++;
+      }
+      if (p.otherPews.length > 0){
+        p.otherPews.splice(0,1);
+        spliced++;
+      }
     }
+    console.log("sadly spliced: " + spliced);
+
 
     for (var i = p.otherPews.length; i > 0; i--){
       if (p.otherPews[i-1].diameter < 0){
