@@ -20,6 +20,8 @@ const pewpewSketch = ( p ) => {
 
   p.frameRateLerp = 60;
 
+  p.maxCircles = 200;
+
   p.socket;
 
   p5.disableFriendlyErrors = true;
@@ -54,12 +56,12 @@ const pewpewSketch = ( p ) => {
     if (p.int(p.windowWidth) > p.int(p.windowHeight)){
       p.theWidth = p.int(p.windowWidth) - 55;
       p.theHeight = p.int(p.windowHeight);
-      p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight, p.WEBGL);
+      p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
     }
     else{
       p.theWidth = p.int(p.windowWidth);
       p.theHeight = p.int(p.windowHeight) - 50;
-      p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight, p.WEBGL);
+      p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
     }
 
     p.rippleCanvas.parent('theToyContainer');
@@ -100,10 +102,15 @@ const pewpewSketch = ( p ) => {
     //p.blendMode(p.BLEND);
 
     p.fill(0,0,0);
-    p.rect(80,0,40,30);
+    p.rect(80,0,40,90);
     p.fill(0,0,100);
     p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 0.06);
     p.text(p.int(p.frameRateLerp), 83, 20);
+
+    p.maxCircles = p.map(p.frameRateLerp, 20, 75, 50, 400);
+    p.text(p.int(p.maxCircles), 83, 40);
+
+    p.text( p.pews.length, 83, 60);
 
     p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -50,50), p.map(p.mouseY - p.previousMouseY, -300, 300, -50, 50));
     //console.log("previousMouseX:" + p.previousMouseX + " mouseX: " + p.mouseX + " x direction: " + p.mouseDirection.x);
@@ -113,7 +120,7 @@ const pewpewSketch = ( p ) => {
 
       var data;
 
-      let start = p.millis();
+      //let start = p.millis();
 
       for (var i = 0; i < p.duplicates; i++){
         if (p.random(0,1)<= p.spawnProbability){
@@ -141,26 +148,26 @@ const pewpewSketch = ( p ) => {
         }
       }
 
-      let end = p.millis();
-      let elapsed = p.nf(end - start, 2, 4);
+      //let end = p.millis();
+      //let elapsed = p.nf(end - start, 2, 4);
 
-      console.log("Sending circles took: " + elapsed);
+      //console.log("Sending circles took: " + elapsed);
 
     }
 
-    if (p.pews.length > 0){
-      let start = p.millis();
+    //if (p.pews.length > 0){
+      //let start = p.millis();
       for (var i = 0; i < p.pews.length; i++){
         p.pews[i].update();
         p.pews[i].display();
       }
 
-      let elapsed = p.nf(p.millis() - start, 2, 4);
-      console.log("Drawing " + p.pews.length + " circles took: " + elapsed);
-    }
+      //let elapsed = p.nf(p.millis() - start, 2, 4);
+      //console.log("Drawing " + p.pews.length + " circles took: " + elapsed);
+    //}
 
     //console.log(p.pews.length);
-    while (p.pews.length > 200){
+    while (p.pews.length > p.maxCircles){
       p.pews.splice(0,1);
     }
 
@@ -173,17 +180,17 @@ const pewpewSketch = ( p ) => {
       }
     }
 
-    if (p.otherPews.length > 0){
-      let start = p.millis();
+    //if (p.otherPews.length > 0){
+      //let start = p.millis();
       for (var i = 0; i < p.otherPews.length; i++){
         p.otherPews[i].update();
         p.otherPews[i].display();
       }
-      let elapsed = p.nf(p.millis() - start, 2, 4);
-      console.log("Drawing " + p.otherPews.length + "other circles took: " + elapsed);
-    }
+      //let elapsed = p.nf(p.millis() - start, 2, 4);
+      //console.log("Drawing " + p.otherPews.length + "other circles took: " + elapsed);
+    //}
 
-    while (p.otherPews.length > 150){
+    while (p.otherPews.length > p.maxCircles){
       p.otherPews.splice(0,1);
     }
 
@@ -332,7 +339,7 @@ const pewpewSketch = ( p ) => {
   	display(){
       p.fill(this.hue, this.sat, this.bri, 60);
       //p.stroke(this.hue,70,90,50);
-  		p.ellipse(this.position.x, this.position.y, this.diameter, this.diameter, 3);
+  		p.ellipse(this.position.x, this.position.y, this.diameter, this.diameter);
   	}
   }
 
