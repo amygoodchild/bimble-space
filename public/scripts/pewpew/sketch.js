@@ -102,7 +102,7 @@ const pewpewSketch = ( p ) => {
     p.fill(0,0,0);
     p.rect(80,0,40,30);
     p.fill(0,0,100);
-    p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 0.01);
+    p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 0.06);
     p.text(p.int(p.frameRateLerp), 83, 20);
 
     p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -50,50), p.map(p.mouseY - p.previousMouseY, -300, 300, -50, 50));
@@ -332,7 +332,7 @@ const pewpewSketch = ( p ) => {
   	display(){
       p.fill(this.hue, this.sat, this.bri, 60);
       //p.stroke(this.hue,70,90,50);
-  		p.ellipse(this.position.x, this.position.y, this.diameter, this.diameter);
+  		p.ellipse(this.position.x, this.position.y, this.diameter, this.diameter, 3);
   	}
   }
 
