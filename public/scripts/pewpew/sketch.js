@@ -76,9 +76,9 @@ const pewpewSketch = ( p ) => {
     //p.fill('#bb66bb');
     //p.ellipse(data.x,data.y,15,15);
 
-    var newDot = new OtherDot(data.x, data.y, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
-                              data.maxDiameter, data.hue, data.sat, data.bri);
-    p.otherPews.push(newDot);
+    //var newDot = new OtherDot(data.x, data.y, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
+                              //data.maxDiameter, data.hue, data.sat, data.bri);
+    //p.otherPews.push(newDot);
   }
 
   p.draw = () => {
@@ -123,7 +123,7 @@ const pewpewSketch = ( p ) => {
             bri : newDot.bri
           }
 
-          p.socket.emit('aNewDot', data);
+          //p.socket.emit('aNewDot', data);
         }
       }
 
