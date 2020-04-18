@@ -211,18 +211,18 @@ const pewpewSketch = ( p ) => {
     //}
 
     //console.log(p.pews.length);
-    var spliced = 0;
+    // spliced = 0;
     while ((p.pews.length + p.otherPews.length) > p.maxCircles){
       if (p.pews.length > 0){
         p.pews.splice(0,1);
-        spliced++;
+        //spliced++;
       }
       if (p.otherPews.length > 0){
         p.otherPews.splice(0,1);
-        spliced++;
+        //spliced++;
       }
     }
-    console.log("sadly spliced: " + spliced);
+    //console.log("sadly spliced: " + spliced);
 
 
     for (var i = p.otherPews.length; i > 0; i--){
