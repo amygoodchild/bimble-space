@@ -76,9 +76,9 @@ const pewpewSketch = ( p ) => {
     //p.fill('#bb66bb');
     //p.ellipse(data.x,data.y,15,15);
 
-    //var newDot = new OtherDot(data.x, data.y, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
-                              //data.maxDiameter, data.hue, data.sat, data.bri);
-    //p.otherPews.push(newDot);
+    var newDot = new OtherDot(data.x, data.y, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
+                              data.maxDiameter, data.hue, data.sat, data.bri);
+    p.otherPews.push(newDot);
   }
 
   p.draw = () => {
@@ -100,6 +100,8 @@ const pewpewSketch = ( p ) => {
     if (p.mouseIsPressed && p.mouseX > 100){
 
       var data;
+
+      let start = p.millis();
 
       for (var i = 0; i < p.duplicates; i++){
         if (p.random(0,1)<= p.spawnProbability){
@@ -123,15 +125,26 @@ const pewpewSketch = ( p ) => {
             bri : newDot.bri
           }
 
-          //p.socket.emit('aNewDot', data);
+          p.socket.emit('aNewDot', data);
         }
       }
 
+      let end = p.millis();
+      let elapsed = p.nf(end - start, 2, 4);
+
+      console.log("Sending circles took: " + elapsed);
+
     }
 
-    for (var i = 0; i < p.pews.length; i++){
-      p.pews[i].update();
-      p.pews[i].display();
+    if (p.pews.length > 0){
+      let start = p.millis();
+      for (var i = 0; i < p.pews.length; i++){
+        p.pews[i].update();
+        p.pews[i].display();
+      }
+
+      let elapsed = p.nf(p.millis() - start, 2, 4);
+      console.log("Drawing " + p.pews.length + " circles took: " + elapsed);
     }
 
     //console.log(p.pews.length);
@@ -148,11 +161,14 @@ const pewpewSketch = ( p ) => {
       }
     }
 
-
-
-    for (var i = 0; i < p.otherPews.length; i++){
-      p.otherPews[i].update();
-      p.otherPews[i].display();
+    if (p.otherPews.length > 0){
+      let start = p.millis();
+      for (var i = 0; i < p.otherPews.length; i++){
+        p.otherPews[i].update();
+        p.otherPews[i].display();
+      }
+      let elapsed = p.nf(p.millis() - start, 2, 4);
+      console.log("Drawing " + p.pews.length + "other circles took: " + elapsed);
     }
 
     while (p.otherPews.length > 150){
