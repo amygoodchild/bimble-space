@@ -22,7 +22,11 @@ const pewpewSketch = ( p ) => {
 
   p.socket;
 
+  p5.disableFriendlyErrors = true;
+
+
   p.setup = () => {
+
 
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       console.log("local!");
