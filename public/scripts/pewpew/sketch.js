@@ -108,10 +108,14 @@ const pewpewSketch = ( p ) => {
     p.background(0,0,5,100);
     //p.blendMode(p.BLEND);
 
+
+
+    if (p.frameCount % 30 == 0){
+      p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 0.9);
+    }
     p.fill(0,0,0);
     p.rect(80,0,40,90);
     p.fill(0,0,100);
-    p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 0.06);
     p.text(p.int(p.frameRateLerp), 83, 20);
 
 
