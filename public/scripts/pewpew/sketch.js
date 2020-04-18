@@ -105,7 +105,7 @@ const pewpewSketch = ( p ) => {
     //p.textFont(myFont, 20);
     //p.clear();
     //p.blendMode(p.ADD);
-    p.background(0,0,5,100);
+    p.background(0,0,5,40);
     //p.blendMode(p.BLEND);
 
 
