@@ -81,8 +81,10 @@ const pewpewSketch = ( p ) => {
     p.background(0,0,5,30);
     //p.blendMode(p.BLEND);
 
-    //p.fill(255,255,255);
-    //p.text(p.frameRate(), 10, 20);
+    p.fill(0,0,0);
+    p.rect(80,0,40,30);
+    p.fill(0,0,100);
+    p.text(p.int(p.frameRate()), 83, 20);
 
     p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -50,50), p.map(p.mouseY - p.previousMouseY, -300, 300, -50, 50));
     //console.log("previousMouseX:" + p.previousMouseX + " mouseX: " + p.mouseX + " x direction: " + p.mouseDirection.x);
