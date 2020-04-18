@@ -39,10 +39,13 @@ app.get('/ripple', function (req, res) {
   res.render('ripple', { title: 'Ripple', path: 'ripple', theScripts:[]})
 })
 
-app.get('/pewpew', function (req, res) {
+app.get('/pewpewhidden', function (req, res) {
   res.render('pewpew', { title: 'PewPew', path: 'pewpew', theScripts:[]})
 })
 
+app.get('/pewpew', function (req, res) {
+    res.render('home', { title: 'Home', path: 'home' })
+})
 
 // Server stuff
 
