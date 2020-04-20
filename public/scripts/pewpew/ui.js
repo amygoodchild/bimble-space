@@ -8,5 +8,36 @@ $(document).ready(function(){
   $("#color5").click(function(){ ps.colorChoice = 5; });
   $("#color6").click(function(){ ps.colorChoice = 6; });
   $("#color7").click(function(){ ps.colorChoice = 7; });
+  $("#color8").click(function(){ ps.colorChoice = 8; });
+  $("#color9").click(function(){ ps.colorChoice = 9; });
+  $("#color10").click(function(){ ps.colorChoice = 10; });
+  $("#color11").click(function(){ ps.colorChoice = 11; });
+
 
 });
+
+
+function windowResized() {
+  console.log("resize");
+  sortOutWindowResize();
+}
+
+function sortOutWindowResize(){
+  var newToyWidth;
+  var newToyHeight;
+
+
+  if(!landscape){
+    newToyWidth =  $(window).width();
+    newToyHeight = $(window).height();
+                    - 50;
+  }
+  else{
+    newToyWidth =  $(window).width()
+                      - 55;
+    newToyHeight = $(window).height();
+  }
+
+  $("#theToyContainer").css({ 'width': newToyWidth });
+  $("#theToyContainer").css({ 'height': newToyHeight });
+}

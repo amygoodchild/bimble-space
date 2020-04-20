@@ -1,7 +1,11 @@
 $(document).ready(function(){
 
+
   $( window ).resize(function() {
     if ($( window ).height() < $( window ).width()){
+      landscape = true;
+      ps.maxSize = 20;
+      ps.minSize = 8;
       $("#menu").css("width", "55px");
       $("#menu").css("height", "100%");
       $(".menuButtonClosed").css("display", "inline-block");
@@ -10,12 +14,16 @@ $(document).ready(function(){
       $(".menuButtonOpenMobile").css("display", "none");
     }
     else{
+      landscape = false;
+      ps.maxSize = 15;
+      ps.minSize = 5;
       $("#menu").css("height", "50px");
       $("#menu").css("width", "100%");
       $(".menuButtonClosedMobile").css("display", "inline-block");
       $(".menuButtonOpenMobile").css("display", "none");
       $(".menuButtonClosed").css("display", "none");
       $(".menuButtonOpen").css("display", "none");
+
     }
   });
 

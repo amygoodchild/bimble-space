@@ -1,18 +1,39 @@
 
+var landscape;
+
+
+  if ($( window ).height() < $( window ).width()){
+    landscape = true;
+    console.log("landscape");
+  }
+  else{
+    landscape = false;
+    console.log("portrait");
+  }
+
+
+
 const pewpewSketch = ( p ) => {
 
   p.pews = [];
   p.otherPews = [];
   p.spawnProbability= 0.5;
-  p.duplicates= 8;
+  p.duplicates= 3;
 
-  p.maxSize = 20;
-  p.minSize = 8;
+  if (landscape){
+    p.maxSize = 26;
+    p.minSize = 8;
+  }
+  else{
+    p.maxSize = 15;
+    p.minSize = 5;
+  }
 
   p.previousMouseX = 0;
   p.previousMouseY = 0;
 
-  p.spawnRandomness = 20;
+  p.spawnRandomness = 10;
+  p.wiggleAmount = 5;
 
   p.huePicker = 0;
   p.colorCollections = [];
@@ -25,6 +46,7 @@ const pewpewSketch = ( p ) => {
   p.socket;
 
   p5.disableFriendlyErrors = true;
+  p.debugMode = true;
 
   let myFont;
 
@@ -35,8 +57,6 @@ const pewpewSketch = ( p ) => {
 
 
   p.setup = () => {
-
-
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       p.socket = io.connect('http://localhost:3000');
       console.log("local!");
@@ -53,18 +73,14 @@ const pewpewSketch = ( p ) => {
 
 
     if (p.int(p.windowWidth) > p.int(p.windowHeight)){
-
       p.theWidth = p.int(p.windowWidth) - 55;
       p.theHeight = p.int(p.windowHeight);
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
-
     }
     else{
-
       p.theWidth = p.int(p.windowWidth);
       p.theHeight = p.int(p.windowHeight) - 50;
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
-
     }
 
     p.rippleCanvas.parent('theToyContainer');
@@ -74,15 +90,21 @@ const pewpewSketch = ( p ) => {
     //p.y = p.int(i / p.cols);
     p.background(0,0,20);
 
-    p.colorCollections[0] = new ColorCollection( p.color('#f3553C'), p.color('#ffB53C'), p.color('#eeb313') );
+    p.colorCollections[0] = new ColorCollection( p.color('#e2d810'), p.color('#d9138a'), p.color('#12a4d9'), 0.33, 0.33, 0.33 );
+    p.colorCollections[1] = new ColorCollection( p.color('#fff0e1'), p.color('#ff6e53'), p.color('#ffc13b'), 0.10, 0.45, 0.45 );
+    p.colorCollections[2] = new ColorCollection( p.color('#4eff5d'), p.color('#d9f8b1'), p.color('#1b6535'), 0.45, 0.15, 0.40 );
+    p.colorCollections[3] = new ColorCollection( p.color('#e75874,'), p.color('#be1558'), p.color('#fbcbc9'), 0.10, 0.80, 0.10 );
+    p.colorCollections[4] = new ColorCollection( p.color('#8a307f'), p.color('#4493ff'), p.color('#ff48a7'), 0.15, 0.70, 0.15 );
+    p.colorCollections[5] = new ColorCollection( p.color('#fbcbc9'), p.color('#ffea04'), p.color('#f33ca4'), 0.20, 0.35, 0.45 );
+    p.colorCollections[6] = new ColorCollection( p.color('#ffb312'), p.color('#85cfb4'), p.color('#ed186b'), 0.33, 0.33, 0.33 );
+    p.colorCollections[7] = new ColorCollection( p.color('#eecce7'), p.color('#33f2dc'), p.color('#55b7d2'), 0.20, 0.40, 0.40 );
+    p.colorCollections[8] = new ColorCollection( p.color('#79cbb8'), p.color('#500472'), p.color('#ddcb1c'), 0.33, 0.33, 0.33 );
 
-    p.colorCollections[1] = new ColorCollection( p.color('#50a0c3'), p.color('#d74126'), p.color('#ffd84f') );
-    p.colorCollections[2] = new ColorCollection( p.color('#01acbd'), p.color('#aee0dd'), p.color('#e6aecf') );
-    p.colorCollections[3] = new ColorCollection( p.color('#37419a'), p.color('#84c0e9'), p.color('#ebd6e8') );
-    p.colorCollections[4] = new ColorCollection( p.color('#a299ca'), p.color('#7ccaae'), p.color('#ecec84') );
-    p.colorCollections[5] = new ColorCollection( p.color('#715ca8'), p.color('#416eb6'), p.color('#efc638') );
-    p.colorCollections[6] = new ColorCollection( p.color('#ffb312'), p.color('#85cfb4'), p.color('#ed186b') );
-    p.colorCollections[7] = new ColorCollection( p.color('#ffd0d6'), p.color('#b7dde0'), p.color('#fee19f') );
+    p.colorCollections[9] = new ColorCollection( p.color('#1fbfb8'), p.color('#11587e'), p.color('#1978a5'), 0.33, 0.33, 0.33 );
+    p.colorCollections[10] = new ColorCollection( p.color('#da000f'), p.color('#ff7e00'), p.color('#ffd800'), 0.33, 0.33, 0.33 );
+    p.colorCollections[11] = new ColorCollection( p.color('#1b2d34'), p.color('#00ffda'), p.color('#ffca00'), 0.33, 0.33, 0.33 );
+
+
 
 
 
@@ -109,14 +131,15 @@ const pewpewSketch = ( p ) => {
     //p.blendMode(p.BLEND);
 
 
-
-    if (p.frameCount % 30 == 0){
-      p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 0.9);
+    if(p.debugMode){
+      if (p.frameCount % 5 == 0){
+        p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 1.0);
+      }
+      p.fill(0,0,0);
+      p.rect(80,0,40,90);
+      p.fill(0,0,100);
+      p.text(p.int(p.frameRateLerp), 83, 20);
     }
-    p.fill(0,0,0);
-    p.rect(80,0,40,90);
-    p.fill(0,0,100);
-    p.text(p.int(p.frameRateLerp), 83, 20);
 
 
     if (p.frameRate() < 5){
@@ -126,12 +149,13 @@ const pewpewSketch = ( p ) => {
       p.maxCircles = 300;
     }
     else{
-      p.maxCircles = p.lerp(p.maxCircles, p.map(p.frameRate(), 5, 65, 30, 300), 0.2);
+      p.maxCircles = p.lerp(p.maxCircles, p.map(p.frameRate(), 5, 65, 30, 200), 0.2);
     }
-    p.text(p.int(p.maxCircles), 83, 40);
 
-
-    p.text( p.pews.length, 83, 60);
+    if(p.debugMode){
+      p.text(p.int(p.maxCircles), 83, 40);
+      p.text( p.pews.length, 83, 60);
+    }
     //console.log("max circles worked out");
 
 
@@ -267,12 +291,9 @@ const pewpewSketch = ( p ) => {
       this.position.x += this.direction.x;
       this.position.y += this.direction.y;
 
-
       //console.log(p.map(p.noise(this.xoff), 0, 1, -5, 5));
       this.position.x += p.map(p.noise(this.xoff), 0, 1, -5, 5);
       this.position.y += p.map(p.noise(this.yoff), 0, 1, -5, 5);
-
-
 
       this.age++;
 
@@ -302,30 +323,28 @@ const pewpewSketch = ( p ) => {
       this.position = p.createVector(i, j);
       this.xoff = p.random(0,1000);
       this.yoff = p.random(0,1000);
-      this.speed = 0.1;
+      this.speed = 0.05;
 
       this.direction = p.createVector(dx,dy);
       this.diameter = 5;
       this.diameterGrowing = true;
       this.maxDiameter = p.random(p.minSize,p.maxSize);
 
-
       p.probability = p.random(0,1);
 
-
-      if (p.probability<= 0.9){
-        this.hue = p.random(p.hue(p.colorCollections[p.colorChoice].colorA), p.hue(p.colorCollections[p.colorChoice].colorA)+40) %360;
+      if (p.probability<= p.colorCollections[p.colorChoice].pA){
+        this.hue = p.random(p.hue(p.colorCollections[p.colorChoice].colorA)-10, p.hue(p.colorCollections[p.colorChoice].colorA)+10) %360;
         this.sat = p.saturation(p.colorCollections[p.colorChoice].colorA);
         this.bri = p.brightness(p.colorCollections[p.colorChoice].colorA);
 
       }
-      else if (p.probability <= 0.95){
-        this.hue = p.random(p.hue(p.colorCollections[p.colorChoice].colorB), p.hue(p.colorCollections[p.colorChoice].colorB)+40) %360;
+      else if (p.probability <= p.colorCollections[p.colorChoice].pB){
+        this.hue = p.random(p.hue(p.colorCollections[p.colorChoice].colorB)-10, p.hue(p.colorCollections[p.colorChoice].colorB)+10) %360;
         this.sat = p.saturation(p.colorCollections[p.colorChoice].colorB);
         this.bri = p.brightness(p.colorCollections[p.colorChoice].colorB);
       }
       else{
-        this.hue = p.random(p.hue(p.colorCollections[p.colorChoice].colorC), p.hue(p.colorCollections[p.colorChoice].colorC)+40) %360;
+        this.hue = p.random(p.hue(p.colorCollections[p.colorChoice].colorC)-10, p.hue(p.colorCollections[p.colorChoice].colorC)+10) %360;
         this.sat = p.saturation(p.colorCollections[p.colorChoice].colorC);
         this.bri = p.brightness(p.colorCollections[p.colorChoice].colorC);
       }
@@ -348,8 +367,8 @@ const pewpewSketch = ( p ) => {
 
 
       //console.log(p.map(p.noise(this.xoff), 0, 1, -5, 5));
-      this.position.x += p.map(p.noise(this.xoff), 0, 1, -5, 5);
-      this.position.y += p.map(p.noise(this.yoff), 0, 1, -5, 5);
+      this.position.x += p.map(p.noise(this.xoff), 0, 1, 0 - p.wiggleAmount, p.wiggleAmount);
+      this.position.y += p.map(p.noise(this.yoff), 0, 1, 0 - p.wiggleAmount, p.wiggleAmount);
 
 
 
@@ -377,10 +396,13 @@ const pewpewSketch = ( p ) => {
 
 
   class ColorCollection{
-    constructor(a, b, c){
+    constructor(a, b, c, pa, pb, pc){
       this.colorA = a;
       this.colorB = b;
       this.colorC = c;
+      this.pA = pa;
+      this.pB = pa+pb;
+      this.pC = pa+pb+pc;
     }
   }
 
