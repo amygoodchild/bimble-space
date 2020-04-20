@@ -39,12 +39,12 @@ app.get('/ripple', function (req, res) {
   res.render('ripple', { title: 'Ripple', path: 'ripple', theScripts:[]})
 })
 
-app.get('/pewpewhidden', function (req, res) {
-  res.render('pewpew', { title: 'PewPew', path: 'pewpew', theScripts:[]})
+app.get('/swooshhidden', function (req, res) {
+  res.render('pewpew', { title: 'Swoosh', path: 'pewpew', theScripts:[]})
 })
 
-app.get('/pewpew', function (req, res) {
-    res.render('home', { title: 'Home', path: 'home' })
+app.get('/swooshtemp', function (req, res) {
+  res.render('pewpew', { title: 'Swoosh', path: 'pewpew', theScripts:[]})
 })
 
 // Server stuff
