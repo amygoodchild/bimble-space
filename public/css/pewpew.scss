@@ -12,7 +12,7 @@ $pink: rgba(232, 0, 119, 1);
 }
 
 #options {
-  width: 200px;
+  width: 100px;
   height: 100vh;
   //border-right: 1px solid #515151;
   float: left;
@@ -52,11 +52,16 @@ canvas{
   float: left;
   outline: 0;
   background: #cccccc;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  margin-right: 8px;
 }
 
 .colorButton:hover{
   border: 4px solid #ffffff;
+}
+
+.colorButton:focus{
+  border: 6px solid #ffffff;
 }
 
 .colorButtonOn{
@@ -75,6 +80,13 @@ canvas{
 #color9{ background: linear-gradient(34deg, #1fbfb8 30%, #11587e 50%, #1978a5 80%);}
 #color10{ background: linear-gradient(34deg, #da000f 30%, #ff7e00 50%, #ffd800 80%);}
 #color11{ background: linear-gradient(34deg, #1b2d34 30%, #00ffda 50%, #ffca00 80%);}
+
+
+@media (max-height: 700px) {
+  #options {
+    width: 150px;
+  }
+}
 
 
 @media (orientation: portrait) {

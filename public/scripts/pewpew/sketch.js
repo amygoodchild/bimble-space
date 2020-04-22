@@ -105,9 +105,6 @@ const pewpewSketch = ( p ) => {
     p.colorCollections[11] = new ColorCollection( p.color('#1b2d34'), p.color('#00ffda'), p.color('#ffca00'), 0.33, 0.33, 0.33 );
 
 
-
-
-
     p.socket.on('aNewDot', p.otherUserDraws);
 
   };
@@ -356,9 +353,6 @@ const pewpewSketch = ( p ) => {
   	}
 
   	update(){
-      //this.direction.x += p.map(p.noise(this.xoff), 0, 1, -1, 1);
-      //this.direction.y += p.map(p.noise(this.yoff), 0, 1, -1, 1);
-
       this.xoff += this.speed;
       this.yoff += this.speed;
 
@@ -370,6 +364,12 @@ const pewpewSketch = ( p ) => {
       this.position.x += p.map(p.noise(this.xoff), 0, 1, 0 - p.wiggleAmount, p.wiggleAmount);
       this.position.y += p.map(p.noise(this.yoff), 0, 1, 0 - p.wiggleAmount, p.wiggleAmount);
 
+      for (var i = 0; i<p.otherPews.length; i++){
+        if (p.dist(this.position.x, this.position.y, p.otherPews[i].position.x, p.otherPews[i].position.x) < 100){
+            this.direction.x +=  (p.otherPews[i].direction.x)/100;
+            this.direction.y +=  p.otherPews[i].direction.y/100;
+        }
+      }
 
 
       this.age++;

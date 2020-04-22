@@ -5,7 +5,7 @@
 }
 
 #options {
-  width: 200px;
+  width: 100px;
   height: 100vh;
   float: left;
   display: inline-block;
@@ -42,11 +42,16 @@ canvas {
   float: left;
   outline: 0;
   background: #cccccc;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  margin-right: 8px;
 }
 
 .colorButton:hover {
   border: 4px solid #ffffff;
+}
+
+.colorButton:focus {
+  border: 6px solid #ffffff;
 }
 
 .colorButtonOn {
@@ -101,6 +106,11 @@ canvas {
   background: linear-gradient(34deg, #1b2d34 30%, #00ffda 50%, #ffca00 80%);
 }
 
+@media (max-height: 700px) {
+  #options {
+    width: 150px;
+  }
+}
 @media (orientation: portrait) {
   #theToyContainer {
     width: 100%;
