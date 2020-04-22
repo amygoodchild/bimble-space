@@ -308,6 +308,9 @@ const pewpewSketch = ( p ) => {
       if (p.pews[i-1].diameter < 0){
         p.pews.splice(i-1,1);
       }
+      else if(p.pews[i-1].position.x < 0 || p.pews[i-1].position.x > p.theWidth || p.pews[i-1].position.y < 0 || p.pews[i-1].position.y > p.theHeight){
+          p.pews.splice(i-1,1);
+      }
     }
 
     //console.log(p.pews.length);
@@ -366,10 +369,13 @@ const pewpewSketch = ( p ) => {
       //this.position.x += p.map(p.noise(this.xoff), 0, 1, -5, 5);
       //this.position.y += p.map(p.noise(this.yoff), 0, 1, -5, 5);
 
+      // Wrap around
+      /*
       if (this.position.x > p.width){ this.position.x = 0; }
       if (this.position.x < 0){ this.position.x = p.width; }
       if (this.position.y > p.height){ this.position.y = 0; }
       if (this.position.y < 0){ this.position.y = p.height; }
+      */
 
       //change size
       if (this.diameterGrowing){
