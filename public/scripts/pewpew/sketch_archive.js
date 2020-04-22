@@ -1,4 +1,7 @@
+
 var landscape;
+
+
   if ($( window ).height() < $( window ).width()){
     landscape = true;
     console.log("landscape");
@@ -7,6 +10,8 @@ var landscape;
     landscape = false;
     console.log("portrait");
   }
+
+
 
 const pewpewSketch = ( p ) => {
 
@@ -108,9 +113,9 @@ const pewpewSketch = ( p ) => {
     //p.fill('#bb66bb');
     //p.ellipse(data.x,data.y,15,15);
 
-    var newDot = new Dot(data.x, data.y, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
+    var newDot = new OtherDot(data.x, data.y, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
                               data.maxDiameter, data.hue, data.sat, data.bri);
-    p.pews.push(newDot);
+    p.otherPews.push(newDot);
   }
 
   p.draw = () => {
@@ -161,36 +166,9 @@ const pewpewSketch = ( p ) => {
       //let start = p.millis();
       for (var i = 0; i < p.duplicates; i++){
         if (p.random(0,1)<= p.spawnProbability){
-
-          p.probability = p.random(0,1);
-          let tempHue;
-          let tempSat;
-          let tempBri;
-
-          if (p.probability<= p.colorCollections[p.colorChoice].pA){
-            tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorA)-10, p.hue(p.colorCollections[p.colorChoice].colorA)+10) %360;
-            tempSat = p.saturation(p.colorCollections[p.colorChoice].colorA);
-            tempBri = p.brightness(p.colorCollections[p.colorChoice].colorA);
-
-          }
-          else if (p.probability <= p.colorCollections[p.colorChoice].pB){
-            tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorB)-10, p.hue(p.colorCollections[p.colorChoice].colorB)+10) %360;
-            tempSat = p.saturation(p.colorCollections[p.colorChoice].colorB);
-            tempBri = p.brightness(p.colorCollections[p.colorChoice].colorB);
-          }
-          else{
-            tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorC)-10, p.hue(p.colorCollections[p.colorChoice].colorC)+10) %360;
-            tempSat = p.saturation(p.colorCollections[p.colorChoice].colorC);
-            tempBri = p.brightness(p.colorCollections[p.colorChoice].colorC);
-          }
-
           var newDot = new Dot(p.random(p.mouseX - p.spawnRandomness, p.mouseX + p.spawnRandomness),
                               p.random(p.mouseY - p.spawnRandomness, p.mouseY + p.spawnRandomness),
-                              p.random(0,1000), p.random(0,1000), 0.05,
-                              p.mouseDirection.x, p.mouseDirection.y,
-                              5, p.random(p.minSize,p.maxSize),
-                              tempHue, tempSat, tempBri);
-
+                              p.mouseDirection.x, p.mouseDirection.y)
           p.pews.push(newDot);
 
           data = {
@@ -214,6 +192,7 @@ const pewpewSketch = ( p ) => {
 
       //let end = p.millis();
       //let elapsed = p.nf(end - start, 2, 4);
+
       //console.log("Sending circles took: " + elapsed);
 
     }
@@ -239,6 +218,15 @@ const pewpewSketch = ( p ) => {
       }
     }
 
+    //if (p.otherPews.length > 0){
+      //let start = p.millis();
+      for (var i = 0; i < p.otherPews.length; i++){
+        p.otherPews[i].update();
+        p.otherPews[i].display();
+      }
+      //let elapsed = p.nf(p.millis() - start, 2, 4);
+      //console.log("Drawing " + p.otherPews.length + "other circles took: " + elapsed);
+    //}
 
     //console.log(p.pews.length);
     // spliced = 0;
@@ -247,8 +235,22 @@ const pewpewSketch = ( p ) => {
         p.pews.splice(0,1);
         //spliced++;
       }
+      if (p.otherPews.length > 0){
+        p.otherPews.splice(0,1);
+        //spliced++;
+      }
     }
     //console.log("sadly spliced: " + spliced);
+
+
+    for (var i = p.otherPews.length; i > 0; i--){
+      if (p.otherPews[i-1].diameter < 0){
+        p.otherPews.splice(i-1,1);
+      }
+      else if(p.otherPews[i-1].position.x < 0 || p.otherPews[i-1].position.x > p.theWidth || p.otherPews[i-1].position.y < 0 || p.otherPews[i-1].position.y > p.theHeight){
+          p.otherPews.splice(i-1,1);
+      }
+    }
 
     p.previousMouseX = p.mouseX;
     p.previousMouseY = p.mouseY;
@@ -257,7 +259,7 @@ const pewpewSketch = ( p ) => {
 
 
 
-  class Dot{
+  class OtherDot{
     constructor(x, y, xoff, yoff, speed, dx, dy, diameter, maxDiameter, hue, sat, bri){
       this.position = p.createVector(x, y);
       this.xoff = xoff;
@@ -308,6 +310,86 @@ const pewpewSketch = ( p ) => {
   	}
 
   }
+
+
+  class Dot{
+  	constructor(i, j, dx, dy){
+      this.position = p.createVector(i, j);
+      this.xoff = p.random(0,1000);
+      this.yoff = p.random(0,1000);
+      this.speed = 0.05;
+
+      this.direction = p.createVector(dx,dy);
+      this.diameter = 5;
+      this.diameterGrowing = true;
+      this.maxDiameter = p.random(p.minSize,p.maxSize);
+
+      p.probability = p.random(0,1);
+
+      if (p.probability<= p.colorCollections[p.colorChoice].pA){
+        this.hue = p.random(p.hue(p.colorCollections[p.colorChoice].colorA)-10, p.hue(p.colorCollections[p.colorChoice].colorA)+10) %360;
+        this.sat = p.saturation(p.colorCollections[p.colorChoice].colorA);
+        this.bri = p.brightness(p.colorCollections[p.colorChoice].colorA);
+
+      }
+      else if (p.probability <= p.colorCollections[p.colorChoice].pB){
+        this.hue = p.random(p.hue(p.colorCollections[p.colorChoice].colorB)-10, p.hue(p.colorCollections[p.colorChoice].colorB)+10) %360;
+        this.sat = p.saturation(p.colorCollections[p.colorChoice].colorB);
+        this.bri = p.brightness(p.colorCollections[p.colorChoice].colorB);
+      }
+      else{
+        this.hue = p.random(p.hue(p.colorCollections[p.colorChoice].colorC)-10, p.hue(p.colorCollections[p.colorChoice].colorC)+10) %360;
+        this.sat = p.saturation(p.colorCollections[p.colorChoice].colorC);
+        this.bri = p.brightness(p.colorCollections[p.colorChoice].colorC);
+      }
+
+
+      //this.hue = p.map(this.position.x, 0, p.theWidth, 0, 360);
+      this.age = 0;
+
+  	}
+
+  	update(){
+      this.xoff += this.speed;
+      this.yoff += this.speed;
+
+      this.position.x += this.direction.x;
+      this.position.y += this.direction.y;
+
+
+      //console.log(p.map(p.noise(this.xoff), 0, 1, -5, 5));
+      this.position.x += p.map(p.noise(this.xoff), 0, 1, 0 - p.wiggleAmount, p.wiggleAmount);
+      this.position.y += p.map(p.noise(this.yoff), 0, 1, 0 - p.wiggleAmount, p.wiggleAmount);
+
+      for (var i = 0; i<p.otherPews.length; i++){
+        if (p.dist(this.position.x, this.position.y, p.otherPews[i].position.x, p.otherPews[i].position.x) < 100){
+            this.direction.x +=  p.otherPews[i].direction.x/30;
+            this.direction.y +=  p.otherPews[i].direction.y/30;
+        }
+      }
+
+
+      this.age++;
+
+      if (this.diameterGrowing){
+        this.diameter += 2;
+      }
+      else{
+        this.diameter -= 0.2;
+      }
+
+      if (this.diameter > this.maxDiameter){
+        this.diameterGrowing = false;
+      }
+  	}
+
+  	display(){
+      p.fill(this.hue, this.sat, this.bri, 60);
+      //p.stroke(this.hue,70,90,50);
+  		p.ellipse(this.position.x, this.position.y, this.diameter, this.diameter);
+  	}
+  }
+
 
 
   class ColorCollection{
