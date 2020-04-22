@@ -13,7 +13,7 @@ const pewpewSketch = ( p ) => {
   p.pews = [];
   p.otherPews = [];
   p.spawnProbability= 0.5;
-  p.duplicates= 1;
+  p.duplicates= 3;
 
   if (landscape){
     p.maxSize = 26;
@@ -111,10 +111,11 @@ const pewpewSketch = ( p ) => {
   p.otherUserDraws = (data) =>{
     //p.fill('#bb66bb');
     //p.ellipse(data.x,data.y,15,15);
-
-    var newDot = new Dot(data.x, data.y, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
-                              data.maxDiameter, data.hue, data.sat, data.bri);
-    p.pews.push(newDot);
+    if ( p.pews.length < p.maxCircles){
+      var newDot = new Dot(data.x, data.y, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
+                                data.maxDiameter, data.hue, data.sat, data.bri);
+      p.pews.push(newDot);
+    }
   }
 
   p.draw = () => {
@@ -140,10 +141,10 @@ const pewpewSketch = ( p ) => {
       p.maxCircles = 10;
     }
     else if (p.frameRate() > 65){
-      p.maxCircles = 200;
+      p.maxCircles = 100;
     }
     else{
-      p.maxCircles = p.map(p.frameRate(), 20, 65, 30, 200);
+      p.maxCircles = p.map(p.frameRate(), 20, 65, 10, 100);
     }
 
 
@@ -158,7 +159,7 @@ const pewpewSketch = ( p ) => {
     //console.log("previousMouseX:" + p.previousMouseX + " mouseX: " + p.mouseX + " x direction: " + p.mouseDirection.x);
     //console.log("previousMouseY:" + p.previousMouseY + " mouseY: " + p.mouseY + " y direction: " + p.mouseDirection.y);
 
-    if (p.mouseIsPressed && p.mouseX > 100){
+    if (p.mouseIsPressed && p.mouseX > 100 && p.pews.length < p.maxCircles){
       var data;
       //let start = p.millis();
       for (var i = 0; i < p.duplicates; i++){
@@ -364,10 +365,11 @@ const pewpewSketch = ( p ) => {
       this.position.add(this.velocity);
       this.acceleration.mult(0);
 
-      //this.xoff += this.speed;
-      //this.yoff += this.speed;
-      //this.position.x += p.map(p.noise(this.xoff), 0, 1, -5, 5);
-      //this.position.y += p.map(p.noise(this.yoff), 0, 1, -5, 5);
+      // Wiggle
+      this.xoff += this.speed;
+      this.yoff += this.speed;
+      this.position.x += p.map(p.noise(this.xoff), 0, 1, -3, 3);
+      this.position.y += p.map(p.noise(this.yoff), 0, 1, -3, 3);
 
       // Wrap around
       /*
