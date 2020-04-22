@@ -381,10 +381,10 @@ const pewpewSketch = ( p ) => {
 
       //change size
       if (this.diameterGrowing){
-        this.diameter += 1.8;
+        this.diameter += 2;
       }
       else{
-        this.diameter -= 0.1;
+        this.diameter -= 0.15;
       }
 
       if (this.diameter > this.maxDiameter){
