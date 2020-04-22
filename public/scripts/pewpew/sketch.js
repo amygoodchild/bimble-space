@@ -13,14 +13,14 @@ const pewpewSketch = ( p ) => {
   p.pews = [];
   p.otherPews = [];
   p.spawnProbability= 0.5;
-  p.duplicates= 3;
+  p.duplicates= 1;
 
   if (landscape){
     p.maxSize = 26;
     p.minSize = 8;
   }
   else{
-    p.maxSize = 15;
+    p.maxSize = 26;
     p.minSize = 5;
   }
 
@@ -42,6 +42,10 @@ const pewpewSketch = ( p ) => {
 
   p5.disableFriendlyErrors = true;
   p.debugMode = true;
+
+
+  p.desiredSeparation = 25;
+  p.neighborDist = 50;
 
   let myFont;
 
@@ -114,8 +118,6 @@ const pewpewSketch = ( p ) => {
   }
 
   p.draw = () => {
-
-
     //p.textFont(myFont, 20);
     //p.clear();
     //p.blendMode(p.ADD);
@@ -155,8 +157,6 @@ const pewpewSketch = ( p ) => {
     p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -50,50), p.map(p.mouseY - p.previousMouseY, -300, 300, -50, 50));
     //console.log("previousMouseX:" + p.previousMouseX + " mouseX: " + p.mouseX + " x direction: " + p.mouseDirection.x);
     //console.log("previousMouseY:" + p.previousMouseY + " mouseY: " + p.mouseY + " y direction: " + p.mouseDirection.y);
-
-
 
     if (p.mouseIsPressed && p.mouseX > 100){
       var data;
@@ -213,17 +213,86 @@ const pewpewSketch = ( p ) => {
           p.socket.emit('aNewDot', data);
         }
       }
-
       //let end = p.millis();
       //let elapsed = p.nf(end - start, 2, 4);
       //console.log("Sending circles took: " + elapsed);
-
     }
 
-
-    //if (p.pews.length > 0){
+      //if (p.pews.length > 0){
       //let start = p.millis();
       for (var i = 0; i < p.pews.length; i++){
+        let steer = p.createVector(0,0,0);
+        let steerCount = 0;
+        let align = p.createVector(0,0,0);
+        let sum = p.createVector(0,0);
+        let alignCount = 0;
+
+        let cohSum = p.createVector(0,0);
+        let cohSteer = p.createVector(0,0);
+
+        for (var j = 0; j < p.pews.length; j++){
+          if (i!=j){
+
+            let d = p.dist(p.pews[i].position.x, p.pews[i].position.y, p.pews[j].position.x, p.pews[j].position.y);
+
+            // steer
+            if ((d > 0) && (d < p.desiredSeparation)){
+              let diff = p5.Vector.sub(p.pews[i].position, p.pews[j].position);
+              diff.normalize();
+              diff.div(d);
+              steer.add(diff);
+              steerCount++;
+            }
+
+            // alignment
+            if ((d > 0) && (d < p.neighborDist)){
+              sum.add(p.pews[j].velocity);
+              cohSum.add(p.pews[j].position);
+
+              sum.x *= p.pews[j].diameter;
+              sum.y *= p.pews[j].diameter;
+              cohSum.x *= p.pews[j].diameter;
+              cohSum.y *= p.pews[j].diameter;
+
+              alignCount++;
+            }
+          }
+
+          if (steerCount > 0){
+            steer.div(steerCount);
+          }
+
+          if (steer.mag() > 0){
+            steer.setMag(p.pews[i].maxSpeed);
+            steer.sub(p.pews[i].velocity);
+            steer.limit(p.pews[i].maxForce);
+          }
+
+
+          if (alignCount > 0){
+            sum.setMag(p.pews[i].maxSpeed);
+            align = p5.Vector.sub(sum, p.pews[i].velocity);
+            align.limit(p.pews[i].maxForce);
+
+            cohSum.div(alignCount);
+
+            let desired = p5.Vector.sub(cohSum, p.pews[i].position);
+            desired.setMag(p.pews[i].maxSpeed);
+            cohSteer = p5.Vector.sub(desired, p.pews[i].velocity);
+            cohSteer.limit(p.pews[i].maxForce);
+          }
+
+        }
+
+        steer.mult(0.5);
+        align.mult(1.0);
+        cohSteer.mult(0.5);
+
+        p.pews[i].applyForce(steer);
+        p.pews[i].applyForce(align);
+        p.pews[i].applyForce(cohSteer);
+
+
         p.pews[i].update();
         p.pews[i].display();
 
@@ -239,20 +308,16 @@ const pewpewSketch = ( p ) => {
       if (p.pews[i-1].diameter < 0){
         p.pews.splice(i-1,1);
       }
-      else if(p.pews[i-1].position.x < 0 || p.pews[i-1].position.x > p.theWidth || p.pews[i-1].position.y < 0 || p.pews[i-1].position.y > p.theHeight){
-          p.pews.splice(i-1,1);
-      }
     }
-
 
     //console.log(p.pews.length);
     // spliced = 0;
-    while (p.pews.length > p.maxCircles){
+    /*while (p.pews.length > p.maxCircles){
       if (p.pews.length > 0){
         p.pews.splice(0,1);
         //spliced++;
       }
-    }
+    }*/
     //console.log("sadly spliced: " + spliced);
 
     p.previousMouseX = p.mouseX;
@@ -279,37 +344,45 @@ const pewpewSketch = ( p ) => {
       this.age = 0;
 
       this.r = 2.0;
-      this.maxSpeed = 2;
+      this.maxSpeed = 8;
       this.maxForce = 0.03;
   	}
 
+    applyForce(force){
+      this.acceleration.add(force);
+    }
+
+
     update(){
-
       //old();
-
-      //flock
-
-
       //move
       this.velocity.add(this.acceleration);
       this.velocity.limit(this.maxSpeed);
       this.position.add(this.velocity);
       this.acceleration.mult(0);
 
+      //this.xoff += this.speed;
+      //this.yoff += this.speed;
+      //this.position.x += p.map(p.noise(this.xoff), 0, 1, -5, 5);
+      //this.position.y += p.map(p.noise(this.yoff), 0, 1, -5, 5);
+
+      if (this.position.x > p.width){ this.position.x = 0; }
+      if (this.position.x < 0){ this.position.x = p.width; }
+      if (this.position.y > p.height){ this.position.y = 0; }
+      if (this.position.y < 0){ this.position.y = p.height; }
 
       //change size
       if (this.diameterGrowing){
-        this.diameter += 2;
+        this.diameter += 1.8;
       }
       else{
-        this.diameter -= 0.2;
+        this.diameter -= 0.1;
       }
 
       if (this.diameter > this.maxDiameter){
         this.diameterGrowing = false;
       }
 
-      this.age++;
   	}
 
   	display(){
