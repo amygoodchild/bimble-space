@@ -133,9 +133,9 @@ const pewpewSketch = ( p ) => {
         p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 1.0);
       }
       p.fill(0,0,0);
-      p.rect(80,0,40,90);
+      p.rect(180,0,40,90);
       p.fill(0,0,100);
-      p.text(p.int(p.frameRateLerp), 83, 20);
+      p.text(p.int(p.frameRateLerp), 183, 20);
     }
 
 
@@ -143,15 +143,15 @@ const pewpewSketch = ( p ) => {
       p.maxCircles = 10;
     }
     if (p.frameRate() > 65){
-      p.maxCircles = 300;
+      p.maxCircles = 200;
     }
     else{
       p.maxCircles = p.lerp(p.maxCircles, p.map(p.frameRate(), 5, 65, 30, 200), 0.2);
     }
 
     if(p.debugMode){
-      p.text(p.int(p.maxCircles), 83, 40);
-      p.text( p.pews.length, 83, 60);
+      p.text(p.int(p.maxCircles), 183, 40);
+      p.text( p.pews.length, 183, 60);
     }
     //console.log("max circles worked out");
 
@@ -366,8 +366,8 @@ const pewpewSketch = ( p ) => {
 
       for (var i = 0; i<p.otherPews.length; i++){
         if (p.dist(this.position.x, this.position.y, p.otherPews[i].position.x, p.otherPews[i].position.x) < 100){
-            this.direction.x +=  (p.otherPews[i].direction.x)/100;
-            this.direction.y +=  p.otherPews[i].direction.y/100;
+            this.direction.x +=  p.otherPews[i].direction.x/5;
+            this.direction.y +=  p.otherPews[i].direction.y/5;
         }
       }
 
