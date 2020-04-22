@@ -366,8 +366,8 @@ const pewpewSketch = ( p ) => {
 
       for (var i = 0; i<p.otherPews.length; i++){
         if (p.dist(this.position.x, this.position.y, p.otherPews[i].position.x, p.otherPews[i].position.x) < 100){
-            this.direction.x +=  p.otherPews[i].direction.x/5;
-            this.direction.y +=  p.otherPews[i].direction.y/5;
+            this.direction.x +=  p.otherPews[i].direction.x/30;
+            this.direction.y +=  p.otherPews[i].direction.y/30;
         }
       }
 
