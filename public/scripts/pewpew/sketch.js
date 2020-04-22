@@ -134,15 +134,16 @@ const pewpewSketch = ( p ) => {
     }
 
 
-    if (p.frameRate() < 5){
+    if (p.frameRate() < 20){
       p.maxCircles = 10;
     }
-    if (p.frameRate() > 65){
+    else if (p.frameRate() > 65){
       p.maxCircles = 200;
     }
     else{
-      p.maxCircles = p.lerp(p.maxCircles, p.map(p.frameRate(), 5, 65, 30, 200), 0.2);
+      p.maxCircles = p.map(p.frameRate(), 20, 65, 30, 200);
     }
+
 
     if(p.debugMode){
       p.text(p.int(p.maxCircles), 183, 40);
@@ -151,10 +152,11 @@ const pewpewSketch = ( p ) => {
     //console.log("max circles worked out");
 
 
-
     p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -50,50), p.map(p.mouseY - p.previousMouseY, -300, 300, -50, 50));
     //console.log("previousMouseX:" + p.previousMouseX + " mouseX: " + p.mouseX + " x direction: " + p.mouseDirection.x);
     //console.log("previousMouseY:" + p.previousMouseY + " mouseY: " + p.mouseY + " y direction: " + p.mouseDirection.y);
+
+
 
     if (p.mouseIsPressed && p.mouseX > 100){
       var data;
@@ -199,8 +201,8 @@ const pewpewSketch = ( p ) => {
             xoff : newDot.xoff,
             yoff : newDot.yoff,
             speed : newDot.speed,
-            directionx : newDot.direction.x,
-            directiony : newDot.direction.y,
+            directionx : newDot.velocity.x,
+            directiony : newDot.velocity.y,
             diameter : newDot.diameter,
             maxDiameter : newDot.maxDiameter,
             hue : newDot.hue,
@@ -218,6 +220,7 @@ const pewpewSketch = ( p ) => {
 
     }
 
+
     //if (p.pews.length > 0){
       //let start = p.millis();
       for (var i = 0; i < p.pews.length; i++){
@@ -225,6 +228,8 @@ const pewpewSketch = ( p ) => {
         p.pews[i].display();
 
       }
+
+
 
       //let elapsed = p.nf(p.millis() - start, 2, 4);
       //console.log("Drawing " + p.pews.length + " circles took: " + elapsed);
@@ -242,7 +247,7 @@ const pewpewSketch = ( p ) => {
 
     //console.log(p.pews.length);
     // spliced = 0;
-    while ((p.pews.length + p.otherPews.length) > p.maxCircles){
+    while (p.pews.length > p.maxCircles){
       if (p.pews.length > 0){
         p.pews.splice(0,1);
         //spliced++;
@@ -260,10 +265,11 @@ const pewpewSketch = ( p ) => {
   class Dot{
     constructor(x, y, xoff, yoff, speed, dx, dy, diameter, maxDiameter, hue, sat, bri){
       this.position = p.createVector(x, y);
+      this.velocity = p.createVector(dx,dy);
+      this.acceleration = p.createVector(0,0);
       this.xoff = xoff;
       this.yoff = yoff;
       this.speed = speed;
-      this.direction = p.createVector(dx,dy);
       this.diameter = diameter;
       this.diameterGrowing = true;
       this.maxDiameter = maxDiameter;
@@ -271,24 +277,27 @@ const pewpewSketch = ( p ) => {
       this.sat = sat;
       this.bri = bri;
       this.age = 0;
+
+      this.r = 2.0;
+      this.maxSpeed = 2;
+      this.maxForce = 0.03;
   	}
 
     update(){
-      //this.direction.x += p.map(p.noise(this.xoff), 0, 1, -1, 1);
-      //this.direction.y += p.map(p.noise(this.yoff), 0, 1, -1, 1);
 
-      this.xoff += this.speed;
-      this.yoff += this.speed;
+      //old();
 
-      this.position.x += this.direction.x;
-      this.position.y += this.direction.y;
+      //flock
 
-      //console.log(p.map(p.noise(this.xoff), 0, 1, -5, 5));
-      this.position.x += p.map(p.noise(this.xoff), 0, 1, -5, 5);
-      this.position.y += p.map(p.noise(this.yoff), 0, 1, -5, 5);
 
-      this.age++;
+      //move
+      this.velocity.add(this.acceleration);
+      this.velocity.limit(this.maxSpeed);
+      this.position.add(this.velocity);
+      this.acceleration.mult(0);
 
+
+      //change size
       if (this.diameterGrowing){
         this.diameter += 2;
       }
@@ -299,6 +308,8 @@ const pewpewSketch = ( p ) => {
       if (this.diameter > this.maxDiameter){
         this.diameterGrowing = false;
       }
+
+      this.age++;
   	}
 
   	display(){
