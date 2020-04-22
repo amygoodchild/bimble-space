@@ -14,6 +14,11 @@ $(document).ready(function(){
   $("#color11").click(function(){ ps.colorChoice = 11; });
 
 
+  $(".colorButton").click(function(){
+    $(".colorButton").removeClass('colorButtonOn');
+    $(this).addClass('colorButtonOn');
+  });
+
 });
 
 

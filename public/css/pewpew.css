@@ -5,7 +5,7 @@
 }
 
 #options {
-  width: 100px;
+  width: 200px;
   height: 100vh;
   float: left;
   display: inline-block;
@@ -31,11 +31,11 @@ canvas {
 }
 
 .colorButton {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   border-radius: 25px;
   padding: 0px;
-  border: 1px solid #ffffff;
+  border: 2px solid #ffffff;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -43,6 +43,14 @@ canvas {
   outline: 0;
   background: #cccccc;
   margin-bottom: 10px;
+}
+
+.colorButton:hover {
+  border: 4px solid #ffffff;
+}
+
+.colorButtonOn {
+  border: 6px solid #ffffff;
 }
 
 #color0 {
