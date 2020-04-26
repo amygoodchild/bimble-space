@@ -47,6 +47,10 @@ app.get('/swooshtemp', function (req, res) {
   res.render('pewpew', { title: 'Swoosh', path: 'pewpew', theScripts:[]})
 })
 
+app.get('/swoosh', function (req, res) {
+  res.render('swoosh', { title: 'Swoosh', path: 'swoosh', theScripts:[]})
+})
+
 // Server stuff
 
 var socket = require('socket.io');

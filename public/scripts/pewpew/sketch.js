@@ -8,6 +8,32 @@ var landscape;
     console.log("portrait");
   }
 
+  $( window ).resize(function() {
+    if ($( window ).height() < $( window ).width()){
+      landscape = true;
+      ps.maxSize = 20;
+      ps.minSize = 8;
+      $("#menu").css("width", "55px");
+      $("#menu").css("height", "100%");
+      $(".menuButtonClosed").css("display", "inline-block");
+      $(".menuButtonOpen").css("display", "none");
+      $(".menuButtonClosedMobile").css("display", "none");
+      $(".menuButtonOpenMobile").css("display", "none");
+    }
+    else{
+      landscape = false;
+      ps.maxSize = 15;
+      ps.minSize = 5;
+      $("#menu").css("height", "50px");
+      $("#menu").css("width", "100%");
+      $(".menuButtonClosedMobile").css("display", "inline-block");
+      $(".menuButtonOpenMobile").css("display", "none");
+      $(".menuButtonClosed").css("display", "none");
+      $(".menuButtonOpen").css("display", "none");
+
+    }
+  });
+
 const pewpewSketch = ( p ) => {
 
   p.pews = [];
@@ -40,8 +66,10 @@ const pewpewSketch = ( p ) => {
 
   p.socket;
 
-  p5.disableFriendlyErrors = true;
+  p.disableFriendlyErrors = true;
   p.debugMode = true;
+  p.start = 0;
+  p.elapsed = 0;
 
 
   p.desiredSeparation = 25;
@@ -120,9 +148,9 @@ const pewpewSketch = ( p ) => {
     //p.textFont(myFont, 20);
     //p.clear();
     //p.blendMode(p.ADD);
+
     p.background(0,0,5,40);
     //p.blendMode(p.BLEND);
-
 
     if(p.debugMode){
       if (p.frameCount % 5 == 0){
@@ -134,6 +162,7 @@ const pewpewSketch = ( p ) => {
       p.text(p.int(p.frameRateLerp), 183, 20);
     }
 
+    p.start = p.millis();
 
     if (p.frameRate() < 20){
       p.maxCircles = 10;
@@ -145,6 +174,8 @@ const pewpewSketch = ( p ) => {
       p.maxCircles = p.map(p.frameRate(), 20, 65, 10, 50);
     }
 
+    p.elapsed = p.nf(p.millis() - p.start, 1, 4);
+    console.log("Adjusting max circles: " + p.elapsed);
 
     if(p.debugMode){
       p.text(p.int(p.maxCircles), 183, 40);
@@ -152,14 +183,20 @@ const pewpewSketch = ( p ) => {
     }
     //console.log("max circles worked out");
 
-
-    p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -50,50), p.map(p.mouseY - p.previousMouseY, -300, 300, -50, 50));
-    //console.log("previousMouseX:" + p.previousMouseX + " mouseX: " + p.mouseX + " x direction: " + p.mouseDirection.x);
-    //console.log("previousMouseY:" + p.previousMouseY + " mouseY: " + p.mouseY + " y direction: " + p.mouseDirection.y);
-
     if (p.mouseIsPressed && p.mouseX > 100 && p.pews.length < p.maxCircles){
+
+
+      p.start = p.millis();
+
+      p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -20,20), p.map(p.mouseY - p.previousMouseY, -300, 300, -20, 20));
+
+      p.elapsed = p.nf(p.millis() - p.start, 1, 4);
+      console.log("Calc mouse direction: " + p.elapsed);
+
       var data;
       //let start = p.millis();
+      p.start = p.millis();
+
       for (var i = 0; i < p.duplicates; i++){
         if (p.random(0,1)<= p.spawnProbability){
 
@@ -212,10 +249,14 @@ const pewpewSketch = ( p ) => {
           p.socket.emit('aNewDot', data);
         }
       }
-      //let end = p.millis();
-      //let elapsed = p.nf(end - start, 2, 4);
-      //console.log("Sending circles took: " + elapsed);
+
+      p.elapsed = p.nf(p.millis() - p.start, 1, 4);
+      console.log("Creating and sending circs: " + p.elapsed);
+
+
     }
+
+    p.start = p.millis();
 
     for (var i = p.pews.length; i > 0; i--){
       if (p.pews[i-1].diameter < 0){
@@ -226,8 +267,10 @@ const pewpewSketch = ( p ) => {
       }
     }
 
-    //if (p.pews.length > 0){
-    //let start = p.millis();
+    p.elapsed = p.nf(p.millis() - p.start, 1, 4);
+    console.log("Splicing circls took: " + p.elapsed);
+
+    p.start = p.millis();
     for (var i = 0; i < p.pews.length; i++){
       let steer = p.createVector(0,0,0);
       let steerCount = 0;
@@ -299,22 +342,31 @@ const pewpewSketch = ( p ) => {
       p.pews[i].applyForce(steer);
       p.pews[i].applyForce(align);
       p.pews[i].applyForce(cohSteer);
-
-
-      p.pews[i].update();
-
-
     }
+
+    p.elapsed = p.nf(p.millis() - p.start, 1, 4);
+    console.log("Swarming circs took: " + p.elapsed);
+
+    p.start = p.millis();
+
+
+    for (var i = 0; i < p.pews.length; i++){
+      p.pews[i].update();
+    }
+
+
+
+    p.elapsed = p.nf(p.millis() - p.start, 1, 4);
+    console.log("Updating circs took: " + p.elapsed);
+
+    p.start = p.millis();
 
     for (var i = 0; i < p.pews.length; i++){
       p.pews[i].display();
     }
 
-
-
-      //let elapsed = p.nf(p.millis() - start, 2, 4);
-      //console.log("Drawing " + p.pews.length + " circles took: " + elapsed);
-    //}
+    p.elapsed = p.nf(p.millis() - p.start, 1, 4);
+    console.log("Drawing circles took: " + p.elapsed);
 
 
     //console.log(p.pews.length);

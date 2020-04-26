@@ -1,0 +1,27 @@
+#img-out {
+  position: absolute;
+  right: 0;
+  z-index: -10;
+}
+
+#options {
+  width: 100px;
+  height: 100vh;
+  float: left;
+  display: inline-block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding-left: 10px;
+  padding-top: 10px;
+  position: absolute;
+  left: 55px;
+  top: 0px;
+  z-index: 1;
+}
+
+#theToyContainer {
+  width: calc(100% - 55px);
+  height: 100%;
+  margin-left: 55px;
+}
