@@ -39,7 +39,7 @@ const pewpewSketch = ( p ) => {
   p.pews = [];
   p.otherPews = [];
   p.spawnProbability= 0.25;
-  p.duplicates= 3;
+  p.duplicates= 4;
 
   if (landscape){
     p.maxSize = 26;
@@ -168,14 +168,14 @@ const pewpewSketch = ( p ) => {
       p.maxCircles = 10;
     }
     else if (p.frameRate() > 65){
-      p.maxCircles = 50;
+      p.maxCircles = 150;
     }
     else{
-      p.maxCircles = p.map(p.frameRate(), 20, 65, 10, 50);
+      p.maxCircles = p.map(p.frameRate(), 20, 65, 10, 150);
     }
 
     p.elapsed = p.nf(p.millis() - p.start, 1, 4);
-    console.log("Adjusting max circles: " + p.elapsed);
+    //console.log("Adjusting max circles: " + p.elapsed);
 
     if(p.debugMode){
       p.text(p.int(p.maxCircles), 183, 40);
@@ -188,10 +188,10 @@ const pewpewSketch = ( p ) => {
 
       p.start = p.millis();
 
-      p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -20,20), p.map(p.mouseY - p.previousMouseY, -300, 300, -20, 20));
+      p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -50,50), p.map(p.mouseY - p.previousMouseY, -300, 300, -50, 50));
 
       p.elapsed = p.nf(p.millis() - p.start, 1, 4);
-      console.log("Calc mouse direction: " + p.elapsed);
+      //console.log("Calc mouse direction: " + p.elapsed);
 
       var data;
       //let start = p.millis();
@@ -251,7 +251,7 @@ const pewpewSketch = ( p ) => {
       }
 
       p.elapsed = p.nf(p.millis() - p.start, 1, 4);
-      console.log("Creating and sending circs: " + p.elapsed);
+      //console.log("Creating and sending circs: " + p.elapsed);
 
 
     }
@@ -268,7 +268,7 @@ const pewpewSketch = ( p ) => {
     }
 
     p.elapsed = p.nf(p.millis() - p.start, 1, 4);
-    console.log("Splicing circls took: " + p.elapsed);
+    //console.log("Splicing circls took: " + p.elapsed);
 
     p.start = p.millis();
     for (var i = 0; i < p.pews.length; i++){
@@ -300,10 +300,10 @@ const pewpewSketch = ( p ) => {
             sum.add(p.pews[j].velocity);
             cohSum.add(p.pews[j].position);
 
-            sum.x *= p.pews[j].diameter;
-            sum.y *= p.pews[j].diameter;
-            cohSum.x *= p.pews[j].diameter;
-            cohSum.y *= p.pews[j].diameter;
+            //sum.x *= p.pews[j].diameter;
+            //sum.y *= p.pews[j].diameter;
+            //cohSum.x *= p.pews[j].diameter;
+            //cohSum.y *= p.pews[j].diameter;
 
             alignCount++;
           }
@@ -336,7 +336,7 @@ const pewpewSketch = ( p ) => {
       }
 
       steer.mult(0.5);
-      align.mult(1.0);
+      align.mult(3.0);
       cohSteer.mult(0.5);
 
       p.pews[i].applyForce(steer);
@@ -345,7 +345,7 @@ const pewpewSketch = ( p ) => {
     }
 
     p.elapsed = p.nf(p.millis() - p.start, 1, 4);
-    console.log("Swarming circs took: " + p.elapsed);
+    //console.log("Swarming circs took: " + p.elapsed);
 
     p.start = p.millis();
 
@@ -357,7 +357,7 @@ const pewpewSketch = ( p ) => {
 
 
     p.elapsed = p.nf(p.millis() - p.start, 1, 4);
-    console.log("Updating circs took: " + p.elapsed);
+    //console.log("Updating circs took: " + p.elapsed);
 
     p.start = p.millis();
 
@@ -366,7 +366,7 @@ const pewpewSketch = ( p ) => {
     }
 
     p.elapsed = p.nf(p.millis() - p.start, 1, 4);
-    console.log("Drawing circles took: " + p.elapsed);
+    //console.log("Drawing circles took: " + p.elapsed);
 
 
     //console.log(p.pews.length);
@@ -403,8 +403,8 @@ const pewpewSketch = ( p ) => {
       this.age = 0;
 
       this.r = 2.0;
-      this.maxSpeed = 8;
-      this.maxForce = 0.03;
+      this.maxSpeed = 4;
+      this.maxForce = 0.08;
   	}
 
     applyForce(force){
@@ -427,19 +427,19 @@ const pewpewSketch = ( p ) => {
       this.position.y += p.map(p.noise(this.yoff), 0, 1, -3, 3);
 
       // Wrap around
-      /*
+
       if (this.position.x > p.width){ this.position.x = 0; }
       if (this.position.x < 0){ this.position.x = p.width; }
       if (this.position.y > p.height){ this.position.y = 0; }
       if (this.position.y < 0){ this.position.y = p.height; }
-      */
+
 
       //change size
       if (this.diameterGrowing){
         this.diameter += 5;
       }
       else{
-        this.diameter -= 0.2;
+        this.diameter -= 0.13;
       }
 
       if (this.diameter > this.maxDiameter){
