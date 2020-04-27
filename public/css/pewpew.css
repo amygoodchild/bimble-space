@@ -127,6 +127,10 @@ canvas {
   body {
     overscroll-behavior-y: contain;
   }
+
+  #options {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=pewpew.css.map */
