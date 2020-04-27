@@ -19,6 +19,21 @@ $(document).ready(function(){
     $(this).addClass('colorButtonOn');
   });
 
+  if($(window).width() < $(window).height()){
+    $("#mobileColor").click(function(){
+      $(this).css("display", "none");
+      $('.colorButton').css("display", "block");
+    });
+
+    $(".colorButton").click(function(){
+      $(".colorButton").css("display", "none");
+      $('#mobileColor').css("display", "block");
+      $('#mobileColor').css("background", $(this).css('background'));
+    });
+
+  }
+
+
 });
 
 

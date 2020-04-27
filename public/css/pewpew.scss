@@ -28,6 +28,10 @@ $pink: rgba(232, 0, 119, 1);
   z-index: 1;
 }
 
+#mobileColor{
+  display: none;
+}
+
 
 #theToyContainer{
   width: calc(100% - 55px);
@@ -125,8 +129,31 @@ canvas{
     overscroll-behavior-y: contain;
   }
 
-  #options {
+  .colorButton {
     display: none;
+  }
+
+  #options{
+    left: 0;
+    top: 50;
+  }
+
+  #mobileColor{
+    display: block;
+    width: 48px;
+    height: 48px;
+    border-radius: 25px;
+    padding: 0px;
+    border: 2px solid #ffffff;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    float: left;
+    outline: 0;
+    background: #cccccc;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    background: linear-gradient(90deg, rgba(188,0,233,1) 0%, rgba(72,70,255,1) 19%, rgba(44,169,170,1) 33%, rgba(98,213,126,1) 45%, rgba(188,217,51,1) 60%, rgba(255,149,0,1) 75%, rgba(255,61,61,1) 100%);
   }
 
 
