@@ -72,8 +72,8 @@ const pewpewSketch = ( p ) => {
   p.elapsed = 0;
 
 
-  p.desiredSeparation = 25;
-  p.neighborDist = 50;
+  p.desiredSeparation = 15;
+  p.neighborDist = 15;
 
   let myFont;
 
@@ -267,90 +267,9 @@ const pewpewSketch = ( p ) => {
       }
     }
 
-    p.elapsed = p.nf(p.millis() - p.start, 1, 4);
-    //console.log("Splicing circls took: " + p.elapsed);
-
-    p.start = p.millis();
-    for (var i = 0; i < p.pews.length; i++){
-      let steer = p.createVector(0,0,0);
-      let steerCount = 0;
-      let align = p.createVector(0,0,0);
-      let sum = p.createVector(0,0);
-      let alignCount = 0;
-
-      let cohSum = p.createVector(0,0);
-      let cohSteer = p.createVector(0,0);
-
-      for (var j = 0; j < p.pews.length; j++){
-        if (i!=j){
-
-          let d = p.dist(p.pews[i].position.x, p.pews[i].position.y, p.pews[j].position.x, p.pews[j].position.y);
-
-          // steer
-          if ((d > 0) && (d < p.desiredSeparation)){
-            let diff = p5.Vector.sub(p.pews[i].position, p.pews[j].position);
-            diff.normalize();
-            diff.div(d);
-            steer.add(diff);
-            steerCount++;
-          }
-
-          // alignment
-          if ((d > 0) && (d < p.neighborDist)){
-            sum.add(p.pews[j].velocity);
-            cohSum.add(p.pews[j].position);
-
-            //sum.x *= p.pews[j].diameter;
-            //sum.y *= p.pews[j].diameter;
-            //cohSum.x *= p.pews[j].diameter;
-            //cohSum.y *= p.pews[j].diameter;
-
-            alignCount++;
-          }
-        }
-
-        if (steerCount > 0){
-          steer.div(steerCount);
-        }
-
-        if (steer.mag() > 0){
-          steer.setMag(p.pews[i].maxSpeed);
-          steer.sub(p.pews[i].velocity);
-          steer.limit(p.pews[i].maxForce);
-        }
-
-
-        if (alignCount > 0){
-          sum.setMag(p.pews[i].maxSpeed);
-          align = p5.Vector.sub(sum, p.pews[i].velocity);
-          align.limit(p.pews[i].maxForce);
-
-          cohSum.div(alignCount);
-
-          let desired = p5.Vector.sub(cohSum, p.pews[i].position);
-          desired.setMag(p.pews[i].maxSpeed);
-          cohSteer = p5.Vector.sub(desired, p.pews[i].velocity);
-          cohSteer.limit(p.pews[i].maxForce);
-        }
-
-      }
-
-      steer.mult(0.5);
-      align.mult(3.0);
-      cohSteer.mult(0.5);
-
-      p.pews[i].applyForce(steer);
-      p.pews[i].applyForce(align);
-      p.pews[i].applyForce(cohSteer);
-    }
-
-    p.elapsed = p.nf(p.millis() - p.start, 1, 4);
-    //console.log("Swarming circs took: " + p.elapsed);
-
-    p.start = p.millis();
-
 
     for (var i = 0; i < p.pews.length; i++){
+      p.pews[i].compare();
       p.pews[i].update();
     }
 
@@ -409,6 +328,79 @@ const pewpewSketch = ( p ) => {
 
     applyForce(force){
       this.acceleration.add(force);
+    }
+
+    compare(){
+      let steer = p.createVector(0,0,0);
+      let steerCount = 0;
+      let align = p.createVector(0,0,0);
+      let sum = p.createVector(0,0);
+      let alignCount = 0;
+
+      let cohSum = p.createVector(0,0);
+      let cohSteer = p.createVector(0,0);
+
+      for (var j = 0; j < p.pews.length; j++){
+        if (this.position != p.pews[j].position){
+
+          let d = p.dist(this.position.x, this.position.y, p.pews[j].position.x, p.pews[j].position.y);
+
+          // steer
+          if ((d > 0) && (d < p.desiredSeparation)){
+            let diff = p5.Vector.sub(this.position, p.pews[j].position);
+            diff.normalize();
+            diff.div(d);
+            steer.add(diff);
+            steerCount++;
+          }
+
+          // alignment
+          if ((d > 0) && (d < p.neighborDist)){
+            sum.add(p.pews[j].velocity);
+            cohSum.add(p.pews[j].position);
+
+            //sum.x *= p.pews[j].diameter;
+            //sum.y *= p.pews[j].diameter;
+            //cohSum.x *= p.pews[j].diameter;
+            //cohSum.y *= p.pews[j].diameter;
+
+            alignCount++;
+          }
+        }
+
+        if (steerCount > 0){
+          steer.div(steerCount);
+        }
+
+        if (steer.mag() > 0){
+          steer.setMag(this.maxSpeed);
+          steer.sub(this.velocity);
+          steer.limit(this.maxForce);
+        }
+
+
+        if (alignCount > 0){
+          sum.setMag(this.maxSpeed);
+          align = p5.Vector.sub(sum, this.velocity);
+          align.limit(this.maxForce);
+
+          cohSum.div(alignCount);
+
+          let desired = p5.Vector.sub(cohSum, this.position);
+          desired.setMag(this.maxSpeed);
+          cohSteer = p5.Vector.sub(desired,this.velocity);
+          cohSteer.limit(this.maxForce);
+        }
+
+      }
+
+      steer.mult(0.5);
+      align.mult(3.0);
+      cohSteer.mult(0.5);
+
+      this.applyForce(steer);
+      this.applyForce(align);
+      this.applyForce(cohSteer);
     }
 
 
