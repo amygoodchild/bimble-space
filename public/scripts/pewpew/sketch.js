@@ -11,8 +11,6 @@ var landscape;
   $( window ).resize(function() {
     if ($( window ).height() < $( window ).width()){
       landscape = true;
-      ps.maxSize = 20;
-      ps.minSize = 8;
       $("#menu").css("width", "55px");
       $("#menu").css("height", "100%");
       $(".menuButtonClosed").css("display", "inline-block");
@@ -22,8 +20,6 @@ var landscape;
     }
     else{
       landscape = false;
-      ps.maxSize = 15;
-      ps.minSize = 5;
       $("#menu").css("height", "50px");
       $("#menu").css("width", "100%");
       $(".menuButtonClosedMobile").css("display", "inline-block");
@@ -39,11 +35,11 @@ const pewpewSketch = ( p ) => {
   p.pews = [];
   p.otherPews = [];
   p.spawnProbability= 0.5;
-  p.duplicates= 1;
+  p.duplicates= 3;
 
   if (landscape){
-    p.maxSize = 30;
-    p.minSize = 15;
+    p.maxSize = 32;
+    p.minSize = 20;
   }
   else{
     p.maxSize = 26;
@@ -168,10 +164,10 @@ const pewpewSketch = ( p ) => {
       p.maxCircles = 10;
     }
     else if (p.frameRate() > 65){
-      p.maxCircles = 150;
+      p.maxCircles = 100;
     }
     else{
-      p.maxCircles = p.map(p.frameRate(), 20, 65, 10, 150);
+      p.maxCircles = p.map(p.frameRate(), 20, 65, 10, 100);
     }
 
     p.elapsed = p.nf(p.millis() - p.start, 1, 4);
@@ -188,7 +184,7 @@ const pewpewSketch = ( p ) => {
 
       p.start = p.millis();
 
-      p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -50,50), p.map(p.mouseY - p.previousMouseY, -300, 300, -50, 50));
+      p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -30,30), p.map(p.mouseY - p.previousMouseY, -300, 300, -30, 30));
 
       p.elapsed = p.nf(p.millis() - p.start, 1, 4);
       //console.log("Calc mouse direction: " + p.elapsed);
@@ -259,7 +255,7 @@ const pewpewSketch = ( p ) => {
     p.start = p.millis();
 
     for (var i = p.pews.length; i > 0; i--){
-      if (p.pews[i-1].diameter < 0){
+      if (p.pews[i-1].diameter < 12 && p.pews[i-1].diameterGrowing == false){
         p.pews.splice(i-1,1);
       }
       else if(p.pews[i-1].position.x < 0 || p.pews[i-1].position.x > p.theWidth || p.pews[i-1].position.y < 0 || p.pews[i-1].position.y > p.theHeight){
@@ -273,30 +269,10 @@ const pewpewSketch = ( p ) => {
       p.pews[i].update();
     }
 
-
-
-    p.elapsed = p.nf(p.millis() - p.start, 1, 4);
-    //console.log("Updating circs took: " + p.elapsed);
-
-    p.start = p.millis();
-
     for (var i = 0; i < p.pews.length; i++){
       p.pews[i].display();
+
     }
-
-    p.elapsed = p.nf(p.millis() - p.start, 1, 4);
-    //console.log("Drawing circles took: " + p.elapsed);
-
-
-    //console.log(p.pews.length);
-    // spliced = 0;
-    /*while (p.pews.length > p.maxCircles){
-      if (p.pews.length > 0){
-        p.pews.splice(0,1);
-        //spliced++;
-      }
-    }*/
-    //console.log("sadly spliced: " + spliced);
 
     p.previousMouseX = p.mouseX;
     p.previousMouseY = p.mouseY;
@@ -364,6 +340,13 @@ const pewpewSketch = ( p ) => {
             //cohSum.x *= p.pews[j].diameter;
             //cohSum.y *= p.pews[j].diameter;
 
+            if (p.pews[j].age < 80){
+              sum.x *= (81 - p.pews[j].age);
+              sum.y *= (81 - p.pews[j].age);
+              cohSum.x *= (81 - p.pews[j].age);
+              cohSum.y *= (81 - p.pews[j].age);
+            }
+
             alignCount++;
           }
         }
@@ -428,15 +411,18 @@ const pewpewSketch = ( p ) => {
 
       //change size
       if (this.diameterGrowing){
-        this.diameter += 5;
+        this.diameter += 2;
       }
       else{
-        this.diameter -= 0.13;
+        this.diameter -= 0.10;
       }
 
       if (this.diameter > this.maxDiameter){
         this.diameterGrowing = false;
       }
+
+      this.age++;
+
 
   	}
 
