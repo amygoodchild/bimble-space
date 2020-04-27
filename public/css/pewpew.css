@@ -106,6 +106,23 @@ canvas {
   background: linear-gradient(34deg, #1b2d34 30%, #00ffda 50%, #ffca00 80%);
 }
 
+#drawToggle {
+  width: 48px;
+  height: 30px;
+  border: 1px solid #ffffff;
+  background: 0;
+  margin-top: 10px;
+  float: left;
+}
+
+#toggler {
+  width: 23px;
+  height: 28px;
+  background: #ffffff;
+  margin: 1px 0px 1px 1px;
+  float: left;
+}
+
 @media (max-height: 700px) {
   #options {
     width: 150px;
