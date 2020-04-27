@@ -38,12 +38,12 @@ const pewpewSketch = ( p ) => {
 
   p.pews = [];
   p.otherPews = [];
-  p.spawnProbability= 0.25;
-  p.duplicates= 4;
+  p.spawnProbability= 0.5;
+  p.duplicates= 1;
 
   if (landscape){
-    p.maxSize = 26;
-    p.minSize = 8;
+    p.maxSize = 30;
+    p.minSize = 15;
   }
   else{
     p.maxSize = 26;
