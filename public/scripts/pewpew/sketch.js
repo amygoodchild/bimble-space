@@ -65,7 +65,7 @@ const pewpewSketch = ( p ) => {
   p.socket;
 
   p.disableFriendlyErrors = true;
-  p.debugMode = true;
+  p.debugMode = false;
   p.start = 0;
   p.elapsed = 0;
 
