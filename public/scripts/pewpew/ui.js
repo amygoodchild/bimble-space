@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+
+
   $("#color0").click(function(){ ps.colorChoice = 0; });
   $("#color1").click(function(){ ps.colorChoice = 1; });
   $("#color2").click(function(){ ps.colorChoice = 2; });

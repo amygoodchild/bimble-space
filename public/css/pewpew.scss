@@ -28,6 +28,25 @@ $pink: rgba(232, 0, 119, 1);
   z-index: 1;
 }
 
+#info{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #000000;
+  color: #ffffff;
+  z-index: 3;
+  padding: 5px 10px 5px 10px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 14px;
+  //font-family: Tahoma;
+  -webkit-user-select: none; /* Safari */
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+/Edge */
+user-select: none; /* Standard */
+}
+
 #mobileColor{
   display: none;
 }
@@ -103,7 +122,7 @@ canvas{
 }
 
 
-@media (max-height: 700px) {
+@media (max-height: 725px) {
   #options {
     width: 150px;
   }
@@ -136,6 +155,7 @@ canvas{
   #options{
     left: 0;
     top: 50;
+    width: 150px;
   }
 
   #mobileColor{
@@ -154,6 +174,14 @@ canvas{
     margin-bottom: 8px;
     margin-right: 8px;
     background: linear-gradient(90deg, rgba(188,0,233,1) 0%, rgba(72,70,255,1) 19%, rgba(44,169,170,1) 33%, rgba(98,213,126,1) 45%, rgba(188,217,51,1) 60%, rgba(255,149,0,1) 75%, rgba(255,61,61,1) 100%);
+  }
+
+  #info{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    top: auto;
+    right: auto;
   }
 
 

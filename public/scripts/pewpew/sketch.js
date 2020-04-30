@@ -26,9 +26,13 @@ var landscape;
       $(".menuButtonOpenMobile").css("display", "none");
       $(".menuButtonClosed").css("display", "none");
       $(".menuButtonOpen").css("display", "none");
-
     }
   });
+
+function registerOwnID(data){
+  console.log(data);
+}
+
 
 const pewpewSketch = ( p ) => {
 
@@ -38,6 +42,7 @@ const pewpewSketch = ( p ) => {
   p.duplicates= 3;
   p.initialSpeed = 80;
   p.minInitialSpeed = -80;
+  p.id = 0;
 
   if (landscape){
     p.maxSize = 32;
@@ -58,6 +63,14 @@ const pewpewSketch = ( p ) => {
   p.colorCollections = [];
   p.colorChoice = 0;
 
+
+  p.pairMessages = [];
+  p.loneMessages = [];
+  p.otherWidth;
+  p.otherHeight;
+  p.wrapWidth;
+  p.wrapHeight;
+
   p.frameRateLerp = 60;
 
   p.maxCircles = 200;
@@ -76,6 +89,8 @@ const pewpewSketch = ( p ) => {
   p.desiredSeparation = 15;
   p.neighborDist = 50;
 
+
+
   let myFont;
 
   //p.preload = () => {
@@ -87,6 +102,7 @@ const pewpewSketch = ( p ) => {
   p.setup = () => {
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       p.socket = io.connect('http://localhost:3000');
+
       console.log("local!");
     }
     else{
@@ -98,9 +114,9 @@ const pewpewSketch = ( p ) => {
     p.colorMode(p.HSB,360,100,100, 100);
     p.noStroke();
     //p.textFont(myFont, 20);
-
+    //p.frameRate(1);
     p.pusher = new Pusher(0,0,0,0);
-
+    p.noiseSeed(100);
 
     if (p.int(p.windowWidth) > p.int(p.windowHeight)){
       p.theWidth = p.int(p.windowWidth) - 55;
@@ -120,6 +136,9 @@ const pewpewSketch = ( p ) => {
     //p.y = p.int(i / p.cols);
     p.background(0,0,20);
 
+    p.wrapWidth = p.width;
+    p.wrapHeight = p.height;
+
     p.colorCollections[0] = new ColorCollection( p.color('#e2d810'), p.color('#d9138a'), p.color('#12a4d9'), 0.33, 0.33, 0.33 );
     p.colorCollections[1] = new ColorCollection( p.color('#fff0e1'), p.color('#ff6e53'), p.color('#ffc13b'), 0.10, 0.45, 0.45 );
     p.colorCollections[2] = new ColorCollection( p.color('#4eff5d'), p.color('#d9f8b1'), p.color('#1b6535'), 0.45, 0.15, 0.40 );
@@ -133,18 +152,89 @@ const pewpewSketch = ( p ) => {
     p.colorCollections[10] = new ColorCollection( p.color('#da000f'), p.color('#ff7e00'), p.color('#ffd800'), 0.33, 0.33, 0.33 );
     p.colorCollections[11] = new ColorCollection( p.color('#1b2d34'), p.color('#00ffda'), p.color('#ffca00'), 0.33, 0.33, 0.33 );
 
+
+    p.loneMessages[0] = "Like a spider";
+    p.loneMessages[1] = "such as a monk";
+    p.loneMessages[2] = "much like the moon";
+    p.loneMessages[3] = "deep";
+    p.loneMessages[4] = "maybe you'll make a friend soon";
+
+
     p.socket.on('aNewDot', p.otherUserDraws);
+  //  p.socket.on('updateUsers', p.updateUsers);
+    p.socket.on('whatsyourinfo', p.whatsyourinfo);
+    p.socket.on('test', p.test);
+    p.socket.on('matched', p.matched);
+    p.socket.on('unmatched', p.unmatched);
 
   };
 
+  p.unmatched = (data) =>{
+     //console.log("Unmatched :(");
+    let randomNumber = p.random(0,1);
+    for (let i = 0; i<p.loneMessages.length;i++){
+      if (randomNumber<=1/p.loneMessages.length*(i+1)){
+        $("#info").html("You're playing solo - " + p.loneMessages[i]);
+        break;
+      }
+    }
+
+    p.wrapWidth = p.width;
+    p.wrapHeight = p.height;
+  }
+
+  p.matched = (data) =>{
+     //console.log("I am: " + data.whoami);
+     //console.log("My id is: " + data.myid);
+     //console.log("Matched with: " + data.otherUser);
+     $("#info").html("You're paired up - " + data.message);
+     p.otherWidth = data.otherWidth;
+     p.otherHeight = data.otherHeight;
+     if (p.otherWidth > p.width){  p.wrapWidth = p.otherWidth; }
+     if (p.otherHeight > p.height){ p.wrapHeight = p.otherHeight; }
+
+
+  }
+
+  p.test = (data) =>{
+     console.log(data.test);
+  }
+
+  p.whatsyourinfo = (data) =>{
+    data = {
+      room : "swoosh",
+      width : p.width,
+      height : p.height
+    }
+    p.socket.emit('myinfo', data);
+  }
+
+
+
+  p.updateUsers = (data) =>{
+    $("#info").html(data.numUsers + " users connected");
+  }
+
+
   p.otherUserDraws = (data) =>{
+
     //p.fill('#bb66bb');
     //p.ellipse(data.x,data.y,15,15);
     if ( p.pews.length < p.maxCircles){
-      var newDot = new Dot(data.x, data.y, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
+      let xposition = p.map(data.x, 0, p.otherWidth, 0, p.width);
+      let yposition = p.map(data.y, 0, p.otherHeight, 0, p.height);
+
+      //let xposition = data.x;
+      //let yposition = data.y;
+
+      var newDot = new Dot(xposition, yposition, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
                                 data.maxDiameter, data.hue, data.sat, data.bri);
       p.pews.push(newDot);
+      //console.log("recc pos x: " + newDot.position.x + " recc pos y: " + newDot.position.y);
+      p.id++;
     }
+
+
   }
 
   p.keyPressed = () => {
@@ -194,7 +284,7 @@ const pewpewSketch = ( p ) => {
     }
     //console.log("max circles worked out");
 
-    if (p.mouseIsPressed && p.mouseX > 100){
+    if (p.mouseIsPressed){
       if(p.pews.length < p.maxCircles && p.choosePush == false){
 
         p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, p.minInitialSpeed, p.initialSpeed), p.map(p.mouseY - p.previousMouseY, -300, 300, p.minInitialSpeed, p.initialSpeed));
@@ -230,7 +320,10 @@ const pewpewSketch = ( p ) => {
                                 p.mouseDirection.x, p.mouseDirection.y,
                                 5, p.random(p.minSize,p.maxSize),
                                 tempHue, tempSat, tempBri);
+            p.id++;
 
+
+            //console.log("sent pos x: " + newDot.position.x + " sent pos y: " + newDot.position.y);
             p.pews.push(newDot);
 
             data = {
@@ -272,20 +365,42 @@ const pewpewSketch = ( p ) => {
         p.pews.splice(i-1,1);
       }
       else if(p.pews[i-1].position.x < 0 || p.pews[i-1].position.x > p.theWidth || p.pews[i-1].position.y < 0 || p.pews[i-1].position.y > p.theHeight){
-          p.pews.splice(i-1,1);
+        p.pews.splice(i-1,1);
       }
-    }
-
-
-    for (var i = 0; i < p.pews.length; i++){
-      p.pews[i].compare();
-      p.pews[i].update();
     }
 
     for (var i = 0; i < p.pews.length; i++){
       p.pews[i].display();
-
     }
+
+
+    for (var i = 0; i < p.pews.length; i++){
+      if (i == -10){
+        //console.log("age: " + p.pews[i].age);
+        console.log("before compare");
+        console.log("x position: " + p.pews[i].position.x);
+        //console.log("xoff: " + p.pews[i].xoff);
+        //console.log("noise: " + p.noise(p.pews[i].xoff));
+      }
+      p.pews[i].compare();
+      if (i == -10){
+        console.log("before update");
+        console.log("x position: " + p.pews[i].position.x);
+        //console.log("xoff: " + p.pews[i].xoff);
+        //console.log("noise: " + p.noise(p.pews[i].xoff));
+      }
+
+      p.pews[i].update();
+
+      if (i == -10){
+        console.log("after update");
+        console.log("x position: " + p.pews[i].position.x);
+        //console.log("xoff: " + p.pews[i].xoff);
+        //console.log("noise: " + p.noise(p.pews[i].xoff));
+      }
+    }
+
+
 
     p.previousMouseX = p.mouseX;
     p.previousMouseY = p.mouseY;
@@ -322,6 +437,7 @@ const pewpewSketch = ( p ) => {
       this.r = 2.0;
       this.maxSpeed = 5;
       this.maxForce = 0.2;
+      this.id = p.id;
   	}
 
     applyForce(force){
@@ -335,7 +451,6 @@ const pewpewSketch = ( p ) => {
       let sum = p.createVector(0,0);
       let alignCount = 0;
       let pushSum = p.createVector(0,0);
-
       let cohSum = p.createVector(0,0);
 
       for (var j = 0; j < p.pews.length; j++){
@@ -405,10 +520,9 @@ const pewpewSketch = ( p ) => {
       this.applyForce(cohSum);
 
 
-      if (p.pushing && p.random(0,1) < 0.5){
+      if (p.pushing){
         let distance = p.dist(this.position.x, this.position.y, p.pusher.position.x, p.pusher.position.y);
-        let randomDistance = p.random(5,80);
-        if (distance<randomDistance){
+        if (distance<30){
           pushSum.add(p.pusher.velocity);
           pushSum.mult(1.5);
           //console.log("pushsum:" + pushSum.x);
@@ -431,8 +545,18 @@ const pewpewSketch = ( p ) => {
       let xforce = p.map(p.noise(this.xoff), 0, 1, 0-this.wiggle, this.wiggle);
       let yforce = p.map(p.noise(this.yoff), 0, 1, 0-this.wiggle, this.wiggle);
       let totalForce = p.createVector(xforce,yforce);
+      //console.log("before add total force - 503")
+      //console.log("pos x: " + this.position.x + " pos y: " + this.position.y);
+
+      //console.log("xforce: " + xforce + " yforce: " + yforce);
+      //console.log("xoff: "+ this.xoff);
+      //console.log("xnoise: "+ p.noise(this.xoff));
+
 
       this.position.add(totalForce);
+
+      //console.log("after add total force - 508")
+      //console.log("pos x: " + this.position.x + " pos y: " + this.position.y);
 
 
       this.velocity.add(this.acceleration);
@@ -440,16 +564,17 @@ const pewpewSketch = ( p ) => {
       this.position.add(this.velocity);
       this.acceleration.mult(0);
 
+
       // Wiggle
       this.xoff += this.speed;
       this.yoff += this.speed;
 
 
       // Wrap around
-      if (this.position.x > p.width){ this.position.x = 0; }
-      if (this.position.x < 0){ this.position.x = p.width; }
-      if (this.position.y > p.height){ this.position.y = 0; }
-      if (this.position.y < 0){ this.position.y = p.height; }
+    /*  if (this.position.x > (p.wrapWidth + 10)){ this.position.x = -10; }
+      else if (this.position.x < -10){ this.position.x = p.wrapWidth+10; }
+      if (this.position.y > (p.wrapHeight+ 10)){ this.position.y = -10; }
+      else if (this.position.y < -10){ this.position.y = p.wrapHeight+10; }*/
 
 
       //change size
@@ -471,6 +596,8 @@ const pewpewSketch = ( p ) => {
 
       this.age++;
 
+      //this.position.x = p.int(this.position.x);
+      //this.position.y = p.int(this.position.y);
 
   	}
 
@@ -478,6 +605,9 @@ const pewpewSketch = ( p ) => {
       p.fill(this.hue, this.sat, this.bri, 60);
       //p.stroke(this.hue,70,90,50);
   		p.ellipse(this.position.x, this.position.y, this.diameter, this.diameter);
+
+      //console.log("pos x: " + this.position.x + " pos y: " + this.position.y);
+      //console.log("vel x: " + this.velocity.x + " vel y: " + this.velocity.y);
   	}
 
   }
