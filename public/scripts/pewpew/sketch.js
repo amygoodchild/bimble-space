@@ -38,86 +38,78 @@ const pewpewSketch = ( p ) => {
   p.boids = [];
 
   // Spawning variables
-  p.duplicates= 1;      // how many spawn per frame (looks cool if loads shoot out at once, but hits max boids quicker)
-  p.initialSpeed = 80;  // how much the mouse direction affects initial velocity
-  p.minInitialSpeed = -80;
-  p.spawnRandomness = 10; // gives a bit of randomness to the position of spawning
-  p.id = 0;
+  p.duplicates= 2;          // how many spawn per frame (looks cool if loads shoot out at once, but hits max boids quicker)
+  p.spawnRandomness = 10;   // gives a bit of randomness to the position of spawning
+  p.id = 0;                 // gives each boid an ID - useful for debugging because it's possible to log out details of one boid
+  p.desiredSeparation = 15; // when flocking
+  p.neighborDist = 50;      // when flocking
 
-  p.maxSize = 32;
+  p.maxSize = 32;         // Size the boids will grow to
   p.minSize = 20;
 
-  p.previousMouseX = 0;
+  p.previousMouseX = 0;   // To figure out what direction the mouse is going in
   p.previousMouseY = 0;
+  p.mouseSpeedMin = -550;
+  p.mouseSpeedMax = 550;
+  p.minInitialSpeed = -80;
+  p.initialSpeed = 80;      // how much the mouse direction affects initial velocity
 
 
-  p.wiggleAmount = 5;
-
-  p.huePicker = 0;
-  p.colorCollections = [];
-  p.colorChoice = 0;
-
-
-  p.pairMessages = [];
-  p.loneMessages = [];
-  p.otherWidth;
-  p.otherHeight;
-  p.wrapWidth;
-  p.wrapHeight;
-
-  p.frameRateLerp = 60;
-
-  p.maxBoids = 200;
-
-  p.socket;
-
-  p.disableFriendlyErrors = true;
-  p.debugMode = false;
-  p.start = 0;
-  p.elapsed = 0;
+  p.maxBoids = 200;      // Max number of boids, changes to be lower if framerate is struggling
+  p.topMaxBoids = 200;
+  p.lowMaxBoids = 50;
 
   p.pusher;
   p.pushing = false;
-  p.choosePush = false;
+  p.choosePush = false;  // When we've hit max boids and we can't make new ones, we can push existing ones around instead
 
-  p.desiredSeparation = 15;
-  p.neighborDist = 50;
+  p.huePicker = 0;       // Manage colour choices
+  p.colorCollections = [];
+  p.colorChoice = 0;
+  p.socket;              // For comms with other player
+  p.loneMessages = [];   // Collection of messages to display if you're playing alone
+                            // (messages for if you've been paired with a partner are in the server side code so both users can get the same one)
 
+  p.otherWidth;          // Partner's screen size, so we can map movement from different resolutions
+  p.otherHeight;
+  p.wrapWidth;           // When wrapping is on, we wrap to the bigger user's screen size
+  p.wrapHeight;
 
+  p.frameRateLerp = 60;  // For displaying framerate more smoothly/readably
 
-  let myFont;
-
-  //p.preload = () => {
-  //  console.log("preload");
-  //  myFont = p.loadFont('../../fonts/Moon Bold.otf');
-  //}
+  p.disableFriendlyErrors = true; // Supposed to improve p5js performance... *shrug*
+  p.debugMode = false;    // debug and stuff for measuring time taken
+  p.start = 0;
+  p.elapsed = 0;
 
 
   p.setup = () => {
+    // Connects to server for comms
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       p.socket = io.connect('http://localhost:3000');
-
-      console.log("local!");
     }
     else{
       p.socket = io.connect('https://desolate-dusk-28350.herokuapp.com/');
-      console.log("not local!");
     }
 
-    //p.noStroke();
+    // Set up some options
     p.colorMode(p.HSB,360,100,100, 100);
     p.noStroke();
-    //p.textFont(myFont, 20);
-    //p.frameRate(1);
-    p.pusher = new Pusher(0,0,0,0);
-    p.noiseSeed(100);
+    p.rectMode(p.CENTER);
+    p.noiseSeed(100);   // So that each session gets the same perlin noise
 
-    if (p.int(p.windowWidth) > p.int(p.windowHeight)){
+    //p.frameRate(1);  // for debugging
+
+    // Pushes the boids around when its not possible to create more because frame rate.
+    p.pusher = new Pusher(0,0,0,0);
+
+    // Creates the canvas
+    if (p.int(p.windowWidth) > p.int(p.windowHeight)){    // landscape
       p.theWidth = p.int(p.windowWidth) - 55;
       p.theHeight = p.int(p.windowHeight);
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
     }
-    else{
+    else{                                               // portrait
       p.theWidth = p.int(p.windowWidth);
       p.theHeight = p.int(p.windowHeight) - 50;
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
@@ -126,13 +118,13 @@ const pewpewSketch = ( p ) => {
     p.rippleCanvas.parent('theToyContainer');
 
 
-    //p.x = i % p.cols;
-    //p.y = p.int(i / p.cols);
     p.background(0,0,20);
 
+    // default wrap width (changes if you are paired with someonn with a bigger screen)
     p.wrapWidth = p.width;
     p.wrapHeight = p.height;
 
+    // Stores some nice colour options to pick from.
     p.colorCollections[0] = new ColorCollection( p.color('#e2d810'), p.color('#d9138a'), p.color('#12a4d9'), 0.33, 0.33, 0.33 );
     p.colorCollections[1] = new ColorCollection( p.color('#fff0e1'), p.color('#ff6e53'), p.color('#ffc13b'), 0.10, 0.45, 0.45 );
     p.colorCollections[2] = new ColorCollection( p.color('#4eff5d'), p.color('#d9f8b1'), p.color('#1b6535'), 0.45, 0.15, 0.40 );
@@ -146,34 +138,30 @@ const pewpewSketch = ( p ) => {
     p.colorCollections[10] = new ColorCollection( p.color('#da000f'), p.color('#ff7e00'), p.color('#ffd800'), 0.33, 0.33, 0.33 );
     p.colorCollections[11] = new ColorCollection( p.color('#1b2d34'), p.color('#00ffda'), p.color('#ffca00'), 0.33, 0.33, 0.33 );
 
-
+    // hee hee.
     p.loneMessages[0] = "Like a spider";
     p.loneMessages[1] = "such as a monk";
     p.loneMessages[2] = "much like the moon";
     p.loneMessages[3] = "deep";
     p.loneMessages[4] = "maybe you'll make a friend soon";
 
-
-    p.socket.on('aNewBoid', p.otherUserDraws);
-  //  p.socket.on('updateUsers', p.updateUsers);
-    p.socket.on('whatsyourinfo', p.whatsyourinfo);
-    p.socket.on('test', p.test);
-    p.socket.on('matched', p.matched);
-    p.socket.on('unmatched', p.unmatched);
+    p.socket.on('whatsyourinfo', p.whatsmyinfo);  // Tell the server our deets.
+    p.socket.on('matched', p.matched);              // Lets us know we've been matched
+    p.socket.on('aNewBoid', p.otherUserDraws);      // When a boid from our partner arrives
+    p.socket.on('unmatched', p.unmatched);          // Lets us know we've been unmatched (the other person left)
 
   };
 
   p.unmatched = (data) =>{
-     //console.log("Unmatched :(");
-    let randomNumber = p.random(0,1);
+    //console.log("Unmatched :(");
+    let randomNumber = p.random(0,1);   // to pick a lone message
     for (let i = 0; i<p.loneMessages.length;i++){
       if (randomNumber<=1/p.loneMessages.length*(i+1)){
         $("#info").html("You're playing solo - " + p.loneMessages[i]);
         break;
       }
     }
-
-    p.wrapWidth = p.width;
+    p.wrapWidth = p.width; // set the wrap with back to our own
     p.wrapHeight = p.height;
   }
 
@@ -182,19 +170,17 @@ const pewpewSketch = ( p ) => {
      //console.log("My id is: " + data.myid);
      //console.log("Matched with: " + data.otherUser);
      $("#info").html("You're paired up - " + data.message);
-     p.otherWidth = data.otherWidth;
+     p.otherWidth = data.otherWidth;    // map up the screen widths
      p.otherHeight = data.otherHeight;
-     if (p.otherWidth > p.width){  p.wrapWidth = p.otherWidth; }
-     if (p.otherHeight > p.height){ p.wrapHeight = p.otherHeight; }
-
-
+     if (p.otherWidth > p.width){
+       p.wrapWidth = p.otherWidth;
+     }
+     if (p.otherHeight > p.height){
+       p.wrapHeight = p.otherHeight;
+     }
   }
 
-  p.test = (data) =>{
-     console.log(data.test);
-  }
-
-  p.whatsyourinfo = (data) =>{
+  p.whatsmyinfo = (data) =>{
     data = {
       room : "swoosh",
       width : p.width,
@@ -203,39 +189,22 @@ const pewpewSketch = ( p ) => {
     p.socket.emit('myinfo', data);
   }
 
-
-
-  p.updateUsers = (data) =>{
-    $("#info").html(data.numUsers + " users connected");
-  }
-
-
   p.otherUserDraws = (data) =>{
-
-    //p.fill('#bb66bb');
-    //p.ellipse(data.x,data.y,15,15);
     if ( p.boids.length < p.maxBoids){
-      let xposition = p.map(data.x, 0, p.otherWidth, 0, p.width);
+      let xposition = p.map(data.x, 0, p.otherWidth, 0, p.width);   // mapped to other user's screensize
       let yposition = p.map(data.y, 0, p.otherHeight, 0, p.height);
-
-      //let xposition = data.x;
-      //let yposition = data.y;
 
       var newBoid = new Boid(xposition, yposition, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
                                 data.maxDiameter, data.hue, data.sat, data.bri);
-      p.boids.push(newBoid);
-      //console.log("recc pos x: " + newBoid.position.x + " recc pos y: " + newBoid.position.y);
+      p.boids.push(newBoid);    // other user boids get added to the same array as this user's boids.
       p.id++;
     }
-
-
   }
 
   p.keyPressed = () => {
-    if (p.key === 'p') {
+    if (p.key === 'p') {  // flip into Push mode. Not sure about this so never included it in the UI.
       p.choosePush = !p.choosePush;
       console.log(p.choosePush);
-
     }
 }
 
@@ -244,8 +213,8 @@ const pewpewSketch = ( p ) => {
     //p.clear();
     //p.blendMode(p.ADD);
 
-    p.background(0,0,5,40);
-    //p.blendMode(p.BLEND);
+    p.background(0,0,5,30);
+    p.blendMode(p.BLEND);
 
     if(p.debugMode){
       if (p.frameCount % 5 == 0){
@@ -257,32 +226,36 @@ const pewpewSketch = ( p ) => {
       p.text(p.int(p.frameRateLerp), 183, 20);
     }
 
-    p.start = p.millis();
+    //p.start = p.millis();
 
-    if (p.frameRate() < 20){
-      p.maxBoids = 10;
-    }
-    else if (p.frameRate() > 65){
-      p.maxBoids = 100;
-    }
-    else{
-      p.maxBoids = p.map(p.frameRate(), 20, 65, 10, 100);
+    // Decide how many boids we should allow, based on frame rate. Only update once every 60 frames or it's adding to the issue probably
+    if(p.frameCount%60 == 0){
+      if (p.frameRate() < 20){
+        p.maxBoids = p.lowMaxBoids;
+      }
+      else if (p.frameRate() > 65){
+        p.maxBoids = p.topMaxBoids;
+      }
+      else{
+        p.maxBoids = p.map(p.frameRate(), 20, 65, p.lowMaxBoids, p.topMaxBoids);
+      }
     }
 
-    p.elapsed = p.nf(p.millis() - p.start, 1, 4);
-    //console.log("Adjusting max circles: " + p.elapsed);
+    //p.elapsed = p.nf(p.millis() - p.start, 1, 4);
 
     if(p.debugMode){
       p.text( p.int(p.maxBoids), 183, 40);
       p.text( p.boids.length, 183, 60);
     }
-    //console.log("max circles worked out");
 
     if (p.mouseIsPressed){
-      if(p.boids.length < p.maxBoids && p.choosePush == false){
+      if(p.boids.length < p.maxBoids && p.choosePush == false){     // only add boids if we're not at max already
 
-        p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -100, 100, p.minInitialSpeed, p.initialSpeed), p.map(p.mouseY - p.previousMouseY, -100, 100, p.minInitialSpeed, p.initialSpeed));
-        var data;
+        //console.log(p.mouseX - p.previousMouseX);
+        p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, p.mouseSpeedMin, p.mouseSpeedMax, p.minInitialSpeed, p.initialSpeed),
+                                          p.map(p.mouseY - p.previousMouseY, p.mouseSpeedMin, p.mouseSpeedMax, p.minInitialSpeed, p.initialSpeed)
+                                          );
+
         for (var i = 0; i < p.duplicates; i++){
             p.probability = p.random(0,1);
             let tempHue;
@@ -317,7 +290,7 @@ const pewpewSketch = ( p ) => {
             //console.log("sent pos x: " + newBoid.position.x + " sent pos y: " + newBoid.position.y);
             p.boids.push(newBoid);
 
-            data = {
+            var data = {
               x : newBoid.position.x,
               y : newBoid.position.y,
               xoff : newBoid.xoff,
@@ -489,7 +462,7 @@ const pewpewSketch = ( p ) => {
   	}
 
   	display(){
-      p.fill(this.hue, this.sat, this.bri, 60);
+      p.fill(this.hue, this.sat, this.bri);
       //p.stroke(this.hue,70,90,50);
   		p.rect(this.position.x, this.position.y, this.diameter, this.diameter);
 
