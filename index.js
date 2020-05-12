@@ -5,7 +5,7 @@ const app = express();
 const path = require('path');
 
 app.use(enforce.HTTPS({ trustProtoHeader: true }))
-app.use(enforce.HTTPS());
+
 
 app.set('view engine', 'pug');
 app.set('views', './views');
