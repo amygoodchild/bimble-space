@@ -33,30 +33,24 @@ function registerOwnID(data){
   console.log(data);
 }
 
-
 const pewpewSketch = ( p ) => {
 
-  p.pews = [];
-  p.otherPews = [];
-  p.spawnProbability= 0.5;
-  p.duplicates= 3;
-  p.initialSpeed = 80;
+  p.boids = [];
+
+  // Spawning variables
+  p.duplicates= 1;      // how many spawn per frame (looks cool if loads shoot out at once, but hits max boids quicker)
+  p.initialSpeed = 80;  // how much the mouse direction affects initial velocity
   p.minInitialSpeed = -80;
+  p.spawnRandomness = 10; // gives a bit of randomness to the position of spawning
   p.id = 0;
 
-  if (landscape){
-    p.maxSize = 32;
-    p.minSize = 20;
-  }
-  else{
-    p.maxSize = 26;
-    p.minSize = 5;
-  }
+  p.maxSize = 32;
+  p.minSize = 20;
 
   p.previousMouseX = 0;
   p.previousMouseY = 0;
 
-  p.spawnRandomness = 10;
+
   p.wiggleAmount = 5;
 
   p.huePicker = 0;
@@ -73,7 +67,7 @@ const pewpewSketch = ( p ) => {
 
   p.frameRateLerp = 60;
 
-  p.maxCircles = 200;
+  p.maxBoids = 200;
 
   p.socket;
 
@@ -160,7 +154,7 @@ const pewpewSketch = ( p ) => {
     p.loneMessages[4] = "maybe you'll make a friend soon";
 
 
-    p.socket.on('aNewDot', p.otherUserDraws);
+    p.socket.on('aNewBoid', p.otherUserDraws);
   //  p.socket.on('updateUsers', p.updateUsers);
     p.socket.on('whatsyourinfo', p.whatsyourinfo);
     p.socket.on('test', p.test);
@@ -220,17 +214,17 @@ const pewpewSketch = ( p ) => {
 
     //p.fill('#bb66bb');
     //p.ellipse(data.x,data.y,15,15);
-    if ( p.pews.length < p.maxCircles){
+    if ( p.boids.length < p.maxBoids){
       let xposition = p.map(data.x, 0, p.otherWidth, 0, p.width);
       let yposition = p.map(data.y, 0, p.otherHeight, 0, p.height);
 
       //let xposition = data.x;
       //let yposition = data.y;
 
-      var newDot = new Dot(xposition, yposition, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
+      var newBoid = new Boid(xposition, yposition, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
                                 data.maxDiameter, data.hue, data.sat, data.bri);
-      p.pews.push(newDot);
-      //console.log("recc pos x: " + newDot.position.x + " recc pos y: " + newDot.position.y);
+      p.boids.push(newBoid);
+      //console.log("recc pos x: " + newBoid.position.x + " recc pos y: " + newBoid.position.y);
       p.id++;
     }
 
@@ -266,32 +260,30 @@ const pewpewSketch = ( p ) => {
     p.start = p.millis();
 
     if (p.frameRate() < 20){
-      p.maxCircles = 10;
+      p.maxBoids = 10;
     }
     else if (p.frameRate() > 65){
-      p.maxCircles = 100;
+      p.maxBoids = 100;
     }
     else{
-      p.maxCircles = p.map(p.frameRate(), 20, 65, 10, 100);
+      p.maxBoids = p.map(p.frameRate(), 20, 65, 10, 100);
     }
 
     p.elapsed = p.nf(p.millis() - p.start, 1, 4);
     //console.log("Adjusting max circles: " + p.elapsed);
 
     if(p.debugMode){
-      p.text(p.int(p.maxCircles), 183, 40);
-      p.text( p.pews.length, 183, 60);
+      p.text( p.int(p.maxBoids), 183, 40);
+      p.text( p.boids.length, 183, 60);
     }
     //console.log("max circles worked out");
 
     if (p.mouseIsPressed){
-      if(p.pews.length < p.maxCircles && p.choosePush == false){
+      if(p.boids.length < p.maxBoids && p.choosePush == false){
 
-        p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, p.minInitialSpeed, p.initialSpeed), p.map(p.mouseY - p.previousMouseY, -300, 300, p.minInitialSpeed, p.initialSpeed));
+        p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -100, 100, p.minInitialSpeed, p.initialSpeed), p.map(p.mouseY - p.previousMouseY, -100, 100, p.minInitialSpeed, p.initialSpeed));
         var data;
         for (var i = 0; i < p.duplicates; i++){
-          if (p.random(0,1)<= p.spawnProbability){
-
             p.probability = p.random(0,1);
             let tempHue;
             let tempSat;
@@ -314,41 +306,40 @@ const pewpewSketch = ( p ) => {
               tempBri = p.brightness(p.colorCollections[p.colorChoice].colorC);
             }
 
-            var newDot = new Dot(p.random(p.mouseX - p.spawnRandomness, p.mouseX + p.spawnRandomness),
-                                p.random(p.mouseY - p.spawnRandomness, p.mouseY + p.spawnRandomness),
-                                p.random(0,1000), p.random(0,1000), 0.05,
-                                p.mouseDirection.x, p.mouseDirection.y,
-                                5, p.random(p.minSize,p.maxSize),
-                                tempHue, tempSat, tempBri);
+            var newBoid = new Boid(p.random(p.mouseX - p.spawnRandomness, p.mouseX + p.spawnRandomness),   // pos x
+                                p.random(p.mouseY - p.spawnRandomness, p.mouseY + p.spawnRandomness),    // pos y
+                                p.random(0,1000), p.random(0,1000), 0.05,                                // xoff yoff noiseSpeed
+                                p.mouseDirection.x, p.mouseDirection.y,                                  // velocity
+                                5, p.random(p.minSize,p.maxSize),                                        // diameter maxdiameter
+                                tempHue, tempSat, tempBri);                                              // hue sat bri
             p.id++;
 
-
-            //console.log("sent pos x: " + newDot.position.x + " sent pos y: " + newDot.position.y);
-            p.pews.push(newDot);
+            //console.log("sent pos x: " + newBoid.position.x + " sent pos y: " + newBoid.position.y);
+            p.boids.push(newBoid);
 
             data = {
-              x : newDot.position.x,
-              y : newDot.position.y,
-              xoff : newDot.xoff,
-              yoff : newDot.yoff,
-              speed : newDot.speed,
-              directionx : newDot.velocity.x,
-              directiony : newDot.velocity.y,
-              diameter : newDot.diameter,
-              maxDiameter : newDot.maxDiameter,
-              hue : newDot.hue,
-              sat : newDot.sat,
-              bri : newDot.bri
+              x : newBoid.position.x,
+              y : newBoid.position.y,
+              xoff : newBoid.xoff,
+              yoff : newBoid.yoff,
+              speed : newBoid.speed,
+              directionx : newBoid.velocity.x,
+              directiony : newBoid.velocity.y,
+              diameter : newBoid.diameter,
+              maxDiameter : newBoid.maxDiameter,
+              hue : newBoid.hue,
+              sat : newBoid.sat,
+              bri : newBoid.bri
             }
 
-            p.socket.emit('aNewDot', data);
-          }
+            p.socket.emit('aNewBoid', data);
+
         }
         pushing = false;
       }
 
       else{
-        p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -50,50), p.map(p.mouseY - p.previousMouseY, -300, 300, -50, 50));
+        p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -50, 50), p.map(p.mouseY - p.previousMouseY, -300, 300, -50, 50));
         p.pusher.position.x = p.mouseX;
         p.pusher.position.y = p.mouseY;
         p.pusher.velocity.x = p.mouseDirection.x;
@@ -360,47 +351,45 @@ const pewpewSketch = ( p ) => {
 
     p.start = p.millis();
 
-    for (var i = p.pews.length; i > 0; i--){
-      if (p.pews[i-1].diameter < 12 && p.pews[i-1].diameterGrowing == false){
-        p.pews.splice(i-1,1);
+    for (var i = p.boids.length; i > 0; i--){
+      if (p.boids[i-1].diameter < 8 && p.boids[i-1].diameterGrowing == false){
+        p.boids.splice(i-1,1);
       }
-      else if(p.pews[i-1].position.x < 0 || p.pews[i-1].position.x > p.theWidth || p.pews[i-1].position.y < 0 || p.pews[i-1].position.y > p.theHeight){
-        p.pews.splice(i-1,1);
+      else if(p.boids[i-1].position.x < 0 || p.boids[i-1].position.x > p.theWidth || p.boids[i-1].position.y < 0 || p.boids[i-1].position.y > p.theHeight){
+        p.boids.splice(i-1,1);
       }
     }
 
-    for (var i = 0; i < p.pews.length; i++){
-      p.pews[i].display();
-    }
 
-
-    for (var i = 0; i < p.pews.length; i++){
+    for (var i = 0; i < p.boids.length; i++){
       if (i == -10){
-        //console.log("age: " + p.pews[i].age);
+        //console.log("age: " + p.boids[i].age);
         console.log("before compare");
-        console.log("x position: " + p.pews[i].position.x);
-        //console.log("xoff: " + p.pews[i].xoff);
-        //console.log("noise: " + p.noise(p.pews[i].xoff));
+        console.log("x position: " + p.boids[i].position.x);
+        //console.log("xoff: " + p.boids[i].xoff);
+        //console.log("noise: " + p.noise(p.boids[i].xoff));
       }
-      p.pews[i].compare();
+      p.boids[i].compare();
       if (i == -10){
         console.log("before update");
-        console.log("x position: " + p.pews[i].position.x);
-        //console.log("xoff: " + p.pews[i].xoff);
-        //console.log("noise: " + p.noise(p.pews[i].xoff));
+        console.log("x position: " + p.boids[i].position.x);
+        //console.log("xoff: " + p.boids[i].xoff);
+        //console.log("noise: " + p.noise(p.boids[i].xoff));
       }
 
-      p.pews[i].update();
+      p.boids[i].update();
 
       if (i == -10){
         console.log("after update");
-        console.log("x position: " + p.pews[i].position.x);
-        //console.log("xoff: " + p.pews[i].xoff);
-        //console.log("noise: " + p.noise(p.pews[i].xoff));
+        console.log("x position: " + p.boids[i].position.x);
+        //console.log("xoff: " + p.boids[i].xoff);
+        //console.log("noise: " + p.noise(p.boids[i].xoff));
       }
     }
 
-
+    for (var i = 0; i < p.boids.length; i++){
+      p.boids[i].display();
+    }
 
     p.previousMouseX = p.mouseX;
     p.previousMouseY = p.mouseY;
@@ -416,7 +405,7 @@ const pewpewSketch = ( p ) => {
   }
 
 
-  class Dot{
+  class Boid{
     constructor(x, y, xoff, yoff, speed, dx, dy, diameter, maxDiameter, hue, sat, bri){
       this.position = p.createVector(x, y);
       this.velocity = p.createVector(dx,dy);
@@ -436,7 +425,7 @@ const pewpewSketch = ( p ) => {
 
       this.r = 2.0;
       this.maxSpeed = 5;
-      this.maxForce = 0.2;
+      this.maxForce = 0.1;
       this.id = p.id;
   	}
 
@@ -445,94 +434,6 @@ const pewpewSketch = ( p ) => {
     }
 
     compare(){
-      let steer = p.createVector(0,0,0);
-      let steerCount = 0;
-      let align = p.createVector(0,0,0);
-      let sum = p.createVector(0,0);
-      let alignCount = 0;
-      let pushSum = p.createVector(0,0);
-      let cohSum = p.createVector(0,0);
-
-      for (var j = 0; j < p.pews.length; j++){
-        if (this != p.pews[j]){
-          let d = p.dist(this.position.x, this.position.y, p.pews[j].position.x, p.pews[j].position.y);
-
-          // steer
-          if ((d > 0) && (d < p.desiredSeparation)){
-            let diff = p5.Vector.sub(this.position, p.pews[j].position);
-            diff.normalize();
-            diff.div(d);
-            steer.add(diff);
-            steerCount++;
-          }
-
-          // alignment
-          if ((d > 0) && (d < p.neighborDist)){
-            sum.add(p.pews[j].velocity);
-            cohSum.add(p.pews[j].position);
-
-            //sum.x *= p.pews[j].diameter;
-            //sum.y *= p.pews[j].diameter;
-            //cohSum.x *= p.pews[j].diameter;
-            //cohSum.y *= p.pews[j].diameter;
-
-          /*  if (p.pews[j].age < 80){
-              sum.x *= (81 - p.pews[j].age);
-              sum.y *= (81 - p.pews[j].age);
-              cohSum.x *= (81 - p.pews[j].age);
-              cohSum.y *= (81 - p.pews[j].age);
-            }*/
-            alignCount++;
-          }
-        }
-      }
-
-
-      if (steerCount > 0){
-        steer.div(steerCount);
-      }
-
-      if (steer.mag() > 0){
-        steer.setMag(this.maxSpeed);
-        steer.sub(this.velocity);
-        steer.limit(this.maxForce);
-      }
-
-
-      if (alignCount > 0){
-        sum.setMag(this.maxSpeed);
-        align = p5.Vector.sub(sum, this.velocity);
-        align.limit(this.maxForce);
-
-        cohSum.div(alignCount);
-        cohSum.sub(this.position);
-        cohSum.setMag(this.maxSpeed);
-        cohSum.sub(this.velocity);
-        cohSum.limit(this.maxForce);
-      }
-
-      steer.mult(0.8);
-      align.mult(1.2);
-      cohSum.mult(0.5);
-
-      this.applyForce(steer);
-      this.applyForce(align);
-      this.applyForce(cohSum);
-
-
-      if (p.pushing){
-        let distance = p.dist(this.position.x, this.position.y, p.pusher.position.x, p.pusher.position.y);
-        if (distance<30){
-          pushSum.add(p.pusher.velocity);
-          pushSum.mult(1.5);
-          //console.log("pushsum:" + pushSum.x);
-          this.applyForce(pushSum);
-          this.maxSpeed = 8;
-          this.wiggle = 10;
-        //  console.log("acceleration:" + this.acceleration.x);
-        }
-      }
-
 
 
     }
@@ -544,19 +445,8 @@ const pewpewSketch = ( p ) => {
 
       let xforce = p.map(p.noise(this.xoff), 0, 1, 0-this.wiggle, this.wiggle);
       let yforce = p.map(p.noise(this.yoff), 0, 1, 0-this.wiggle, this.wiggle);
-      let totalForce = p.createVector(xforce,yforce);
-      //console.log("before add total force - 503")
-      //console.log("pos x: " + this.position.x + " pos y: " + this.position.y);
-
-      //console.log("xforce: " + xforce + " yforce: " + yforce);
-      //console.log("xoff: "+ this.xoff);
-      //console.log("xnoise: "+ p.noise(this.xoff));
-
-
-      this.position.add(totalForce);
-
-      //console.log("after add total force - 508")
-      //console.log("pos x: " + this.position.x + " pos y: " + this.position.y);
+      let wiggleForce = p.createVector(xforce,yforce);
+      //this.position.add(wiggleForce);
 
 
       this.velocity.add(this.acceleration);
@@ -571,7 +461,7 @@ const pewpewSketch = ( p ) => {
 
 
       // Wrap around
-    /*  if (this.position.x > (p.wrapWidth + 10)){ this.position.x = -10; }
+  /*  if (this.position.x > (p.wrapWidth + 10)){ this.position.x = -10; }
       else if (this.position.x < -10){ this.position.x = p.wrapWidth+10; }
       if (this.position.y > (p.wrapHeight+ 10)){ this.position.y = -10; }
       else if (this.position.y < -10){ this.position.y = p.wrapHeight+10; }*/
@@ -582,7 +472,7 @@ const pewpewSketch = ( p ) => {
         this.diameter += 2;
       }
       else{
-        this.diameter -= 0.05;
+        this.diameter -= 0.1;
       }
 
       if (this.diameter > this.maxDiameter){
@@ -596,15 +486,12 @@ const pewpewSketch = ( p ) => {
 
       this.age++;
 
-      //this.position.x = p.int(this.position.x);
-      //this.position.y = p.int(this.position.y);
-
   	}
 
   	display(){
       p.fill(this.hue, this.sat, this.bri, 60);
       //p.stroke(this.hue,70,90,50);
-  		p.ellipse(this.position.x, this.position.y, this.diameter, this.diameter);
+  		p.rect(this.position.x, this.position.y, this.diameter, this.diameter);
 
       //console.log("pos x: " + this.position.x + " pos y: " + this.position.y);
       //console.log("vel x: " + this.velocity.x + " vel y: " + this.velocity.y);
