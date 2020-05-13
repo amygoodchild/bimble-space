@@ -169,7 +169,9 @@ canvas{
     overscroll-behavior-y: contain;
   }
 
-
+  body{
+    overscroll-behavior-y: contain;
+  }
 
   .colorButton {
     display: none;
