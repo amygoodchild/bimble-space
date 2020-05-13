@@ -316,9 +316,9 @@ const pewpewSketch = ( p ) => {
         p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 1.0);
       }
       p.fill(0,0,0);
-      p.rect(180,0,40,90);
+      p.rect(80,0,40,90);
       p.fill(0,0,100);
-      p.text(p.int(p.frameRateLerp), 183, 20);
+      p.text(p.int(p.frameRateLerp), 83, 20);
     }
 
     //p.start = p.millis();
@@ -342,8 +342,8 @@ const pewpewSketch = ( p ) => {
     //p.elapsed = p.nf(p.millis() - p.start, 1, 4);
 
     if(p.debugMode){
-      p.text( p.int(p.maxBoids), 183, 40);
-      p.text( p.boids.length, 183, 60);
+      p.text( p.int(p.maxBoids), 83, 40);
+      p.text( p.boids.length, 83, 60);
     }
 
     if (p.mouseIsPressed){
