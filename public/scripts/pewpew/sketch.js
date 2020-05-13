@@ -443,7 +443,7 @@ const pewpewSketch = ( p ) => {
       //}
     }
 
-    while (p.boids.length > p.maxBoids){
+    if (p.boids.length > p.maxBoids){
       p.boids[0].murder=true;
     }
 
