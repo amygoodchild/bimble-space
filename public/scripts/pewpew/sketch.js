@@ -16,16 +16,48 @@ var landscape;
       $(".menuButtonClosed").css("display", "inline-block");
       $(".menuButtonOpen").css("display", "none");
       $(".menuButtonClosedMobile").css("display", "none");
-      $(".menuButtonOpenMobile").css("display", "none");
+      $(".menuButtonOpenMobile").css("display", "none")
+
+      newToyWidth =  $(window).width() - 55;
+      newToyHeight = $(window).height();
+
     }
     else{
       landscape = false;
+
       $("#menu").css("height", "50px");
       $("#menu").css("width", "100%");
       $(".menuButtonClosedMobile").css("display", "inline-block");
       $(".menuButtonOpenMobile").css("display", "none");
       $(".menuButtonClosed").css("display", "none");
       $(".menuButtonOpen").css("display", "none");
+
+      newToyWidth =  $(window).width();
+      newToyHeight = $(window).height() - 50;
+    }
+
+    $("#theToyContainer").css({ 'width': newToyWidth });
+    $("#theToyContainer").css({ 'height': newToyHeight });
+    ps.resizeCanvas(parseInt($("#theToyContainer").width()), parseInt($("#theToyContainer").height()));
+
+    data = {
+      newWidth : newToyWidth,
+      newHeight : newToyHeight,
+      otherUser : ps.otherUser
+    }
+    ps.socket.emit('iResized', data);
+
+    if (ps.otherWidth > newToyWidth){
+      ps.wrapWidth = ps.otherWidth;
+    }
+    else{
+      ps.wrapWidth = newToyWidth;
+    }
+    if (ps.otherHeight > newToyHeight){
+      ps.wrapHeight = ps.otherHeight;
+    }
+    else{
+      ps.wrapHeight = newToyHeight;
     }
   });
 
@@ -38,33 +70,37 @@ const pewpewSketch = ( p ) => {
   p.boids = [];
 
   // Spawning variables
-  p.duplicates= 2;          // how many spawn per frame (looks cool if loads shoot out at once, but hits max boids quicker)
-  p.spawnRandomness = 10;   // gives a bit of randomness to the position of spawning
+  p.duplicates= 1;          // how many spawn per frame (looks cool if loads shoot out at once, but hits max boids quicker)
+  p.spawnRandomness = 20;   // gives a bit of randomness to the position of spawning
   p.id = 0;                 // gives each boid an ID - useful for debugging because it's possible to log out details of one boid
-  p.desiredSeparation = 15; // when flocking
-  p.neighborDist = 50;      // when flocking
+
+  p.perceptionRadius = 50;     // when flocking
+  p.desiredSeparation = 20;     // when flocking
+
+  p.colorJitter = 12;       // colours are picked from a set of pre selected ones, but with a little randomness built into the hues for depth
+  p.wiggleAmount = 2;
 
   p.maxSize = 32;         // Size the boids will grow to
   p.minSize = 20;
+  p.deleteDiameter = 12;   // size the boids get deleted at
 
   p.previousMouseX = 0;   // To figure out what direction the mouse is going in
   p.previousMouseY = 0;
   p.mouseSpeedMin = -550;
   p.mouseSpeedMax = 550;
-  p.minInitialSpeed = -80;
-  p.initialSpeed = 80;      // how much the mouse direction affects initial velocity
+  p.minInitialSpeed = -300;
+  p.initialSpeed = 300;      // how much the mouse direction affects initial velocity
+  p.startSpeed = 7;          // how fast the mousedirection pushes a boid
 
   p.maxBoids = 200;      // Max number of boids, changes to be lower if framerate is struggling
   p.topMaxBoids = 200;
   p.lowMaxBoids = 50;
 
-  p.pusher;
-  p.pushing = false;
-  p.choosePush = false;  // When we've hit max boids and we can't make new ones, we can push existing ones around instead
-
-  p.huePicker = 0;       // Manage colour choices
-  p.colorCollections = [];
+  p.colorCollections = []; // Manage colour choices
   p.colorChoice = 0;
+  p.matched = false;
+  p.matchMe = false;
+  p.numUsers;
   p.socket;              // For comms with other player
   p.loneMessages = [];   // Collection of messages to display if you're playing alone
                             // (messages for if you've been paired with a partner are in the server side code so both users can get the same one)
@@ -81,6 +117,20 @@ const pewpewSketch = ( p ) => {
   p.start = 0;
   p.elapsed = 0;
 
+  p.alignSlider;
+  p.cohesionSlider;
+  p.separationSlider;
+  p.separationDistanceSlider;
+  p.forceSlider;
+
+  p.separationAmount = 1.5;
+  p.separationDistanceAmount = 30;
+  p.alignAmount = 1.8;
+  p.cohesionAmount = 0.3;
+  p.forceAmount = 0.35;
+
+  p.dragLength = 0;
+
 
   p.setup = () => {
     // Connects to server for comms
@@ -91,16 +141,32 @@ const pewpewSketch = ( p ) => {
       p.socket = io.connect('https://desolate-dusk-28350.herokuapp.com/');
     }
 
+    /*p.separationSlider = p.createSlider(0, 5, 1.5, 0.1);
+    p.separationDistanceSlider = p.createSlider(1, 500, 30, 1);
+    p.alignSlider = p.createSlider(0, 5, 1.8, 0.1);
+    p.cohesionSlider = p.createSlider(0, 5, 0.3, 0.1);
+    p.forceSlider = p.createSlider(0, 2, 0.3, 0.05);
+
+    p.separationSlider.position(200, 10);
+    p.separationSlider.style('width', '100px');
+    p.separationDistanceSlider.position(350, 10);
+    p.separationDistanceSlider.style('width', '100px');
+
+    p.alignSlider.position(200, 40);
+    p.alignSlider.style('width', '100px');
+    p.cohesionSlider.position(200, 70);
+    p.cohesionSlider.style('width', '100px');
+
+    p.forceSlider.position(200, 120);
+    p.forceSlider.style('width', '100px');*/
+
+
     // Set up some options
     p.colorMode(p.HSB,360,100,100, 100);
     p.noStroke();
-    p.rectMode(p.CENTER);
     p.noiseSeed(100);   // So that each session gets the same perlin noise
 
     //p.frameRate(1);  // for debugging
-
-    // Pushes the boids around when its not possible to create more because frame rate.
-    p.pusher = new Pusher(0,0,0,0);
 
     // Creates the canvas
     if (p.int(p.windowWidth) > p.int(p.windowHeight)){    // landscape
@@ -116,10 +182,9 @@ const pewpewSketch = ( p ) => {
 
     p.rippleCanvas.parent('theToyContainer');
 
-
     p.background(0,0,20);
 
-    // default wrap width (changes if you are paired with someonn with a bigger screen)
+    // default wrap width (changes if you are paired with someone with a bigger screen)
     p.wrapWidth = p.width;
     p.wrapHeight = p.height;
 
@@ -145,8 +210,10 @@ const pewpewSketch = ( p ) => {
     p.loneMessages[4] = "maybe you'll make a friend soon";
 
     p.socket.on('whatsyourinfo', p.whatsmyinfo);  // Tell the server our deets.
+    p.socket.on('updateUsers', p.updateUsers);  // Tell the server our deets.
     p.socket.on('matched', p.matched);              // Lets us know we've been matched
     p.socket.on('aNewBoid', p.otherUserDraws);      // When a boid from our partner arrives
+    p.socket.on('theyResized', p.theyResized);          // Lets us know we've been unmatched (the other person left)
     p.socket.on('unmatched', p.unmatched);          // Lets us know we've been unmatched (the other person left)
 
   };
@@ -162,12 +229,18 @@ const pewpewSketch = ( p ) => {
     }
     p.wrapWidth = p.width; // set the wrap with back to our own
     p.wrapHeight = p.height;
+    p.matched = false;
+  }
+
+  p.updateUsers = (data) => {
+    p.numUsers = data.numUsers;
   }
 
   p.matched = (data) =>{
      //console.log("I am: " + data.whoami);
      //console.log("My id is: " + data.myid);
      //console.log("Matched with: " + data.otherUser);
+
      $("#info").html("You're paired up - " + data.message);
      p.otherWidth = data.otherWidth;    // map up the screen widths
      p.otherHeight = data.otherHeight;
@@ -177,15 +250,36 @@ const pewpewSketch = ( p ) => {
      if (p.otherHeight > p.height){
        p.wrapHeight = p.otherHeight;
      }
+     p.matched = true;
+     p.otherUser = data.otherUser;
+  }
+
+  p.theyResized = (data) =>{
+    p.otherWidth = data.newWidth;    // map up the screen widths
+    p.otherHeight = data.newHeight;
+    if (p.otherWidth > p.width){
+      p.wrapWidth = p.otherWidth;
+    }
+    if (p.otherHeight > p.height){
+      p.wrapHeight = p.otherHeight;
+    }
   }
 
   p.whatsmyinfo = (data) =>{
-    data = {
+    p.numUsers = data.numUsers;
+    if (p.numUsers == 1){
+      $('#userCount').html("You're the only person here right now.");
+    }
+    else{
+      $('#userCount').html("There are currently " + p.numUsers + " people here.");
+    }
+
+    sendData = {
       room : "swoosh",
       width : p.width,
       height : p.height
     }
-    p.socket.emit('myinfo', data);
+    p.socket.emit('myinfo', sendData);
   }
 
   p.otherUserDraws = (data) =>{
@@ -200,19 +294,21 @@ const pewpewSketch = ( p ) => {
     }
   }
 
-  p.keyPressed = () => {
-    if (p.key === 'p') {  // flip into Push mode. Not sure about this so never included it in the UI.
-      p.choosePush = !p.choosePush;
-      console.log(p.choosePush);
-    }
-}
+  /*p.keyPressed = () => {
+    console.log("Separation Weight: " + p.separationSlider.value());
+    console.log("Alignment Weight:  " + p.alignSlider.value());
+    console.log("Cohesion Weight:   " + p.cohesionSlider.value());
+    console.log("Separation Dist:   " + p.separationDistanceSlider.value());
+    console.log("Force Strength:    " + p.forceSlider.value());
+  }*/
 
   p.draw = () => {
     //p.textFont(myFont, 20);
     //p.clear();
     //p.blendMode(p.ADD);
 
-    p.background(0,0,5,30);
+    p.fill(0,0,5,40);
+    p.rect(0,0,p.width,p.height);
     p.blendMode(p.BLEND);
 
     if(p.debugMode){
@@ -248,47 +344,58 @@ const pewpewSketch = ( p ) => {
     }
 
     if (p.mouseIsPressed){
-      if(p.boids.length < p.maxBoids && p.choosePush == false){     // only add boids if we're not at max already
 
-        //console.log(p.mouseX - p.previousMouseX);
-        p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, p.mouseSpeedMin, p.mouseSpeedMax, p.minInitialSpeed, p.initialSpeed),
+      if(p.boids.length < p.maxBoids){     // only add boids if we're not at max already
+
+        // Map the mouse direction to a reasonable amount - unneccessary because the max speed controls this anyway.
+         p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, p.mouseSpeedMin, p.mouseSpeedMax, p.minInitialSpeed, p.initialSpeed),
                                           p.map(p.mouseY - p.previousMouseY, p.mouseSpeedMin, p.mouseSpeedMax, p.minInitialSpeed, p.initialSpeed)
                                           );
 
+        // Figure out the mouse direction
+        //p.mouseDirection = p.createVector(p.mouseX - p.previousMouseX,
+        //                                  p.mouseY - p.previousMouseY
+        //                                  );
+
         for (var i = 0; i < p.duplicates; i++){
-            p.probability = p.random(0,1);
-            let tempHue;
-            let tempSat;
-            let tempBri;
+          // choosing a colour
+          p.probability = p.random(0,1);
+          let tempHue;
+          let tempSat;
+          let tempBri;
 
-            if (p.probability<= p.colorCollections[p.colorChoice].pA){
-              tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorA)-10, p.hue(p.colorCollections[p.colorChoice].colorA)+10) %360;
-              tempSat = p.saturation(p.colorCollections[p.colorChoice].colorA);
-              tempBri = p.brightness(p.colorCollections[p.colorChoice].colorA);
+          if (p.probability<= p.colorCollections[p.colorChoice].pA){
+            tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorA)-p.colorJitter, p.hue(p.colorCollections[p.colorChoice].colorA)+p.colorJitter) %360;
+            tempSat = p.saturation(p.colorCollections[p.colorChoice].colorA);
+            tempBri = p.brightness(p.colorCollections[p.colorChoice].colorA);
 
-            }
-            else if (p.probability <= p.colorCollections[p.colorChoice].pB){
-              tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorB)-10, p.hue(p.colorCollections[p.colorChoice].colorB)+10) %360;
-              tempSat = p.saturation(p.colorCollections[p.colorChoice].colorB);
-              tempBri = p.brightness(p.colorCollections[p.colorChoice].colorB);
-            }
-            else{
-              tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorC)-10, p.hue(p.colorCollections[p.colorChoice].colorC)+10) %360;
-              tempSat = p.saturation(p.colorCollections[p.colorChoice].colorC);
-              tempBri = p.brightness(p.colorCollections[p.colorChoice].colorC);
-            }
+          }
+          else if (p.probability <= p.colorCollections[p.colorChoice].pB){
+            tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorB)-p.colorJitter, p.hue(p.colorCollections[p.colorChoice].colorB)+p.colorJitter) %360;
+            tempSat = p.saturation(p.colorCollections[p.colorChoice].colorB);
+            tempBri = p.brightness(p.colorCollections[p.colorChoice].colorB);
+          }
+          else{
+            tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorC)-p.colorJitter, p.hue(p.colorCollections[p.colorChoice].colorC)+p.colorJitter) %360;
+            tempSat = p.saturation(p.colorCollections[p.colorChoice].colorC);
+            tempBri = p.brightness(p.colorCollections[p.colorChoice].colorC);
+          }
 
-            var newBoid = new Boid(p.random(p.mouseX - p.spawnRandomness, p.mouseX + p.spawnRandomness),   // pos x
-                                p.random(p.mouseY - p.spawnRandomness, p.mouseY + p.spawnRandomness),    // pos y
-                                p.random(0,1000), p.random(0,1000), 0.05,                                // xoff yoff noiseSpeed
-                                p.mouseDirection.x, p.mouseDirection.y,                                  // velocity
-                                5, p.random(p.minSize,p.maxSize),                                        // diameter maxdiameter
-                                tempHue, tempSat, tempBri);                                              // hue sat bri
-            p.id++;
+          var newBoid = new Boid(p.random(p.mouseX - p.spawnRandomness, p.mouseX + p.spawnRandomness), // pos x
+                              p.random(p.mouseY - p.spawnRandomness, p.mouseY + p.spawnRandomness),    // pos y
+                              p.random(0,1000), p.random(0,1000), 0.05,                                // xoff yoff noiseSpeed
+                              p.mouseDirection.x, p.mouseDirection.y,                                  // velocity
+                              5, p.random(p.minSize,p.maxSize),                                        // diameter maxdiameter
+                              tempHue, tempSat, tempBri);                                              // hue sat bri
 
-            //console.log("sent pos x: " + newBoid.position.x + " sent pos y: " + newBoid.position.y);
-            p.boids.push(newBoid);
+          p.id++;
 
+          // add new boid to the array
+          p.boids.push(newBoid);
+
+          // if we have a buddy
+          if (p.matched){
+            // make a data packet of this boid's info
             var data = {
               x : newBoid.position.x,
               y : newBoid.position.y,
@@ -301,176 +408,189 @@ const pewpewSketch = ( p ) => {
               maxDiameter : newBoid.maxDiameter,
               hue : newBoid.hue,
               sat : newBoid.sat,
-              bri : newBoid.bri
-            }
+              bri : newBoid.bri,
+              otherUser : p.otherUser
 
+            }
+            // send it
             p.socket.emit('aNewBoid', data);
 
+          }
         }
-        pushing = false;
-      }
-
-      else{
-        p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, -300, 300, -50, 50), p.map(p.mouseY - p.previousMouseY, -300, 300, -50, 50));
-        p.pusher.position.x = p.mouseX;
-        p.pusher.position.y = p.mouseY;
-        p.pusher.velocity.x = p.mouseDirection.x;
-        p.pusher.velocity.y = p.mouseDirection.y;
-        //console.log(p.pusher.velocity);
-        p.pushing = true;
       }
     }
+
 
     p.start = p.millis();
 
     for (var i = p.boids.length; i > 0; i--){
-      if (p.boids[i-1].diameter < 8 && p.boids[i-1].diameterGrowing == false){
+      // if the boid has shrunk under a certain size, delete it
+      if (p.boids[i-1].diameter < 0 && p.boids[i-1].diameterGrowing == false){
         p.boids.splice(i-1,1);
       }
-      else if(p.boids[i-1].position.x < 0 || p.boids[i-1].position.x > p.theWidth || p.boids[i-1].position.y < 0 || p.boids[i-1].position.y > p.theHeight){
-        p.boids.splice(i-1,1);
-      }
+      // if the boid is off screen, delete it
+      //  else if(p.boids[i-1].position.x < 0 || p.boids[i-1].position.x > p.theWidth || p.boids[i-1].position.y < 0 || p.boids[i-1].position.y > p.theHeight){
+      //  p.boids.splice(i-1,1);
+      //}
     }
 
-
-    for (var i = 0; i < p.boids.length; i++){
-      if (i == -10){
-        //console.log("age: " + p.boids[i].age);
-        console.log("before compare");
-        console.log("x position: " + p.boids[i].position.x);
-        //console.log("xoff: " + p.boids[i].xoff);
-        //console.log("noise: " + p.noise(p.boids[i].xoff));
-      }
-      p.boids[i].compare();
-      if (i == -10){
-        console.log("before update");
-        console.log("x position: " + p.boids[i].position.x);
-        //console.log("xoff: " + p.boids[i].xoff);
-        //console.log("noise: " + p.noise(p.boids[i].xoff));
-      }
-
-      p.boids[i].update();
-
-      if (i == -10){
-        console.log("after update");
-        console.log("x position: " + p.boids[i].position.x);
-        //console.log("xoff: " + p.boids[i].xoff);
-        //console.log("noise: " + p.noise(p.boids[i].xoff));
-      }
+    for (let boid of p.boids){
+      boid.flock(p.boids);    // flocking behaviour
+    }
+    for(let boid of p.boids){
+      boid.update();
+      boid.noiseWiggle();     // wiggles!
+      boid.growAndShrink();     // other updates (diameter)
     }
 
     for (var i = 0; i < p.boids.length; i++){
-      p.boids[i].display();
+      p.boids[i].display();   // draw boids
     }
 
+    // for measuring mouse direction
     p.previousMouseX = p.mouseX;
     p.previousMouseY = p.mouseY;
-    p.huePicker = (p.huePicker + 2) % 360;
   };
-
-
-  class Pusher{
-    constructor(x, y, dx, dy){
-      this.position = p.createVector(x, y);
-      this.velocity = p.createVector(dx,dy);
-    }
-  }
 
 
   class Boid{
     constructor(x, y, xoff, yoff, speed, dx, dy, diameter, maxDiameter, hue, sat, bri){
-      this.position = p.createVector(x, y);
-      this.velocity = p.createVector(dx,dy);
-      this.acceleration = p.createVector(0,0);
-      this.xoff = xoff;
-      this.yoff = yoff;
-      this.speed = speed;
+      this.position = p.createVector(x,y);       // mouseposition
+      //this.position = p.createVector(p.random(p.width), p.random(p.height));
+      this.velocity = p.createVector(dx,dy);      // velocity = mouse direction
+      this.velocity.limit(p.startSpeed);
+      this.acceleration = p.createVector(0,0);    // acceleration = zero
+      this.xoff = xoff;     // for noise wiggle
+      this.yoff = yoff;     // for noise wiggle
+      this.speed = speed;   // for noise wiggle
       this.diameter = diameter;
       this.diameterGrowing = true;
       this.maxDiameter = maxDiameter;
       this.hue = hue;
       this.sat = sat;
       this.bri = bri;
-      this.age = 0;
-      this.wiggle = 3;
-      this.wiggleFactor = 20;
 
-      this.r = 2.0;
-      this.maxSpeed = 5;
-      this.maxForce = 0.1;
+      this.wiggle = p.wiggleAmount;  // max pixels the noise can map to
+
+      this.maxSpeed = 5;          // for flocking
+      this.ultimateMaxSpeed =40; // for flocking
+      this.maxForce = p.forceAmount;      // for flocking
+      this.force = 0;
+
       this.id = p.id;
   	}
 
-    applyForce(force){
-      this.acceleration.add(force);
+    flock(boids){
+
+      let alignSteer = p.createVector();
+      let cohesionSteer = p.createVector();
+      let separationSteer = p.createVector();
+
+      let closeCount = 0;
+      let separationCloseCount = 0;
+
+      for (let other of boids){
+        if (other!=this){
+          let d = p.dist(this.position.x, this.position.y, other.position.x, other.position.y);
+          if (d < p.perceptionRadius){
+            alignSteer.add(other.velocity);
+            cohesionSteer.add(other.position);
+            closeCount++;
+          }
+          if (d < p.separationDistanceAmount){
+            let diff = p.createVector(this.position.x, this.position.y);
+            diff = diff.sub(other.position);
+            if (d > 0){
+              diff.div(d);
+            }
+            separationSteer.add(diff);
+            separationCloseCount++;
+          }
+        }
+      }
+      if (closeCount > 0){
+        alignSteer.div(closeCount);
+        alignSteer.setMag(this.maxSpeed);
+        alignSteer.sub(this.velocity);
+        alignSteer.limit(this.force);
+
+        cohesionSteer.div(closeCount);
+        cohesionSteer.sub(this.position);
+        cohesionSteer.setMag(this.maxSpeed);
+        cohesionSteer.sub(this.velocity);
+        cohesionSteer.limit(this.force);
+      }
+      if (separationCloseCount > 0){
+        separationSteer.div(separationCloseCount);
+        separationSteer.setMag(this.maxSpeed);
+        separationSteer.sub(this.velocity);
+        separationSteer.limit(this.force);
+      }
+
+      alignSteer.mult(p.alignAmount);
+      cohesionSteer.mult(p.cohesionAmount);
+      separationSteer.mult(p.separationAmount);
+
+      this.acceleration.add(alignSteer);
+      this.acceleration.add(cohesionSteer);
+      this.acceleration.add(separationSteer);
     }
 
-    compare(){
-
-
-    }
-
-
-    update(){
-      //old();
-      //move
-
+    noiseWiggle(){
       let xforce = p.map(p.noise(this.xoff), 0, 1, 0-this.wiggle, this.wiggle);
       let yforce = p.map(p.noise(this.yoff), 0, 1, 0-this.wiggle, this.wiggle);
       let wiggleForce = p.createVector(xforce,yforce);
-      //this.position.add(wiggleForce);
-
-
-      this.velocity.add(this.acceleration);
-      this.velocity.limit(this.maxSpeed);
-      this.position.add(this.velocity);
-      this.acceleration.mult(0);
-
+      this.position.add(wiggleForce);
 
       // Wiggle
       this.xoff += this.speed;
       this.yoff += this.speed;
+    }
 
 
+    update(){
+      this.position.add(this.velocity);
+      this.velocity.add(this.acceleration);
+      this.velocity.limit(this.ultimateMaxSpeed);
+      this.acceleration.set(0,0);
+
+      if (this.force < this.maxForce){
+        this.force+=0.002;
+      }
+    }
+
+
+
+
+    growAndShrink(){
       // Wrap around
-  /*  if (this.position.x > (p.wrapWidth + 10)){ this.position.x = -10; }
+      if (this.position.x > (p.wrapWidth + 10)){ this.position.x = -10; }
       else if (this.position.x < -10){ this.position.x = p.wrapWidth+10; }
       if (this.position.y > (p.wrapHeight+ 10)){ this.position.y = -10; }
-      else if (this.position.y < -10){ this.position.y = p.wrapHeight+10; }*/
-
+      else if (this.position.y < -10){ this.position.y = p.wrapHeight+10; }
 
       //change size
       if (this.diameterGrowing){
         this.diameter += 2;
       }
       else{
-        this.diameter -= 0.1;
+        if (this.diameter > p.deleteDiameter){
+          this.diameter -= 0.05;
+        }
+        else{
+          this.diameter -= 2;
+        }
       }
-
       if (this.diameter > this.maxDiameter){
         this.diameterGrowing = false;
       }
-
-      if (this.wiggle > 5){
-        this.wiggle -=0.8;
-        this.maxSpeed -=0.1;
-      }
-
-      this.age++;
-
   	}
 
   	display(){
       p.fill(this.hue, this.sat, this.bri);
-      //p.stroke(this.hue,70,90,50);
-  		p.rect(this.position.x, this.position.y, this.diameter, this.diameter);
-
-      //console.log("pos x: " + this.position.x + " pos y: " + this.position.y);
-      //console.log("vel x: " + this.velocity.x + " vel y: " + this.velocity.y);
+  		p.ellipse(this.position.x, this.position.y, this.diameter, this.diameter);
   	}
-
   }
-
 
   class ColorCollection{
     constructor(a, b, c, pa, pb, pc){
@@ -482,9 +602,7 @@ const pewpewSketch = ( p ) => {
       this.pC = pa+pb+pc;
     }
   }
-
-
-};
+}
 
 
 

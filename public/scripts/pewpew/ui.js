@@ -21,6 +21,11 @@ $(document).ready(function(){
     $(this).addClass('colorButtonOn');
   });
 
+  $("#welcome").click(function(){
+    $("#welcome").css("display", "none");
+    $("#info").css("display", "block");
+  });
+
   if($(window).width() < $(window).height()){
     $("#mobileColor").click(function(){
       $(this).css("display", "none");
@@ -37,29 +42,3 @@ $(document).ready(function(){
 
 
 });
-
-
-function windowResized() {
-  console.log("resize");
-  sortOutWindowResize();
-}
-
-function sortOutWindowResize(){
-  var newToyWidth;
-  var newToyHeight;
-
-
-  if(!landscape){
-    newToyWidth =  $(window).width();
-    newToyHeight = $(window).height();
-                    - 50;
-  }
-  else{
-    newToyWidth =  $(window).width()
-                      - 55;
-    newToyHeight = $(window).height();
-  }
-
-  $("#theToyContainer").css({ 'width': newToyWidth });
-  $("#theToyContainer").css({ 'height': newToyHeight });
-}

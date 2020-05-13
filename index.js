@@ -1,10 +1,10 @@
 const express = require('express');
 var http = require('http');
-var enforce = require('express-sslify');
+//var enforce = require('express-sslify');
 const app = express();
 const path = require('path');
 
-app.use(enforce.HTTPS({ trustProtoHeader: true }))
+//app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
 
 app.set('view engine', 'pug');
@@ -66,6 +66,7 @@ var server = app.listen(process.env.PORT || 3000, function(){
 
 var io = socket(server);
 var ownID;
+var otherID;
 var numUsers = 0;
 var unMatched = [];
 var matches = [];
@@ -86,17 +87,17 @@ function newConnection(socket){
 
   // Manage user numbers
   numUsers++;
-  let others = { numUsers : numUsers}
-  //io.emit('updateUsers', others);
-
+  let data = { numUsers : numUsers}
   // Ask the client to tell us what room it's in (i.e. which toy it's playing - future proofing for when there are multiple toys)
-  socket.emit('whatsyourinfo', '');
+  socket.emit('whatsyourinfo', data);
+
   // Hear back from the client what room it's in.
   socket.on('myinfo', function(data) {
     socket.join(data.room);
     let newUser = new User(data.room, data.width, data.height, socket.id);
     room = data.room;
     if (newUser.room == "swoosh"){
+
       // When a client joins swoosh, add its object to the array of un matched users
       unMatched.push(newUser);
       matcher();
@@ -130,6 +131,7 @@ function newConnection(socket){
                   otherWidth: newMatch.user1.width, otherHeight: newMatch.user1.height
                 }
       io.to(newMatch.user2.id).emit('matched', data);
+
 
       // Remove them from the un matched array
       unMatched.splice(0,2);
@@ -179,18 +181,13 @@ function newConnection(socket){
     }
   });
 
-  socket.on('aNewDot', function(data) {
-    for (let i = 0; i < matches.length; i++){
-      if (matches[i].user1.id == socket.id){
-        io.to(matches[i].user2.id).emit('aNewDot', data);
-      }
-      if (matches[i].user2.id == socket.id){
-        io.to(matches[i].user1.id).emit('aNewDot', data);
-      }
-    }
+  socket.on('aNewBoid', function(data) {
+      io.to(data.otherUser).emit('aNewBoid', data);
   });
 
-
+  socket.on('iResized', function(data) {
+      io.to(data.otherUser).emit('theyResized', data);
+  });
 
 
 }
