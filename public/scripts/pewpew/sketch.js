@@ -337,7 +337,7 @@ const pewpewSketch = ( p ) => {
         p.maxBoids = p.lerp(p.maxBoids, p.topMaxBoids, 0.6);
       }
       else{
-        p.maxBoids = p.lerp(p.maxBoids, p.map(p.frameRate(), 40, 55, p.lowMaxBoids, p.topMaxBoids), 0.2);
+        p.maxBoids = p.lerp(p.maxBoids, p.map(p.frameRate(), 40, 55, p.lowMaxBoids, p.topMaxBoids), 0.3);
       }
     //}
 
