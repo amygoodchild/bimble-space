@@ -93,8 +93,8 @@ const pewpewSketch = ( p ) => {
   p.startSpeed = 7;          // how fast the mousedirection pushes a boid
 
   p.maxBoids = 200;      // Max number of boids, changes to be lower if framerate is struggling
-  p.topMaxBoids = 200;
-  p.lowMaxBoids = 50;
+  p.topMaxBoids = 180;
+  p.lowMaxBoids = 20;
 
   p.colorCollections = []; // Manage colour choices
   p.colorChoice = 0;
@@ -328,11 +328,11 @@ const pewpewSketch = ( p ) => {
       if (p.frameRate() < 20){
         p.maxBoids = p.lowMaxBoids;
       }
-      else if (p.frameRate() > 65){
+      else if (p.frameRate() > 60){
         p.maxBoids = p.topMaxBoids;
       }
       else{
-        p.maxBoids = p.map(p.frameRate(), 20, 65, p.lowMaxBoids, p.topMaxBoids);
+        p.maxBoids = p.map(p.frameRate(), 20, 60, p.lowMaxBoids, p.topMaxBoids);
       }
     }
 
