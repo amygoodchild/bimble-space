@@ -434,6 +434,10 @@ const pewpewSketch = ( p ) => {
       //}
     }
 
+    while (p.boids.length > p.maxBoids){
+      p.boids.splice(0,1);
+    }
+
     for (let boid of p.boids){
       boid.flock(p.boids);    // flocking behaviour
     }
