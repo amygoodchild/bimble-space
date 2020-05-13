@@ -113,7 +113,7 @@ const pewpewSketch = ( p ) => {
   p.frameRateLerp = 60;  // For displaying framerate more smoothly/readably
 
   p.disableFriendlyErrors = true; // Supposed to improve p5js performance... *shrug*
-  p.debugMode = true;    // debug and stuff for measuring time taken
+  p.debugMode = false;    // debug and stuff for measuring time taken
   p.start = 0;
   p.elapsed = 0;
 
@@ -327,11 +327,11 @@ const pewpewSketch = ( p ) => {
     //if(p.frameCount%6 == 0){
       if (p.frameRate() < 20){
         p.maxBoids = p.lerp(p.maxBoids, p.lowMaxBoids, 0.4);
-        console.log("under 20");
+        //console.log("under 20");
       }
       if (p.frameRate() < 40){
         p.maxBoids = p.lerp(p.maxBoids, p.lowMaxBoids, 0.3);
-        console.log("under 40");
+        //console.log("under 40");
       }
       else if (p.frameRate() > 55){
         p.maxBoids = p.lerp(p.maxBoids, p.topMaxBoids, 0.6);
