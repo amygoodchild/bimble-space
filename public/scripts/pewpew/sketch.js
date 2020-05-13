@@ -113,7 +113,7 @@ const pewpewSketch = ( p ) => {
   p.frameRateLerp = 60;  // For displaying framerate more smoothly/readably
 
   p.disableFriendlyErrors = true; // Supposed to improve p5js performance... *shrug*
-  p.debugMode = false;    // debug and stuff for measuring time taken
+  p.debugMode = true;    // debug and stuff for measuring time taken
   p.start = 0;
   p.elapsed = 0;
 
