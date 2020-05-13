@@ -326,10 +326,12 @@ const pewpewSketch = ( p ) => {
     // Decide how many boids we should allow, based on frame rate.
     //if(p.frameCount%6 == 0){
       if (p.frameRate() < 30){
-        p.maxBoids = p.lowMaxBoids;
+        p.maxBoids = p.lerp(p.maxBoids, p.lowMaxBoids, 0.6);
+        console.log("under 30")
       }
       if (p.frameRate() < 40){
         p.maxBoids = p.lerp(p.maxBoids, p.lowMaxBoids, 0.4);
+        console.log("under 40")
       }
       else if (p.frameRate() > 60){
         p.maxBoids = p.lerp(p.maxBoids, p.topMaxBoids, 0.4);
