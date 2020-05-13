@@ -54,7 +54,6 @@ const pewpewSketch = ( p ) => {
   p.minInitialSpeed = -80;
   p.initialSpeed = 80;      // how much the mouse direction affects initial velocity
 
-
   p.maxBoids = 200;      // Max number of boids, changes to be lower if framerate is struggling
   p.topMaxBoids = 200;
   p.lowMaxBoids = 50;
