@@ -326,22 +326,22 @@ const pewpewSketch = ( p ) => {
     // Decide how many boids we should allow, based on frame rate.
     //if(p.frameCount%6 == 0){
       if (p.frameRate() < 20){
-        p.maxBoids = p.lerp(p.maxBoids, p.lowMaxBoids, 0.3);
+        p.maxBoids = p.lerp(p.maxBoids, p.lowMaxBoids, 0.8);
         //console.log("under 20");
       }
       if (p.frameRate() < 30){
-        p.maxBoids = p.lerp(p.maxBoids, p.lowMaxBoids, 0.25);
+        p.maxBoids = p.lerp(p.maxBoids, p.lowMaxBoids, 0.65);
         //console.log("under 20");
       }
       if (p.frameRate() < 40){
-        p.maxBoids = p.lerp(p.maxBoids, p.lowMaxBoids, 0.2);
+        p.maxBoids = p.lerp(p.maxBoids, p.lowMaxBoids, 0.6);
         //console.log("under 40");
       }
       else if (p.frameRate() > 55){
         p.maxBoids = p.lerp(p.maxBoids, p.topMaxBoids, 0.6);
       }
       else{
-        p.maxBoids = p.lerp(p.maxBoids, p.map(p.frameRate(), 40, 55, p.lowMaxBoids, p.topMaxBoids), 0.2);
+        p.maxBoids = p.lerp(p.maxBoids, p.map(p.frameRate(), 40, 55, p.lowMaxBoids, p.topMaxBoids), 0.5);
       }
     //}
 
@@ -444,7 +444,10 @@ const pewpewSketch = ( p ) => {
     }
 
     if (p.boids.length > p.maxBoids){
-      p.boids[0].murder=true;
+      let overage = (p.boids.length - p.maxBoids)/2;
+      for (let i = 0; i< overage; i++){
+        p.boids[i].murder=true;
+      }
     }
 
     for (let boid of p.boids){
