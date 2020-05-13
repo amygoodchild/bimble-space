@@ -564,10 +564,10 @@ const pewpewSketch = ( p ) => {
 
     growAndShrink(){
       // Wrap around
-      if (this.position.x > (p.wrapWidth + 10)){ this.position.x = -10; }
-      else if (this.position.x < -10){ this.position.x = p.wrapWidth+10; }
-      if (this.position.y > (p.wrapHeight+ 10)){ this.position.y = -10; }
-      else if (this.position.y < -10){ this.position.y = p.wrapHeight+10; }
+      if (this.position.x > (p.width + 10)){ this.position.x = -10; }
+      else if (this.position.x < -10){ this.position.x = p.width+10; }
+      if (this.position.y > (p.height+ 10)){ this.position.y = -10; }
+      else if (this.position.y < -10){ this.position.y = p.height+10; }
 
       //change size
       if (this.diameterGrowing){
