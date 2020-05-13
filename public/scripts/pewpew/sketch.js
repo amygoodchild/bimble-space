@@ -444,7 +444,7 @@ const pewpewSketch = ( p ) => {
     }
 
     while (p.boids.length > p.maxBoids){
-      p.boids.splice(0,1);
+      p.boids[0].murder=true;
     }
 
     for (let boid of p.boids){
@@ -482,6 +482,7 @@ const pewpewSketch = ( p ) => {
       this.hue = hue;
       this.sat = sat;
       this.bri = bri;
+      this.murder = false;
 
       this.wiggle = p.wiggleAmount;  // max pixels the noise can map to
 
@@ -593,7 +594,11 @@ const pewpewSketch = ( p ) => {
         else{
           this.diameter -= 2;
         }
+        if (this.murder == true){
+          this.diameter -=2;
+        }
       }
+
       if (this.diameter > this.maxDiameter){
         this.diameterGrowing = false;
       }
