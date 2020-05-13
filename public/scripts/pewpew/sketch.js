@@ -325,15 +325,20 @@ const pewpewSketch = ( p ) => {
 
     // Decide how many boids we should allow, based on frame rate. Only update once every 60 frames or it's adding to the issue probably
     if(p.frameCount%60 == 0){
-      if (p.frameRate() < 40){
+      if (p.frameRate() < 30){
         p.maxBoids = p.lowMaxBoids;
       }
+      if (p.frameRate() < 40){
+        p.maxBoids = p.lerp(p.maxBoids, p.lowMaxBoids, 0.4);
+      }
       else if (p.frameRate() > 60){
-        p.maxBoids = p.topMaxBoids;
+        p.maxBoids = p.lerp(p.maxBoids, p.topMaxBoids, 0.2);
       }
       else{
-        p.maxBoids = p.map(p.frameRate(), 40, 60, p.lowMaxBoids, p.topMaxBoids);
+        p.maxBoids = p.lerp(p.maxBoids, p.map(p.frameRate(), 40, 60, p.lowMaxBoids, p.topMaxBoids), 0.2);
       }
+
+
     }
 
     //p.elapsed = p.nf(p.millis() - p.start, 1, 4);
