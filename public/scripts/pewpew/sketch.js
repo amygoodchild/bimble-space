@@ -80,8 +80,6 @@ const pewpewSketch = ( p ) => {
   p.spawnRandomness = 20;   // gives a bit of randomness to the position of spawning
   p.id = 0;                 // gives each boid an ID - useful for debugging because it's possible to log out details of one boid
 
-  p.perceptionRadius = 50;     // when flocking
-  p.desiredSeparation = 20;     // when flocking
 
   p.colorJitter = 12;       // colours are picked from a set of pre selected ones, but with a little randomness built into the hues for depth
   p.wiggleAmount = 2;
@@ -96,7 +94,7 @@ const pewpewSketch = ( p ) => {
   p.mouseSpeedMax = 550;
   p.minInitialSpeed = -300;
   p.initialSpeed = 300;      // how much the mouse direction affects initial velocity
-  p.startSpeed = 7;          // how fast the mousedirection pushes a boid
+  p.startSpeed = 5;          // how fast the mousedirection pushes a boid
 
   p.maxBoids = 200;      // Max number of boids, changes to be lower if framerate is struggling
   p.topMaxBoids = 180;
@@ -130,11 +128,13 @@ const pewpewSketch = ( p ) => {
   p.separationDistanceSlider;
   p.forceSlider;
 
-  p.separationAmount = 1.5;
+  p.perceptionRadius = 75;     // when flocking
+  p.desiredSeparation = 15;     // when flocking
+  p.separationAmount = 1.2;
   p.separationDistanceAmount = 30;
-  p.alignAmount = 1.8;
+  p.alignAmount = 2.0;
   p.cohesionAmount = 0.3;
-  p.forceAmount = 0.35;
+  p.forceAmount = 0.6;
 
   p.dragLength = 0;
   p.drawCounter = 0;
@@ -181,6 +181,7 @@ const pewpewSketch = ( p ) => {
       p.theWidth = p.int(p.windowWidth) - 55;
       p.theHeight = p.int(p.windowHeight);
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
+      p.startSpeed = 7;
 
     }
     else{                                               // portrait
@@ -189,6 +190,7 @@ const pewpewSketch = ( p ) => {
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
       p.maxSize = 27;         // Size the boids will grow to
       p.minSize = 17;
+      p.startSpeed = 4;
 
     }
 
@@ -403,82 +405,83 @@ const pewpewSketch = ( p ) => {
             'event_label': p.drawCounter
           });
         }
-
       }
-      p.dragLength++;
-      if(p.boids.length < p.maxBoids){     // only add boids if we're not at max already
+      else{
+        if(p.boids.length < p.maxBoids){     // only add boids if we're not at max already
 
-        // Map the mouse direction to a reasonable amount - unneccessary because the max speed controls this anyway.
-         p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, p.mouseSpeedMin, p.mouseSpeedMax, p.minInitialSpeed, p.initialSpeed),
-                                          p.map(p.mouseY - p.previousMouseY, p.mouseSpeedMin, p.mouseSpeedMax, p.minInitialSpeed, p.initialSpeed)
-                                          );
+          // Map the mouse direction to a reasonable amount - unneccessary because the max speed controls this anyway.
+           p.mouseDirection = p.createVector(p.map(p.mouseX - p.previousMouseX, p.mouseSpeedMin, p.mouseSpeedMax, p.minInitialSpeed, p.initialSpeed),
+                                            p.map(p.mouseY - p.previousMouseY, p.mouseSpeedMin, p.mouseSpeedMax, p.minInitialSpeed, p.initialSpeed)
+                                            );
 
-        // Figure out the mouse direction
-        //p.mouseDirection = p.createVector(p.mouseX - p.previousMouseX,
-        //                                  p.mouseY - p.previousMouseY
-        //                                  );
+          // Figure out the mouse direction
+          //p.mouseDirection = p.createVector(p.mouseX - p.previousMouseX,
+          //                                  p.mouseY - p.previousMouseY
+          //                                  );
 
-        for (var i = 0; i < p.duplicates; i++){
-          // choosing a colour
-          p.probability = p.random(0,1);
-          let tempHue;
-          let tempSat;
-          let tempBri;
+          for (var i = 0; i < p.duplicates; i++){
+            // choosing a colour
+            p.probability = p.random(0,1);
+            let tempHue;
+            let tempSat;
+            let tempBri;
 
-          if (p.probability<= p.colorCollections[p.colorChoice].pA){
-            tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorA)-p.colorJitter, p.hue(p.colorCollections[p.colorChoice].colorA)+p.colorJitter) %360;
-            tempSat = p.saturation(p.colorCollections[p.colorChoice].colorA);
-            tempBri = p.brightness(p.colorCollections[p.colorChoice].colorA);
-
-          }
-          else if (p.probability <= p.colorCollections[p.colorChoice].pB){
-            tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorB)-p.colorJitter, p.hue(p.colorCollections[p.colorChoice].colorB)+p.colorJitter) %360;
-            tempSat = p.saturation(p.colorCollections[p.colorChoice].colorB);
-            tempBri = p.brightness(p.colorCollections[p.colorChoice].colorB);
-          }
-          else{
-            tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorC)-p.colorJitter, p.hue(p.colorCollections[p.colorChoice].colorC)+p.colorJitter) %360;
-            tempSat = p.saturation(p.colorCollections[p.colorChoice].colorC);
-            tempBri = p.brightness(p.colorCollections[p.colorChoice].colorC);
-          }
-
-          var newBoid = new Boid(p.random(p.mouseX - p.spawnRandomness, p.mouseX + p.spawnRandomness), // pos x
-                              p.random(p.mouseY - p.spawnRandomness, p.mouseY + p.spawnRandomness),    // pos y
-                              p.random(0,1000), p.random(0,1000), 0.05,                                // xoff yoff noiseSpeed
-                              p.mouseDirection.x, p.mouseDirection.y,                                  // velocity
-                              5, p.random(p.minSize,p.maxSize),                                        // diameter maxdiameter
-                              tempHue, tempSat, tempBri);                                              // hue sat bri
-
-          p.id++;
-
-          // add new boid to the array
-          p.boids.push(newBoid);
-
-          // if we have a buddy
-          if (p.matched){
-            // make a data packet of this boid's info
-            var data = {
-              x : newBoid.position.x,
-              y : newBoid.position.y,
-              xoff : newBoid.xoff,
-              yoff : newBoid.yoff,
-              speed : newBoid.speed,
-              directionx : newBoid.velocity.x,
-              directiony : newBoid.velocity.y,
-              diameter : newBoid.diameter,
-              maxDiameter : newBoid.maxDiameter,
-              hue : newBoid.hue,
-              sat : newBoid.sat,
-              bri : newBoid.bri,
-              otherUser : p.otherUser
+            if (p.probability<= p.colorCollections[p.colorChoice].pA){
+              tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorA)-p.colorJitter, p.hue(p.colorCollections[p.colorChoice].colorA)+p.colorJitter) %360;
+              tempSat = p.saturation(p.colorCollections[p.colorChoice].colorA);
+              tempBri = p.brightness(p.colorCollections[p.colorChoice].colorA);
 
             }
-            // send it
-            p.socket.emit('aNewBoid', data);
+            else if (p.probability <= p.colorCollections[p.colorChoice].pB){
+              tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorB)-p.colorJitter, p.hue(p.colorCollections[p.colorChoice].colorB)+p.colorJitter) %360;
+              tempSat = p.saturation(p.colorCollections[p.colorChoice].colorB);
+              tempBri = p.brightness(p.colorCollections[p.colorChoice].colorB);
+            }
+            else{
+              tempHue = p.random(p.hue(p.colorCollections[p.colorChoice].colorC)-p.colorJitter, p.hue(p.colorCollections[p.colorChoice].colorC)+p.colorJitter) %360;
+              tempSat = p.saturation(p.colorCollections[p.colorChoice].colorC);
+              tempBri = p.brightness(p.colorCollections[p.colorChoice].colorC);
+            }
 
+            var newBoid = new Boid(p.random(p.mouseX - p.spawnRandomness, p.mouseX + p.spawnRandomness), // pos x
+                                p.random(p.mouseY - p.spawnRandomness, p.mouseY + p.spawnRandomness),    // pos y
+                                p.random(0,1000), p.random(0,1000), 0.05,                                // xoff yoff noiseSpeed
+                                p.mouseDirection.x, p.mouseDirection.y,                                  // velocity
+                                5, p.random(p.minSize,p.maxSize),                                        // diameter maxdiameter
+                                tempHue, tempSat, tempBri);                                              // hue sat bri
+
+            p.id++;
+
+            // add new boid to the array
+            p.boids.push(newBoid);
+
+            // if we have a buddy
+            if (p.matched){
+              // make a data packet of this boid's info
+              var data = {
+                x : newBoid.position.x,
+                y : newBoid.position.y,
+                xoff : newBoid.xoff,
+                yoff : newBoid.yoff,
+                speed : newBoid.speed,
+                directionx : newBoid.velocity.x,
+                directiony : newBoid.velocity.y,
+                diameter : newBoid.diameter,
+                maxDiameter : newBoid.maxDiameter,
+                hue : newBoid.hue,
+                sat : newBoid.sat,
+                bri : newBoid.bri,
+                otherUser : p.otherUser
+
+              }
+              // send it
+              p.socket.emit('aNewBoid', data);
+
+            }
           }
         }
       }
+      p.dragLength++;
     }
 
     else{
@@ -637,10 +640,22 @@ const pewpewSketch = ( p ) => {
 
     growAndShrink(){
       // Wrap around
-      if (this.position.x > (p.width + 10)){ this.position.x = -10; }
-      else if (this.position.x < -10){ this.position.x = p.width+10; }
-      if (this.position.y > (p.height+ 10)){ this.position.y = -10; }
-      else if (this.position.y < -10){ this.position.y = p.height+10; }
+      if (this.position.x > (p.width + 10)){
+        this.position.x = -10;
+        this.diameter -= 8;
+      }
+      else if (this.position.x < -10){
+        this.position.x = p.width+10;
+        this.diameter -= 8;
+      }
+      if (this.position.y > (p.height+ 10)){
+        this.position.y = -10;
+        this.diameter -= 8;
+       }
+      else if (this.position.y < -10){
+        this.position.y = p.height+10;
+        this.diameter -= 8;
+       }
 
       //change size
       if (this.diameterGrowing){

@@ -1,9 +1,9 @@
 const express = require('express');
 var http = require('http');
-var enforce = require('express-sslify');
 const app = express();
 const path = require('path');
 
+var enforce = require('express-sslify');
 app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
 
