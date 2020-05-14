@@ -21,6 +21,9 @@ var landscape;
       newToyWidth =  $(window).width() - 55;
       newToyHeight = $(window).height();
 
+      p.maxSize = 32;         // Size the boids will grow to
+      p.minSize = 20;
+
     }
     else{
       landscape = false;
@@ -34,6 +37,9 @@ var landscape;
 
       newToyWidth =  $(window).width();
       newToyHeight = $(window).height() - 50;
+
+      p.maxSize = 27;         // Size the boids will grow to
+      p.minSize = 17;
     }
 
     $("#theToyContainer").css({ 'width': newToyWidth });
@@ -173,11 +179,15 @@ const pewpewSketch = ( p ) => {
       p.theWidth = p.int(p.windowWidth) - 55;
       p.theHeight = p.int(p.windowHeight);
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
+
     }
     else{                                               // portrait
       p.theWidth = p.int(p.windowWidth);
       p.theHeight = p.int(p.windowHeight) - 50;
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
+      p.maxSize = 27;         // Size the boids will grow to
+      p.minSize = 17;
+
     }
 
     p.rippleCanvas.parent('theToyContainer');
@@ -187,6 +197,7 @@ const pewpewSketch = ( p ) => {
     // default wrap width (changes if you are paired with someone with a bigger screen)
     p.wrapWidth = p.width;
     p.wrapHeight = p.height;
+
 
     // Stores some nice colour options to pick from.
     p.colorCollections[0] = new ColorCollection( p.color('#e2d810'), p.color('#d9138a'), p.color('#12a4d9'), 0.33, 0.33, 0.33 );
