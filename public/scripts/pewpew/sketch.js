@@ -399,6 +399,12 @@ const pewpewSketch = ( p ) => {
             'event_label': p.drawCounter
           });
         }
+        if (p.drawCounter == 30){
+          gtag('event', "Draw counter", {
+            'event_category': "Flock",
+            'event_label': p.drawCounter
+          });
+        }
         else if (p.drawCounter % 50 == 0){
           gtag('event', "Draw counter", {
             'event_category': "Flock",
