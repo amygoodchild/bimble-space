@@ -107,7 +107,7 @@ const pewpewSketch = ( p ) => {
   p.matched = false;
   p.matchMe = false;
   p.numUsers;
-  p.pairCounter;
+  p.pairCounter = 0;
   p.socket;              // For comms with other player
   p.loneMessages = [];   // Collection of messages to display if you're playing alone
                             // (messages for if you've been paired with a partner are in the server side code so both users can get the same one)
