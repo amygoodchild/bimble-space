@@ -1,10 +1,10 @@
 const express = require('express');
 var http = require('http');
-//var enforce = require('express-sslify');
+var enforce = require('express-sslify');
 const app = express();
 const path = require('path');
 
-//app.use(enforce.HTTPS({ trustProtoHeader: true }))
+app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
 
 app.set('view engine', 'pug');
@@ -48,8 +48,8 @@ app.get('/swooshhidden', function (req, res) {
   res.render('pewpew', { title: 'Swoosh', path: 'pewpew', theScripts:[]})
 })
 
-app.get('/swooshtemp', function (req, res) {
-  res.render('pewpew', { title: 'Swoosh', path: 'pewpew', theScripts:[]})
+app.get('/flock', function (req, res) {
+  res.render('pewpew', { title: 'Flock', path: 'pewpew', theScripts:[]})
 })
 
 app.get('/swoosh', function (req, res) {
