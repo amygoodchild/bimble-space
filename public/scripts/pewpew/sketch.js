@@ -107,6 +107,7 @@ const pewpewSketch = ( p ) => {
   p.matched = false;
   p.matchMe = false;
   p.numUsers;
+  p.pairCounter;
   p.socket;              // For comms with other player
   p.loneMessages = [];   // Collection of messages to display if you're playing alone
                             // (messages for if you've been paired with a partner are in the server side code so both users can get the same one)
@@ -242,6 +243,10 @@ const pewpewSketch = ( p ) => {
     p.wrapWidth = p.width; // set the wrap with back to our own
     p.wrapHeight = p.height;
     p.matched = false;
+    gtag('event', "Unpairing", {
+      'event_category': "Flock",
+      'event_label': p.pairCounter
+    });
   }
 
   p.updateUsers = (data) => {
@@ -252,6 +257,11 @@ const pewpewSketch = ( p ) => {
      //console.log("I am: " + data.whoami);
      //console.log("My id is: " + data.myid);
      //console.log("Matched with: " + data.otherUser);
+     p.pairCounter++;
+     gtag('event', "Pairing", {
+       'event_category': "Flock",
+       'event_label': p.pairCounter
+     });
 
      $("#info").html("You're paired up - " + data.message);
      p.otherWidth = data.otherWidth;    // map up the screen widths
