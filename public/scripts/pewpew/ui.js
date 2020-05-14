@@ -23,13 +23,18 @@ $(document).ready(function(){
 
   $("#welcome").click(function(){
     $("#welcome").css("display", "none");
-    $("#info").css("display", "block");
+    gtag('event', "Close welcome", {
+      'event_category': "Flock",
+      'event_label': ps.frameCount
+    });
+
   });
 
   if($(window).width() < $(window).height()){
     $("#mobileColor").click(function(){
       $(this).css("display", "none");
       $('.colorButton').css("display", "block");
+
     });
 
     $(".colorButton").click(function(){

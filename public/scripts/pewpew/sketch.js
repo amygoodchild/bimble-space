@@ -21,8 +21,8 @@ var landscape;
       newToyWidth =  $(window).width() - 55;
       newToyHeight = $(window).height();
 
-      p.maxSize = 32;         // Size the boids will grow to
-      p.minSize = 20;
+      ps.maxSize = 32;         // Size the boids will grow to
+      ps.minSize = 20;
 
     }
     else{
@@ -38,8 +38,8 @@ var landscape;
       newToyWidth =  $(window).width();
       newToyHeight = $(window).height() - 50;
 
-      p.maxSize = 27;         // Size the boids will grow to
-      p.minSize = 17;
+      ps.maxSize = 27;         // Size the boids will grow to
+      ps.minSize = 17;
     }
 
     $("#theToyContainer").css({ 'width': newToyWidth });
@@ -136,6 +136,7 @@ const pewpewSketch = ( p ) => {
   p.forceAmount = 0.35;
 
   p.dragLength = 0;
+  p.drawCounter = 0;
 
 
   p.setup = () => {
@@ -364,7 +365,37 @@ const pewpewSketch = ( p ) => {
     }
 
     if (p.mouseIsPressed){
+      if(p.dragLength == 0){
+        //new drag
+        p.drawCounter++;
 
+        if (p.drawCounter == 1){
+          gtag('event', "First Draw", {
+            'event_category': "Flock",
+            'event_label': p.drawCounter
+          });
+        }
+        if (p.drawCounter == 5){
+          gtag('event', "Draw counter", {
+            'event_category': "Flock",
+            'event_label': p.drawCounter
+          });
+        }
+        if (p.drawCounter == 10){
+          gtag('event', "Draw counter", {
+            'event_category': "Flock",
+            'event_label': p.drawCounter
+          });
+        }
+        else if (p.drawCounter % 50 == 0){
+          gtag('event', "Draw counter", {
+            'event_category': "Flock",
+            'event_label': p.drawCounter
+          });
+        }
+
+      }
+      p.dragLength++;
       if(p.boids.length < p.maxBoids){     // only add boids if we're not at max already
 
         // Map the mouse direction to a reasonable amount - unneccessary because the max speed controls this anyway.
@@ -438,6 +469,10 @@ const pewpewSketch = ( p ) => {
           }
         }
       }
+    }
+
+    else{
+      p.dragLength = 0;
     }
 
 
