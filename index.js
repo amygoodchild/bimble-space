@@ -19,8 +19,8 @@ app.get('/', function (req, res) {
 })
 
 // Content Pages
-app.get('/about', function (req, res) {
-  res.render('about', { title: 'About', path: 'about' })
+app.get('/more', function (req, res) {
+  res.render('more', { title: 'More', path: 'more' })
 })
 
 app.get('/contact', function (req, res) {
