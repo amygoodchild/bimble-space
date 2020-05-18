@@ -391,7 +391,7 @@ canvas {
 
   #info {
     position: absolute;
-    bottom: 27px;
+    bottom: 40px;
     top: auto;
     left: 10px !important;
     max-width: calc(100vw - 20px);
