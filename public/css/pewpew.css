@@ -327,14 +327,14 @@ canvas {
 }
 @media (orientation: landscape) {
   #actions {
-    left: 140px !important;
+    left: 140px;
     top: 10px;
     right: auto;
   }
 
   .actionMenu {
     width: 330px;
-    left: 140px !important;
+    left: 140px;
     top: 60px;
     padding-bottom: 0px;
   }
@@ -408,6 +408,16 @@ canvas {
   .goodbye {
     left: 14px;
     z-index: 2;
+  }
+
+  #actions {
+    left: auto !important;
+    right: 10px !important;
+  }
+
+  .actionMenu {
+    right: auto !important;
+    left: 0px !important;
   }
 }
 
