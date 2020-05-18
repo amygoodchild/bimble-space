@@ -109,6 +109,7 @@ const pewpewSketch = ( p ) => {
   p.socket;              // For comms with other player
   p.loneMessages = [];   // Collection of messages to display if you're playing alone
                             // (messages for if you've been paired with a partner are in the server side code so both users can get the same one)
+  p.matchState = "noPartner";
 
   p.otherWidth;          // Partner's screen size, so we can map movement from different resolutions
   p.otherHeight;
@@ -139,6 +140,11 @@ const pewpewSketch = ( p ) => {
   p.dragLength = 0;
   p.drawCounter = 0;
 
+  p.drawGoodbye = false;
+  p.drawGoodbyeCount = 100;
+
+  p.drawMyGoodbye = false;
+  p.drawMyGoodbyeCount = 100;
 
   p.setup = () => {
     // Connects to server for comms
@@ -222,23 +228,34 @@ const pewpewSketch = ( p ) => {
     p.loneMessages[1] = "such as a monk";
     p.loneMessages[2] = "much like the moon";
     p.loneMessages[3] = "deep";
-    p.loneMessages[4] = "maybe you'll make a friend soon";
+    p.loneMessages[4] = "hope you're having a nice time";
 
+    p.socket.on('onJoin', p.onJoin);  // Tell the server our deets.
     p.socket.on('whatsyourinfo', p.whatsmyinfo);  // Tell the server our deets.
     p.socket.on('updateUsers', p.updateUsers);  // Tell the server our deets.
     p.socket.on('matched', p.matched);              // Lets us know we've been matched
     p.socket.on('aNewBoid', p.otherUserDraws);      // When a boid from our partner arrives
     p.socket.on('theyResized', p.theyResized);          // Lets us know we've been unmatched (the other person left)
-    p.socket.on('unmatched', p.unmatched);          // Lets us know we've been unmatched (the other person left)
+    p.socket.on('unMatched', p.unmatched);          // Lets us know we've been unmatched (the other person left)
+    p.socket.on('goodbye', p.goodbye);          // Other person sent a goodbye
 
   };
 
+  p.goodbye = (data) =>{
+    console.log("goodbye!");
+    p.drawGoodbye = true;
+  }
+
+  p.onJoin = (data) =>{
+    $("#currentUsers").html("There are currently "+ data.numUsers + " users here that you could be paired with.");
+  }
+
   p.unmatched = (data) =>{
-    //console.log("Unmatched :(");
+    console.log("Unmatched :(");
     let randomNumber = p.random(0,1);   // to pick a lone message
-    for (let i = 0; i<p.loneMessages.length;i++){
+    for (let i = 0; i<=p.loneMessages.length;i++){
       if (randomNumber<=1/p.loneMessages.length*(i+1)){
-        $("#info").html("You're playing solo - " + p.loneMessages[i]);
+        $("#infoContent").html("Partner left.<br>Finding you a new friend...");
         break;
       }
     }
@@ -249,6 +266,8 @@ const pewpewSketch = ( p ) => {
       'event_category': "Flock",
       'event_label': p.pairCounter
     });
+
+    p.matchState = "searching";
   }
 
   p.updateUsers = (data) => {
@@ -265,7 +284,7 @@ const pewpewSketch = ( p ) => {
        'event_label': p.pairCounter
      });
 
-     $("#info").html("You're paired up - " + data.message);
+     $("#infoContent").html("You're paired up - " + data.message);
      p.otherWidth = data.otherWidth;    // map up the screen widths
      p.otherHeight = data.otherHeight;
      if (p.otherWidth > p.width){
@@ -276,6 +295,7 @@ const pewpewSketch = ( p ) => {
      }
      p.matched = true;
      p.otherUser = data.otherUser;
+     p.matchState = "paired";
   }
 
   p.theyResized = (data) =>{
@@ -299,11 +319,11 @@ const pewpewSketch = ( p ) => {
     }
 
     sendData = {
-      room : "swoosh",
+      room : "flock",
       width : p.width,
       height : p.height
     }
-    p.socket.emit('myinfo', sendData);
+    p.socket.emit('flockMatchMe', sendData);
   }
 
   p.otherUserDraws = (data) =>{
@@ -531,6 +551,36 @@ const pewpewSketch = ( p ) => {
     // for measuring mouse direction
     p.previousMouseX = p.mouseX;
     p.previousMouseY = p.mouseY;
+
+    if (p.drawGoodbye){
+      let top = p.drawGoodbyeCount + "vh";
+      let opacity = p.drawGoodbyeCount/100 - 0.1;
+      $("#goodbye").css("top", top);
+      $("#goodbye").css("opacity", opacity);
+
+      p.drawGoodbyeCount*=0.991;
+      if (p.drawGoodbyeCount < 10){
+        p.drawGoodbye = false;
+        p.drawGoodbyeCount = 100;
+        $("#goodbye").css("top", "100vh");
+      }
+    }
+
+
+    if (p.drawMyGoodbye){
+      let top = p.drawMyGoodbyeCount + "vh";
+      let opacity = p.drawMyGoodbyeCount/100 - 0.1;
+      $("#myGoodbye").css("top", top);
+      $("#myGoodbye").css("opacity", opacity);
+
+      p.drawMyGoodbyeCount*=0.991;
+      if (p.drawMyGoodbyeCount < 10){
+        p.drawMyGoodbye = false;
+        p.drawMyGoodbyeCount = 100;
+        $("#myGoodbye").css("top", "100vh");
+      }
+    }
+
   };
 
 

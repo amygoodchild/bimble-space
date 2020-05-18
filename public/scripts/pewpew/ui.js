@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+  var actionMenuOpen = false;
 
 
   $("#color0").click(function(){ ps.colorChoice = 0; });
@@ -21,14 +22,176 @@ $(document).ready(function(){
     $(this).addClass('colorButtonOn');
   });
 
-  $("#welcome").click(function(){
+  /*$("#welcome").click(function(){
     $("#welcome").css("display", "none");
     gtag('event', "Close welcome", {
       'event_category': "Flock",
       'event_label': ps.frameCount
     });
 
+
+  });*/
+
+  $("#paired").click(function(){
+    $("#welcome").css("display", "none");
+    $("#options").css("display", "block");
+    $("#info").css("display", "table");
+    $("#actions").css("display", "block");
+    ps.matchState = "searching";
+
+
+    sendData = {
+      room : "swoosh",
+      width : ps.width,
+      height : ps.height,
+      pair: true
+    }
+
+    ps.socket.emit('flockMatchMe', sendData);
+
+    gtag('event', "JoinChoice", {
+      'event_category': "Flock",
+      'event_label': "Pair Me"
+    });
   });
+
+
+  $("#alone").click(function(){
+    $("#welcome").css("display", "none");
+    $("#options").css("display", "block");
+    $("#info").css("display", "table");
+    $("#actions").css("display", "block");
+
+    ps.matchState = "choseSolo";
+
+    gtag('event', "JoinChoice", {
+      'event_category': "Flock",
+      'event_label': "Don't Pair Me"
+    });
+
+    for (let i = 0; i<ps.loneMessages.length;i++){
+      let randomNumber = ps.random(0,1);   // to pick a lone message
+      if (randomNumber<=1/ps.loneMessages.length*(i+1)){
+        $("#infoContent").html("You're playing solo - " + ps.loneMessages[i]);
+        break;
+      }
+    }
+
+  });
+
+  $("#actions").click(function(){
+    if (!actionMenuOpen){
+      if (ps.matchState == "choseSolo"){
+        $("#choseSoloActions").css("display", "block");
+      }
+      if (ps.matchState == "searching"){
+        $("#searchingActions").css("display", "block");
+      }
+      if (ps.matchState == "paired"){
+        $("#pairedActions").css("display", "block");
+      }
+      if (ps.matchState == "idle"){
+        $("#idleActions").css("display", "block");
+      }
+
+      $("#actions").addClass("actionsSelected");
+      actionMenuOpen = true;
+    }
+    else{
+      $("#actions").removeClass("actionsSelected");
+      $("#choseSoloActions").css("display", "none");
+      $("#searchingActions").css("display", "none");
+      $("#pairedActions").css("display", "none");
+      $("#idleActions").css("display", "none");
+      actionMenuOpen = false;
+    }
+  });
+
+  $(".actionItem").click(function(){
+    $("#actions").removeClass("actionsSelected");
+    $("#choseSoloActions").css("display", "none");
+    $("#searchingActions").css("display", "none");
+    $("#pairedActions").css("display", "none");
+    $("#idleActions").css("display", "none");
+    actionMenuOpen = false;
+  });
+
+
+
+  $("#theToyContainer").click(function(){
+    if (actionMenuOpen){
+      $("#actions").removeClass("actionsSelected");
+      $("#choseSoloActions").css("display", "none");
+      $("#searchingActions").css("display", "none");
+      $("#pairedActions").css("display", "none");
+      $("#idleActions").css("display", "none");
+      actionMenuOpen = false;
+    }
+  });
+
+
+  $(".playSolo").click(function(){
+    sendData = {
+      state : ps.matchState,
+    }
+    ps.socket.emit('playSolo', sendData);
+
+    ps.matchState = "choseSolo";
+
+    gtag('event', "ChangeChoice", {
+      'event_category': "Flock",
+      'event_label': "Don't Pair Me"
+    });
+
+    for (let i = 0; i<ps.loneMessages.length;i++){
+      let randomNumber = ps.random(0,1);   // to pick a lone message
+      if (randomNumber<=1/ps.loneMessages.length*(i+1)){
+        $("#infoContent").html("You're playing solo - " + ps.loneMessages[i]);
+        break;
+      }
+    }
+  });
+
+
+
+  $(".sendGoodbye").click(function(){
+    console.log("sending goodbye");
+    sendData = {
+      otherUser : ps.otherUser,
+    }
+    ps.socket.emit('sendGoodbye', sendData);
+
+    gtag('event', "Send message", {
+      'event_category': "Flock",
+      'event_label': "Goodbye"
+    });
+
+    ps.drawMyGoodbye = true;
+
+
+  });
+
+
+  $(".findPartner").click(function(){
+    ps.matchState = "searching";
+
+    sendData = {
+      room : "swoosh",
+      width : ps.width,
+      height : ps.height,
+      pair: true
+    }
+
+    ps.socket.emit('flockMatchMe', sendData);
+    $("#infoContent").html("Finding you a partner... <br> You can play solo in the meantime");
+
+
+    gtag('event', "ChangeChoice", {
+      'event_category': "Flock",
+      'event_label': "Pair Me"
+    });
+  });
+
 
   if($(window).width() < $(window).height()){
     $("#mobileColor").click(function(){

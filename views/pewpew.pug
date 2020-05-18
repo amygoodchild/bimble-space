@@ -12,14 +12,36 @@ block content
     //div(id='drawToggle')
     //  div(id='toggler')
     //div draw / push (p)
-  #info You're playing solo  
+  #info 
+    p#infoContent Finding you a partner... <br> You can play solo in the meantime
+  #actions
+  .actionMenu#pairedActions
+    .actionItem.playSolo Play solo instead
+    .actionItem.sendGoodbye Send goodbye
+  .actionMenu#choseSoloActions
+    .actionItem.findPartner Play paired instead
+  .actionMenu#searchingActions
+    .actionItem.playSolo Cancel search - play solo
+  .actionMenu#idleActions
+    .actionItem.findPartner Play paired instead
+  
+  #goodbye.goodbye
+    .small Your partner says 
+    .large Goodbye
+  #myGoodbye.goodbye
+    .small You say 
+    .large Goodbye
+
   #welcome 
-    p.closer [X]
-    p Drag your cursor  :)
-    p If other people are here at the same time as you, you'll be paired up so you can play together.
+    p Welcome :)
     p
-    p#userCount 
+    p Would you like to try this out alone or get paired up with other people?
     p
+    button.choice#alone Alone
+    button.choice#paired Paired<br>
+    p
+    p.hint (Paired is strongly recommended)
+    p.hint#currentUsers Calculating current users
     
 
     

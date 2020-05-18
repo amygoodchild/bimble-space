@@ -3,8 +3,8 @@ var http = require('http');
 const app = express();
 const path = require('path');
 
-var enforce = require('express-sslify');
-app.use(enforce.HTTPS({ trustProtoHeader: true }))
+//var enforce = require('express-sslify');
+//app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
 
 app.set('view engine', 'pug');
@@ -68,7 +68,8 @@ var io = socket(server);
 var ownID;
 var otherID;
 var numUsers = 0;
-var unMatched = [];
+var toMatch = [];
+var doNotMatch = [];
 var matches = [];
 var room;
 
@@ -88,28 +89,22 @@ function newConnection(socket){
   // Manage user numbers
   numUsers++;
   let data = { numUsers : numUsers}
-  // Ask the client to tell us what room it's in (i.e. which toy it's playing - future proofing for when there are multiple toys)
-  socket.emit('whatsyourinfo', data);
+  socket.emit('onJoin', data);
 
   // Hear back from the client what room it's in.
-  socket.on('myinfo', function(data) {
+  socket.on('flockMatchMe', function(data) {
     socket.join(data.room);
     let newUser = new User(data.room, data.width, data.height, socket.id);
     room = data.room;
-    if (newUser.room == "swoosh"){
-
-      // When a client joins swoosh, add its object to the array of un matched users
-      unMatched.push(newUser);
-      matcher();
-    }
+    // When a client joins swoosh, add its object to the array of un matched users
+    toMatch.push(newUser);
+    matcher();
   });
 
-
-
-  function matcher(){// If we've got 2 users in the unmatched list, make them a match
-    if (unMatched.length>=2){
+  function matcher(){// If we've got 2 users in the toMatch list, make them a match
+    if (toMatch.length>=2){
       // add to Match array
-      let newMatch = new Match(unMatched[0], unMatched[1]);
+      let newMatch = new Match(toMatch[0], toMatch[1]);
       matches.push(newMatch);
       let pairMessage;
 
@@ -134,10 +129,10 @@ function newConnection(socket){
 
 
       // Remove them from the un matched array
-      unMatched.splice(0,2);
+      toMatch.splice(0,2);
       //console.log("matcher");
       //console.log("matched: " + matches);
-      //console.log("unmatched: " + unMatched);
+      //console.log("toMatch: " + toMatch);
     }
   }
 
@@ -152,27 +147,27 @@ function newConnection(socket){
 
     let found = false;
     if (room == "swoosh"){
-      for (let i = 0; i< unMatched.length; i++){
-        if (unMatched[i].id == socket.id){
-          unMatched.splice(i,1);
+      for (let i = 0; i< toMatch.length; i++){
+        if (toMatch[i].id == socket.id){
+          toMatch.splice(i,1);
           found = true;
-          //console.log("not matched disconnected");
+          console.log("not matched disconnected");
           break;
 
         }
       }
       if (!found){
-        //console.log("matched disconnected");
+        console.log("matched disconnected");
         for (let i = 0; i < matches.length; i++){
           if (matches[i].user1.id == socket.id){
-            io.to(matches[i].user2.id).emit('unmatched', '');
-            unMatched.push(matches[i].user2);
+            io.to(matches[i].user2.id).emit('unMatched', '');
+            toMatch.push(matches[i].user2);
             matches.splice(i, 1);
             matcher();
           }
           else if (matches[i].user2.id == socket.id){
-            io.to(matches[i].user1.id).emit('unmatched', '');
-            unMatched.push(matches[i].user1);
+            io.to(matches[i].user1.id).emit('unMatched', '');
+            toMatch.push(matches[i].user1);
             matches.splice(i, 1);
             matcher();
           }
@@ -189,6 +184,39 @@ function newConnection(socket){
       io.to(data.otherUser).emit('theyResized', data);
   });
 
+
+  socket.on('playSolo', function(data) {
+    console.log("playsolo");
+    if (data.state == "paired"){
+      console.log("paired");
+      for (let i = 0; i < matches.length; i++){
+        if (matches[i].user1.id == socket.id){
+          io.to(matches[i].user2.id).emit('unMatched', '');
+          toMatch.push(matches[i].user2);
+          matches.splice(i, 1);
+          matcher();
+        }
+        else if (matches[i].user2.id == socket.id){
+          io.to(matches[i].user1.id).emit('unMatched', '');
+          toMatch.push(matches[i].user1);
+          matches.splice(i, 1);
+          matcher();
+        }
+      }
+    }
+    else if (data.state == "searching"){
+      for (let i = 0; i< toMatch.length; i++){
+        if (toMatch[i].id == socket.id){
+          toMatch.splice(i,1);
+          break;
+        }
+      }
+    }
+  });
+
+  socket.on('sendGoodbye', function(data) {
+    io.to(data.otherUser).emit('goodbye', '');
+  });
 
 }
 

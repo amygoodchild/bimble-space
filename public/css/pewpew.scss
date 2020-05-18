@@ -26,27 +26,92 @@ $pink: rgba(232, 0, 119, 1);
   left: 55px;
   top: 0px;
   z-index: 1;
+  display: none;
 }
 
 #info{
   position: absolute;
   top: 10px;
   left: 190px;
+  height: 45px;
   background: #000000;
   color: #ffffff;
   z-index: 3;
-  padding: 5px 10px 5px 10px;
+  padding: 5px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   font-size: 14px;
   //font-family: Tahoma;
   -webkit-user-select: none; /* Safari */
--moz-user-select: none; /* Firefox */
--ms-user-select: none; /* IE10+/Edge */
-user-select: none; /* Standard */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  display: none;
 
 }
+
+#infoContent{
+  vertical-align: middle;
+  margin: 0px;
+  padding: 0px;
+  display: table-cell;
+}
+
+#actions{
+  background-image: url("../images/kebab.png");
+  background-color: #000000;
+  background-size: 35px;
+  background-repeat: no-repeat;
+  background-position: 4px 5px;
+  width: 45px;
+  height: 45px;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  z-index: 4;
+  display: none;
+  cursor: pointer;
+}
+
+.actionMenu{
+  display: none;
+  z-index: 4;
+  position: absolute;
+  top: 120px;
+  right: 0;
+  width: 100vw;
+  border: 1px solid #ffffff;
+  background: #0d0d0dc7;
+  padding-bottom: 30px;
+}
+
+.actionItem{
+  margin: 30px 0px 0px 5px;
+  padding: 5px 10px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+.actionItem:hover{
+  background-color: #ffffff42;
+}
+
+#actions:hover{
+  background-color: #ffffff42;
+}
+
+
+.actionsSelected{
+  background-color: #ffffff42 !important;
+}
+
+
 
 #mobileColor{
   display: none;
@@ -65,25 +130,87 @@ user-select: none; /* Standard */
   z-index: 5;
   left: 200px;
   top: 60px;
-  background: #000000a4;
-  color: #ffffff;
+  background: #ffffffeb;
+  color: #000000;
   border: 1px #ffffff solid;
-  padding: 0px 20px 10px 20px;
+  padding: 20px 30px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  font-size: 14px;
-  font-family: moonLight;
+  font-size: 16px;
+  font-family: MoonLight;
   line-height: 25px;
   letter-spacing: 0.2px;
   cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 
-#welcome .closer{
-  text-align: right;
-  margin: 6px -10px -22px;
+
+#welcome .choice{
+  background: #620c8e;
+  border: 1px #21042f solid;
+  color: #ffffff;
+  padding: 13px 24px;
+  margin-right: 15px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 16px;
+  font-family: MoonBold;
+  letter-spacing: 0.4px;
+  cursor: pointer;
 }
 
+#welcome #alone{
+  background: #d4d4d4;
+  border: 1px #545454 solid;
+  color: #000000;
+}
+
+#welcome .hint{
+  font-size: 13px;
+  line-height: 20px;
+}
+
+
+.goodbye{
+  position: absolute;
+  width: 250px;
+  height: 118px;
+  padding: 9px;
+  top: 100vh;
+  left: 194px;
+  z-index: 2;
+  background-image: url(../images/heart.png);
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+.goodbye .large{
+  font-size: 45px;
+}
+
+
+#myGoodbye{
+  height: 75px;
+  padding: 6px;
+  right: 15;
+  left: auto;
+  width: 120px;
+  background-size: 50px;
+  top: 100vh;
+}
+
+#myGoodbye .large{
+  font-size: 20px;
+}
 
 canvas{
   position: absolute;
@@ -152,8 +279,39 @@ canvas{
   #options {
     width: 150px;
   }
-}
 
+  #actions{
+    left: 180px !important;
+  }
+
+  #info{
+    left: 230px !important;
+  }
+
+  .actionMenu{
+    left: 180px !important;
+  }
+}
+@media (orientation: landscape) {
+
+  #actions{
+    left: 140px;
+    top: 10px;
+    right: auto;
+  }
+
+  .actionMenu{
+    width: 330px;
+    left: 140px;
+    top: 60px;
+    padding-bottom: 0px;
+  }
+
+  .actionItem{
+    text-align: left;
+    margin: 30px 20px;
+  }
+}
 
 @media (orientation: portrait) {
 
@@ -203,21 +361,24 @@ canvas{
 
   #info{
     position: absolute;
-    top: 60px;
-    right: 5px;
-    max-width: calc(100vw - 5px - 120px);
-    left: auto;
-    bottom: auto;
-    text-align: right;
+    bottom: 12px;
+    top: auto;
+    left: 10px;
+    max-width: calc(100vw - 20px);
   }
+
 
   #welcome{
     position: absolute;
     top: 120px;
-    right: 10px;
-    left: auto;
+    left: 10px;
     width: calc(100vw - 20px);
     max-width: 400px;
+  }
+
+  .goodbye{
+    left: 14px;
+    z-index: 2;
   }
 
 
