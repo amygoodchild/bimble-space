@@ -3,8 +3,8 @@ var http = require('http');
 const app = express();
 const path = require('path');
 
-//var enforce = require('express-sslify');
-//app.use(enforce.HTTPS({ trustProtoHeader: true }))
+var enforce = require('express-sslify');
+app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
 
 app.set('view engine', 'pug');
