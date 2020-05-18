@@ -327,14 +327,14 @@ canvas {
 }
 @media (orientation: landscape) {
   #actions {
-    left: 140px;
+    left: 140px !important;
     top: 10px;
     right: auto;
   }
 
   .actionMenu {
     width: 330px;
-    left: 140px;
+    left: 140px !important;
     top: 60px;
     padding-bottom: 0px;
   }
@@ -393,7 +393,7 @@ canvas {
     position: absolute;
     bottom: 12px;
     top: auto;
-    left: 10px;
+    left: 10px !important;
     max-width: calc(100vw - 20px);
   }
 
