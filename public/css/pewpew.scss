@@ -48,7 +48,34 @@ $pink: rgba(232, 0, 119, 1);
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
   display: none;
+}
 
+#idleWarning{
+  position: absolute;
+  top: 55px;
+  left: 190px;
+  height: 45px;
+  background: #000000;
+  color: #ffffff;
+  z-index: 3;
+  padding: 5px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 14px;
+  //font-family: Tahoma;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  display: none;
+}
+
+#idleWarningContent{
+  vertical-align: middle;
+  margin: 0px;
+  padding: 0px;
+  display: table-cell;
 }
 
 #infoContent{
@@ -288,6 +315,10 @@ canvas{
     left: 230px !important;
   }
 
+  #idleWarning{
+    left: 230px !important;
+  }
+
   .actionMenu{
     left: 180px !important;
   }
@@ -369,6 +400,13 @@ canvas{
     max-width: calc(100vw - 20px);
   }
 
+  #idleWarning{
+    position: absolute;
+    bottom: 95px;
+    top: auto;
+    left: 10px !important;
+    max-width: calc(100vw - 20px);
+  }
 
   #welcome{
     position: absolute;

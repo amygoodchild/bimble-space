@@ -146,6 +146,9 @@ const pewpewSketch = ( p ) => {
   p.drawMyGoodbye = false;
   p.drawMyGoodbyeCount = 100;
 
+  p.idleMillis = 0;
+  p.idleCounting = false;
+
   p.setup = () => {
     // Connects to server for comms
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
@@ -247,7 +250,12 @@ const pewpewSketch = ( p ) => {
   }
 
   p.onJoin = (data) =>{
-    $("#currentUsers").html("There are currently "+ data.numUsers + " users here that you could be paired with.");
+    if (data.numPairingUsers == 1){
+      $("#currentUsers").html("There is currently "+ data.numPairingUsers + " other user here that you could be paired with.");
+    }
+    else{
+      $("#currentUsers").html("There are currently "+ data.numPairingUsers + " other users here that you could be paired with.");
+    }
   }
 
   p.unmatched = (data) =>{
@@ -397,6 +405,11 @@ const pewpewSketch = ( p ) => {
     }
 
     if (p.mouseIsPressed){
+      if (p.idleCounting){
+        p.idleCounting = false;
+        $("#idleWarning").css("display", "none");
+      }
+      p.idleMillis = p.millis();
       if(p.dragLength == 0){
         //new drag
         p.drawCounter++;
@@ -515,8 +528,6 @@ const pewpewSketch = ( p ) => {
     }
 
 
-    p.start = p.millis();
-
     for (var i = p.boids.length; i > 0; i--){
       // if the boid has shrunk under a certain size, delete it
       if (p.boids[i-1].diameter < 0 && p.boids[i-1].diameterGrowing == false){
@@ -580,6 +591,46 @@ const pewpewSketch = ( p ) => {
         $("#myGoodbye").css("top", "100vh");
       }
     }
+
+
+    if (ps.matchState == "searching" | ps.matchState == "paired"){
+      if (p.millis() > p.idleMillis + 60000 ){
+        sendData = {
+          state : ps.matchState,
+        }
+        ps.socket.emit('playSolo', sendData);
+
+        $("#idleWarningContent").html("You have been unpaired due lack of activity. Use the menu above to reconnect");
+        p.matchState = "idle";
+        p.matched = false;
+
+        gtag('event', "Idle", {
+          'event_category': "Flock",
+          'event_label': "Idle"
+        });
+
+        p.idleCounting = false;
+
+        for (let i = 0; i<ps.loneMessages.length;i++){
+          let randomNumber = ps.random(0,1);   // to pick a lone message
+          if (randomNumber<=1/ps.loneMessages.length*(i+1)){
+            $("#infoContent").html("You're playing solo - " + ps.loneMessages[i]);
+            break;
+          }
+        }
+
+      }
+
+      else if (p.millis() > p.idleMillis + 50000){
+        p.idleCounting = true;
+        $("#idleWarning").css("display", "table");
+        let seconds = 60 - (p.int((p.millis() - p.idleMillis) / 1000));
+
+        $("#idleWarningContent").html("You will be disconnected if you do not draw in the next " + seconds + " seconds");
+      }
+    }
+
+
 
   };
 

@@ -150,6 +150,7 @@ $(document).ready(function(){
         break;
       }
     }
+    $("#idleWarning").css("display", "none");
   });
 
 
@@ -190,6 +191,8 @@ $(document).ready(function(){
       'event_category': "Flock",
       'event_label': "Pair Me"
     });
+
+    $("#idleWarning").css("display", "none");
   });
 
 

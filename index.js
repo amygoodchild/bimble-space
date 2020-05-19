@@ -68,6 +68,7 @@ var io = socket(server);
 var ownID;
 var otherID;
 var numUsers = 0;
+var numPairingUsers = 0;
 var toMatch = [];
 var doNotMatch = [];
 var matches = [];
@@ -88,11 +89,12 @@ function newConnection(socket){
 
   // Manage user numbers
   numUsers++;
-  let data = { numUsers : numUsers}
+  let data = { numUsers : numUsers, numPairingUsers: numPairingUsers}
   socket.emit('onJoin', data);
 
   // Hear back from the client what room it's in.
   socket.on('flockMatchMe', function(data) {
+    numPairingUsers++;
     socket.join(data.room);
     let newUser = new User(data.room, data.width, data.height, socket.id);
     room = data.room;
@@ -151,25 +153,25 @@ function newConnection(socket){
         if (toMatch[i].id == socket.id){
           toMatch.splice(i,1);
           found = true;
-          console.log("not matched disconnected");
+          numPairingUsers--;
           break;
-
         }
       }
       if (!found){
-        console.log("matched disconnected");
         for (let i = 0; i < matches.length; i++){
           if (matches[i].user1.id == socket.id){
             io.to(matches[i].user2.id).emit('unMatched', '');
             toMatch.push(matches[i].user2);
             matches.splice(i, 1);
             matcher();
+            numPairingUsers--;
           }
           else if (matches[i].user2.id == socket.id){
             io.to(matches[i].user1.id).emit('unMatched', '');
             toMatch.push(matches[i].user1);
             matches.splice(i, 1);
             matcher();
+            numPairingUsers--;
           }
         }
       }
@@ -186,9 +188,8 @@ function newConnection(socket){
 
 
   socket.on('playSolo', function(data) {
-    console.log("playsolo");
     if (data.state == "paired"){
-      console.log("paired");
+      numPairingUsers--;
       for (let i = 0; i < matches.length; i++){
         if (matches[i].user1.id == socket.id){
           io.to(matches[i].user2.id).emit('unMatched', '');
@@ -205,6 +206,7 @@ function newConnection(socket){
       }
     }
     else if (data.state == "searching"){
+      numPairingUsers--;
       for (let i = 0; i< toMatch.length; i++){
         if (toMatch[i].id == socket.id){
           toMatch.splice(i,1);
