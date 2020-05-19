@@ -71,6 +71,21 @@ $pink: #e80077;
   src: url("../fonts/Roboto-Light.ttf");
 }
 
+@font-face {
+  font-family: cocoLight;
+  src: url("../fonts/Cocogoose Pro Light.ttf");
+}
+
+@font-face {
+  font-family: cocoUltraLight;
+  src: url("../fonts/Cocogoose Pro Ultralight.ttf");
+}
+
+@font-face {
+  font-family: cocoThin;
+  src: url("../fonts/Cocogoose Pro Thin.ttf");
+}
+
 #menu{
   width: 150px;
   height: 100vh;

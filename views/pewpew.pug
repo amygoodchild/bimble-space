@@ -35,14 +35,22 @@ block content
     .large Goodbye
 
   #welcome 
-    p Welcome :)
+    p Hi, this is 
+      span.light Flock.
     p
-    p Would you like to try this out alone or get paired up with other people?
+    p If there are other people here, you can play 
+      span.light together. 
     p
-    button.choice#alone Alone
-    button.choice#paired Paired<br>
     p
-    p.hint (Paired is strongly recommended)
+    .checkboxHolder
+      #checkbox
+      #checkBoxLabel Pair me with other people 
+        span.small (recommended)
+      
+    button.choice#start Start 
+    //button.choice#alone Alone
+
+    p
     p.hint#currentUsers Calculating current users
     
 

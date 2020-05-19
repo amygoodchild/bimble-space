@@ -173,6 +173,41 @@ $pink: rgba(232, 0, 119, 1);
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
+  font-family: cocoUltraLight;
+}
+
+#welcome .checkboxHolder {
+  width: 100%;
+  float: left;
+  margin-top: 30px;
+}
+
+
+#welcome .light {
+    font-family: cocoLight;
+}
+
+#welcome .checkboxHolder #checkbox {
+  float: left;
+  width: 18px;
+  height: 40px;
+  background-image: url('../images/checkbox-checked.png');
+  background-repeat: no-repeat;
+}
+
+#welcome .checkboxHolder #checkBoxLabel {
+  margin-left: 7px;
+  float: left;
+  width: 240px;
+  line-height: 20px;
+}
+
+#welcome .checkboxHolder #checkBoxLabel .small {
+  font-size: 13px;
+}
+
+.checkboxUnchecked{
+  background-image: url('../images/checkbox-unchecked.png') !important;
 }
 
 
@@ -189,6 +224,7 @@ $pink: rgba(232, 0, 119, 1);
   font-family: MoonBold;
   letter-spacing: 0.4px;
   cursor: pointer;
+  margin-top: 15px;
 }
 
 #welcome #alone{
@@ -200,6 +236,7 @@ $pink: rgba(232, 0, 119, 1);
 #welcome .hint{
   font-size: 13px;
   line-height: 20px;
+  display: none;
 }
 
 
@@ -431,6 +468,13 @@ canvas{
     left: 0px !important;
   }
 
+}
 
+
+@media (max-width: 320px) {
+  #welcome{
+    padding: 15px;
+    font-size: 15px;
+  }
 
 }
