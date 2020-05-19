@@ -47,10 +47,10 @@
 
 #idleWarning {
   position: absolute;
-  top: 55px;
-  left: 190px;
+  top: 115px;
+  left: 140px;
   height: 45px;
-  background: #000000;
+  background: #19003b;
   color: #ffffff;
   z-index: 3;
   padding: 5px;
@@ -397,7 +397,7 @@ canvas {
   }
 
   #idleWarning {
-    left: 230px !important;
+    left: 185px !important;
   }
 
   .actionMenu {
