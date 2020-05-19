@@ -179,7 +179,7 @@
   /* IE10+/Edge */
   user-select: none;
   /* Standard */
-  font-family: cocoUltraLight;
+  font-family: RobotoLight;
 }
 
 #welcome .checkboxHolder {
@@ -189,7 +189,7 @@
 }
 
 #welcome .light {
-  font-family: cocoLight;
+  font-family: robotoRegular;
 }
 
 #welcome .checkboxHolder #checkbox {
