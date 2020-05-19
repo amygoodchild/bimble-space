@@ -74,7 +74,7 @@ $(document).ready(function(){
     } else if (elem.msRequestFullscreen) { /* IE/Edge */
       elem.msRequestFullscreen();
     }
-    sortOutWindowResize()
+    sortOutWindowResize();
     //resizeCanvas(windowWidth, windowHeight);
     //background('#fffffff');
   }
@@ -89,7 +89,7 @@ $(document).ready(function(){
     } else if (elem.msRequestFullscreen) { /* IE/Edge */
       document.msExitFullscreen();
     }
-    sortOutWindowResize()
+    sortOutWindowResize();
     //resizeCanvas(windowWidth, windowHeight);
     //background('#fffffff');
   }

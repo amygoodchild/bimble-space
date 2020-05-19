@@ -71,6 +71,10 @@ function registerOwnID(data){
   console.log(data);
 }
 
+function sortOutWindowResize(){
+
+}
+
 const pewpewSketch = ( p ) => {
 
   p.boids = [];
