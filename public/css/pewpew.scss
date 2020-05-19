@@ -32,7 +32,7 @@ $pink: rgba(232, 0, 119, 1);
 #info{
   position: absolute;
   top: 10px;
-  left: 190px;
+  left: 140px;
   height: 45px;
   background: #000000;
   color: #ffffff;
@@ -86,12 +86,12 @@ $pink: rgba(232, 0, 119, 1);
 }
 
 #actions{
-  background-image: url("../images/kebab.png");
+  background-image: url("../images/dropdown.png");
   background-color: #000000;
   background-size: 35px;
   background-repeat: no-repeat;
-  background-position: 4px 5px;
-  width: 45px;
+  background-position: right;
+  width: 120px;
   height: 45px;
   position: absolute;
   top: 60px;
@@ -99,6 +99,10 @@ $pink: rgba(232, 0, 119, 1);
   z-index: 4;
   display: none;
   cursor: pointer;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding: 14px 0px 0px 10px;
 }
 
 .actionMenu{
@@ -227,6 +231,10 @@ $pink: rgba(232, 0, 119, 1);
   margin-top: 15px;
 }
 
+#welcome .choice:hover {
+  background: #803296;
+}
+
 #welcome #alone{
   background: #d4d4d4;
   border: 1px #545454 solid;
@@ -345,11 +353,11 @@ canvas{
   }
 
   #actions{
-    left: 180px !important;
+    left: 185px !important;
   }
 
   #info{
-    left: 230px !important;
+    left: 185px !important;
   }
 
   #idleWarning{
@@ -357,7 +365,7 @@ canvas{
   }
 
   .actionMenu{
-    left: 180px !important;
+    left: 185px !important;
   }
 }
 
@@ -366,20 +374,20 @@ canvas{
 
   #actions{
     left: 140px;
-    top: 10px;
+    top: 60px;
     right: auto;
   }
 
   .actionMenu{
     width: 330px;
     left: 140px;
-    top: 60px;
+    top: 105px;
     padding-bottom: 0px;
   }
 
   .actionItem{
     text-align: left;
-    margin: 30px 20px;
+    margin: 20px 10px;
   }
 }
 
