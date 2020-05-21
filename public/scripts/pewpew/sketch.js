@@ -597,7 +597,7 @@ const pewpewSketch = ( p ) => {
     }
 
 
-    if (ps.matchState == "searching" | ps.matchState == "paired"){
+    if (ps.matchState == "searching" | ps.matchState == "paired" | ps.matchState == "idle"){
       if (p.millis() > p.idleMillis + 60000 ){
         sendData = {
           state : ps.matchState,

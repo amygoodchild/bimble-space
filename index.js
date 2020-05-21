@@ -6,7 +6,6 @@ const path = require('path');
 var enforce = require('express-sslify');
 app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
-
 app.set('view engine', 'pug');
 app.set('views', './views');
 
@@ -196,6 +195,7 @@ function newConnection(socket){
           toMatch.push(matches[i].user2);
           matches.splice(i, 1);
           matcher();
+
         }
         else if (matches[i].user2.id == socket.id){
           io.to(matches[i].user1.id).emit('unMatched', '');
@@ -205,7 +205,7 @@ function newConnection(socket){
         }
       }
     }
-    else if (data.state == "searching"){
+    else {
       numPairingUsers--;
       for (let i = 0; i< toMatch.length; i++){
         if (toMatch[i].id == socket.id){
@@ -235,5 +235,6 @@ class Match{
   constructor(user1, user2){
     this.user1 = user1;
     this.user2 = user2;
+
   }
 }
