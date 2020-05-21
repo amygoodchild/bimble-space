@@ -143,6 +143,7 @@ $(document).ready(function(){
   $(".playSolo").click(function(){
     sendData = {
       state : ps.matchState,
+      choice: "chose solo"
     }
     ps.socket.emit('playSolo', sendData);
 

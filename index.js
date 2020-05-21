@@ -187,6 +187,7 @@ function newConnection(socket){
 
 
   socket.on('playSolo', function(data) {
+    console.log("user " + socket.id + " " + data.choice);
     if (data.state == "paired"){
       numPairingUsers--;
       for (let i = 0; i < matches.length; i++){
