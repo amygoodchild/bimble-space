@@ -86,7 +86,8 @@ const pewpewSketch = ( p ) => {
 
 
   p.colorJitter = 12;       // colours are picked from a set of pre selected ones, but with a little randomness built into the hues for depth
-  p.wiggleAmount = 2;
+  p.wiggleAmount = 5;
+  p.noiseSpeed = 0.05;
 
   p.maxSize = 32;         // Size the boids will grow to
   p.minSize = 20;
@@ -133,8 +134,9 @@ const pewpewSketch = ( p ) => {
   p.separationDistanceSlider;
   p.forceSlider;
 
-  p.perceptionRadius = 75;     // when flocking
-  p.desiredSeparation = 15;     // when flocking
+  // flock variables
+  p.perceptionRadius = 75;
+  p.desiredSeparation = 15;
   p.separationAmount = 1.2;
   p.separationDistanceAmount = 30;
   p.alignAmount = 2.0;
@@ -488,7 +490,7 @@ const pewpewSketch = ( p ) => {
 
             var newBoid = new Boid(p.random(p.mouseX - p.spawnRandomness, p.mouseX + p.spawnRandomness), // pos x
                                 p.random(p.mouseY - p.spawnRandomness, p.mouseY + p.spawnRandomness),    // pos y
-                                p.random(0,1000), p.random(0,1000), 0.05,                                // xoff yoff noiseSpeed
+                                p.random(0,1000), p.random(0,1000), p.noiseSpeed,                                // xoff yoff noiseSpeed
                                 p.mouseDirection.x, p.mouseDirection.y,                                  // velocity
                                 5, p.random(p.minSize,p.maxSize),                                        // diameter maxdiameter
                                 tempHue, tempSat, tempBri);                                              // hue sat bri

@@ -1,0 +1,31 @@
+#img-out {
+  position: absolute;
+  right: 0;
+  z-index: -10;
+}
+
+
+#theToyContainer {
+  width: calc(100% - 55px);
+  height: 100%;
+  margin-left: 55px;
+}
+
+
+@media (orientation: portrait) {
+  #theToyContainer {
+    width: 100%;
+    height: calc(100% - 50px);
+    margin-left: 0px;
+    margin-top: 50px;
+    overscroll-behavior-y: contain;
+  }
+
+  canvas {
+    overscroll-behavior-y: contain;
+  }
+
+  body {
+    overscroll-behavior-y: contain;
+  }
+}
