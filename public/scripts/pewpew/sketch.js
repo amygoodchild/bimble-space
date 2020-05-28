@@ -86,7 +86,7 @@ const pewpewSketch = ( p ) => {
 
 
   p.colorJitter = 12;       // colours are picked from a set of pre selected ones, but with a little randomness built into the hues for depth
-  p.wiggleAmount = 5;
+  p.wiggleAmount = 3;
   p.noiseSpeed = 0.05;
 
   p.maxSize = 32;         // Size the boids will grow to
