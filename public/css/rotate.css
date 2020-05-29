@@ -9,6 +9,7 @@
   width: calc(100% - 55px);
   height: 100%;
   margin-left: 55px;
+  cursor: crosshair;
 }
 
 
@@ -19,6 +20,7 @@
     margin-left: 0px;
     margin-top: 50px;
     overscroll-behavior-y: contain;
+    cursor: crosshair;
   }
 
   canvas {
