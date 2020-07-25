@@ -1,0 +1,51 @@
+#img-out {
+  position: absolute;
+  right: 0;
+  z-index: -10;
+}
+
+#menu{
+  display: none;
+}
+
+#theToyContainer {
+  /*width: calc(100% - 55px);*/
+  width: 100%;
+  height: 100%;
+  /*margin-left: 55px;*/
+  cursor: crosshair;
+}
+
+
+#controls{
+  display: none;
+  width: 250px;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: #080808;
+  border-right: 1px solid #ffffff;
+}
+
+
+
+@media (orientation: portrait) {
+  #theToyContainer {
+    width: 100%;
+    /*height: calc(100% - 50px);*/
+    height: 100%;
+    margin-left: 0px;
+    margin-top: 0px;
+    overscroll-behavior-y: contain;
+    cursor: crosshair;
+  }
+
+  canvas {
+    overscroll-behavior-y: contain;
+  }
+
+  body {
+    overscroll-behavior-y: contain;
+  }
+}

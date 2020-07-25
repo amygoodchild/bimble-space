@@ -1,0 +1,107 @@
+extends toy.pug
+
+block thisToyScripts
+  script(src='scripts/screenshots/html2canvas.js')
+  script(src='scripts/screenshots/screenshot_lines.js')
+  script(src='scripts/linesidea/midi.js')
+
+
+block content
+  #controls
+    .labelHorizontal
+      .sectionLabel Noise  
+    .controlHorizontal
+      #randomizeNoiseSeedButton.noiseButton Random Noise
+      input(type='text')#randomizeNoiseSeed
+    .controlHorizontal
+      #randomizeSeedStartButton.noiseButton Random Seed
+      input(type='text')#randomizeSeedStart  
+    .controlHorizontal
+      .label Seed Start Step
+      input(type='text')#seedStartStep
+        
+    .divider
+    .labelHorizontal
+      .sectionLabel Lines        
+    .controlHorizontal
+      .label NumLines
+      input(type='text')#numLines
+    .controlHorizontal
+      .label Thickness
+      input(type='text')#thickness
+    .controlHorizontal
+      .label Y line resolution
+      input(type='text')#yResolution
+    .controlHorizontal
+      .label Noise change
+      input(type='text')#noiseChange
+    .controlHorizontal
+      .label Wiggle Left
+      input(type='text')#wiggleLeft
+    .controlHorizontal
+      .label Wiggle right
+      input(type='text')#wiggleRight
+    .controlHorizontal
+      .label Lerp
+      input(type='text')#lerp 
+    
+    .divider
+      
+    .controlHorizontal
+      .sectionLabel Colours  
+    .column
+      .controlVertical
+        .label Hue from
+        input(type='text')#hueFrom1
+      .controlVertical
+        .label Hue to
+        input(type='text')#hueTo1
+      .controlVertical
+        .label Saturation
+        input(type='text')#sat1 
+      .controlVertical
+        .label Brightness
+        input(type='text')#bri1   
+      .controlVertical
+        .label Opacity
+        input(type='text')#opa1   
+    .column
+      .controlVertical
+        .label Hue from
+        input(type='text')#hueFrom2
+      .controlVertical
+        .label Hue to
+        input(type='text')#hueTo2
+      .controlVertical
+        .label Saturation
+        input(type='text')#sat2 
+      .controlVertical
+        .label Brightness
+        input(type='text')#bri2   
+      .controlVertical
+        .label Opacity
+        input(type='text')#opa2
+    .controlHorizontal
+      #splitButton.optionButton Split 
+      #alternateButton.optionButton.optionSelected Alternate       
+    
+    .divider
+    .LabelHorizontal
+      .sectionLabel Generate
+    .controlHorizontal
+      #generateLayerButton.generateButton Layer 
+      #generateNewButton.generateButton New 
+    .controlHorizontal    
+      #saveButton Save
+      
+    .divider
+    .LabelHorizontal
+      .sectionLabel Auto generate?
+    .controlHorizontal
+      #autoLayerButton.autoButton Layer 
+      #autoNewButton.autoButton New 
+      #noAutoButton.autoButton.optionSelected  No
+        
+  #theToyContainer
+  #img-out
+  

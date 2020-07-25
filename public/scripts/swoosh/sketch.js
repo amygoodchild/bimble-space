@@ -76,8 +76,8 @@ class Circle{
 
   update(){
     this.position = this.position.add(this.velocity);
-    let tempX = noise.perlin2(this.xoff, this.yoff) * 3;
-    let tempY = noise.perlin2(this.yoff, this.xoff) * 3;
+    let tempX = noise.perlin2(this.xoff, this.yoff) * 5;
+    let tempY = noise.perlin2(this.yoff, this.xoff) * 5;
 
     let tempVector = new MyVector(tempX, tempY);
     this.position = this.position.add(tempVector);
@@ -123,19 +123,19 @@ class Circle{
 var clicking = false;
 
 var circles = [];
-var spawnProbability = 0.25;
-var duplicates = 3;
-var maxCircles = 50;
+var spawnProbability = 0.75;
+var duplicates = 5;
+var maxCircles = 250;
 
 var maxSize = 13;
 var minSize = 4;
-var fadeLength = 10;
+var fadeLength = 5;
 
 var previousMouseX = 0;
 var previousMouseY = 0;
 
 var spawnPositionSpread = 10;
-var wiggleAmount = 5;
+var wiggleAmount = 100;
 
 var huePicker = 0;
 var colorCollections = [];
@@ -260,7 +260,7 @@ function moving(e){
   let pos = e.data.global;
   let start = Date.now()
   if (clicking && circles.length < maxCircles){
-    let mouseDirection = new MyVector(myMap(e.data.global.x - previousMouseX, -300, 300, -50,50), myMap(e.data.global.y - previousMouseY, -300, 300, -50, 50));
+    let mouseDirection = new MyVector(myMap(e.data.global.x - previousMouseX, -300, 300, -80,80), myMap(e.data.global.y - previousMouseY, -300, 300, -80, 80));
     //let mouseDirection = new MyVector(1,0);
 
     for (let i = 0; i< duplicates; i++){

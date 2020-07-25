@@ -1,0 +1,52 @@
+extends toy.pug
+
+block thisToyScripts
+  // extra script links here if needed
+
+
+block content
+
+  #options
+    #penColors
+      .optionText Pen
+      - for (var i = 0; i < 5; i++)
+        button(id='penColor' + i).penColorButton
+    #bgColors
+      .optionText Canvas
+      - for (var i = 0; i < 5; i++)
+        button(id='bgColor' + i).bgColorButton
+    button(id='clearAllButton').clearButton Clear
+    #otherOptions
+      #optionDrawerTitle.optionText Options
+      #optionDrawer
+        .optionText Trails
+        #trailLengthDisplay.sliderDisplay 100
+        .sliderContainer
+          input(type='range' min="0" max="10" step="1" value="5" id="trailLength").slider  
+        .optionText Pen Size 
+        #penSizeDisplay.sliderDisplay 6
+        .sliderContainer
+          input(type='range' min="6" max="90" step="1" value="10" id="penSize").slider
+
+        //.optionText Smooth
+        //#penLerpDisplay.sliderDisplay 2
+        //.sliderContainer
+          input(type='range' min="0" max="5" step="1" value="2" id="penLerp").slider
+          
+        .optionText Speed
+        #spinSpeedDisplay.sliderDisplay 3
+        .sliderContainer
+          input(type='range' min="1" max="5" step="1" value="3" id="spinSpeed").slider
+          
+        .optionText Spin way
+        button(id='spinClockWise').spinButton.buttonSelected
+        button(id='spinAntiClockWise').spinButton
+
+      //#divider
+      //button(id='soloButton').pairingButton
+      //button(id='byeButton').pairingButton
+          
+  #theToyContainer
+  #img-out
+    
+  

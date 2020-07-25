@@ -90,7 +90,7 @@ const rotateSketch = ( p ) => {
     p.rippleCanvas.parent('theToyContainer');
 
 
-      p.background(300,10,100);
+      p.background(200,15,100);
 
     p.lerpMouseX = p.width/2;
     p.lerpMouseY = p.height/2;
@@ -99,7 +99,7 @@ const rotateSketch = ( p ) => {
 
 
   p.draw = () => {
-    p.background(300,10,100,1);
+    p.background(200,15,100,1);
 
     p.lerpMouseX = p.lerp(p.lerpMouseX, p.mouseX, 0.5);
     p.lerpMouseY = p.lerp(p.lerpMouseY, p.mouseY, 0.5);
@@ -113,7 +113,7 @@ const rotateSketch = ( p ) => {
       p.locations.push(newLocation);
     }
 
-    if (p.locations.length > 1000){
+    if (p.locations.length > 800){
       p.locations.splice(0,1);
     }
 
@@ -136,8 +136,8 @@ const rotateSketch = ( p ) => {
           p.rotate((p.locations.length-i)/rotationDivision);
           p.translate(-(p.width/2), -(p.height/2));
 
-          p.stroke(p.map(i, 0, p.locations.length, 200,300),50,90,70);
-          p.fill(p.map(i, 0, p.locations.length, 300,200),50,100,70);
+        //p.stroke(p.map(i, 0, p.locations.length, 200,300),50,90,70);
+          p.fill(p.map(i, 0, p.locations.length, 175,200),100,95,70);
           //p.strokeWeight(3);
           p.noStroke();
           //p.line(p.locations[i].position.x, p.locations[i].position.y, p.locations[i+1].position.x, p.locations[i+1].position.y);

@@ -89,8 +89,8 @@ const pewpewSketch = ( p ) => {
   p.wiggleAmount = 3;
   p.noiseSpeed = 0.05;
 
-  p.maxSize = 32;         // Size the boids will grow to
-  p.minSize = 20;
+  p.maxSize = 25;         // Size the boids will grow to
+  p.minSize = 15;
   p.deleteDiameter = 12;   // size the boids get deleted at
 
   p.previousMouseX = 0;   // To figure out what direction the mouse is going in
@@ -124,7 +124,7 @@ const pewpewSketch = ( p ) => {
   p.frameRateLerp = 60;  // For displaying framerate more smoothly/readably
 
   p.disableFriendlyErrors = true; // Supposed to improve p5js performance... *shrug*
-  p.debugMode = false;    // debug and stuff for measuring time taken
+  p.debugMode = true;    // debug and stuff for measuring time taken
   p.start = 0;
   p.elapsed = 0;
 
@@ -376,13 +376,14 @@ const pewpewSketch = ( p ) => {
       p.fill(0,0,0);
       p.rect(80,0,40,90);
       p.fill(0,0,100);
-      p.text(p.int(p.frameRateLerp), 83, 20);
+      p.textSize(50);
+      p.text(p.int(p.frameRateLerp), 230, 200);
+      p.textSize(20);
+      p.text("framerate:", 85, 200);
     }
 
-    //p.start = p.millis();
 
     // Decide how many boids we should allow, based on frame rate.
-    //if(p.frameCount%6 == 0){
       if (p.frameRate() < 20){
         p.maxBoids = p.lerp(p.maxBoids, p.lowMaxBoids, 0.8);
         //console.log("under 20");
@@ -401,13 +402,17 @@ const pewpewSketch = ( p ) => {
       else{
         p.maxBoids = p.lerp(p.maxBoids, p.map(p.frameRate(), 40, 55, p.lowMaxBoids, p.topMaxBoids), 0.5);
       }
-    //}
 
-    //p.elapsed = p.nf(p.millis() - p.start, 1, 4);
+
 
     if(p.debugMode){
-      p.text( p.int(p.maxBoids), 83, 40);
-      p.text( p.boids.length, 83, 60);
+      p.textSize(20);
+      p.text("max bubbles:", 85, 280);
+      p.text("current bubbles:", 85, 360);
+
+      p.textSize(50);
+      p.text( p.int(p.maxBoids), 230, 280);
+      p.text( p.boids.length, 230, 360);
     }
 
     if (p.mouseIsPressed){

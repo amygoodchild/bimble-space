@@ -1,0 +1,167 @@
+#img-out {
+  position: absolute;
+  right: 0;
+  z-index: -10;
+}
+
+#menu{
+  display: none;
+}
+
+#theToyContainer {
+  /*width: calc(100% - 55px);*/
+  width: 100%;
+  height: 100%;
+  /*margin-left: 55px;*/
+  cursor: crosshair;
+}
+
+#saveButton{
+  width: calc(50% - 20px);
+  float: left;
+  margin-right: 20px;
+  height: 22px;
+  background-color: #cccccc;
+  color: #000000;
+  text-align: center;
+  padding-top: 8px;
+  cursor: pointer;
+}
+
+#controls{
+  display: none;
+  width: 250px;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: #080808;
+  border-right: 1px solid #ffffff;
+}
+
+.controlHorizontal{
+  width: 100%;
+  margin-top: 15px;
+  padding-left: 10px;
+  float: left;
+}
+
+.labelHorizontal{
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: -10px;
+  padding-left: 10px;
+  float: left;
+}
+
+
+input{
+  width: 70px;
+  float: left;
+}
+
+.noiseButton{
+  float: right;
+  width: 150px;
+  height: 17px;
+  margin-right: 20px;
+  background-color: #cccccc;
+  color: #000000;
+  text-align: center;
+  padding-top: 3px;
+  cursor: pointer;
+}
+
+.controlHorizontal .label{
+  width: 170px;
+  text-size: 12px;
+  float: right;
+}
+
+.divider{
+  margin: 15px 10px 5px 10px;
+  background: #ffffff;
+  height: 1px;
+  float: left;
+  width: calc(100% - 20px);
+}
+
+.sectionLabel{
+  text-size: 12px;
+  float: left;
+}
+
+.column{
+  width: calc(50% - 30px);
+  float: left;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+.controlVertical{
+  margin-top: 15px;
+  float: left;
+}
+
+.optionButton{
+  width: calc(50% - 20px);
+  float: left;
+  margin-right: 20px;
+  height: 22px;
+  background-color: #cccccc;
+  color: #000000;
+  text-align: center;
+  padding-top: 8px;
+  cursor: pointer;
+}
+
+
+.generateButton{
+  width: calc(50% - 20px);
+  float: left;
+  margin-right: 20px;
+  height: 22px;
+  background-color: #cccccc;
+  color: #000000;
+  text-align: center;
+  padding-top: 8px;
+  cursor: pointer;
+}
+
+.autoButton{
+  width: calc(33% - 20px);
+  float: left;
+  margin-right: 20px;
+  height: 22px;
+  background-color: #cccccc;
+  color: #000000;
+  text-align: center;
+  padding-top: 8px;
+  cursor: pointer;
+}
+
+.optionSelected{
+  background-color: #6b6b6b;
+  color: #ffffff;
+}
+
+
+@media (orientation: portrait) {
+  #theToyContainer {
+    width: 100%;
+    /*height: calc(100% - 50px);*/
+    height: 100%;
+    margin-left: 0px;
+    margin-top: 0px;
+    overscroll-behavior-y: contain;
+    cursor: crosshair;
+  }
+
+  canvas {
+    overscroll-behavior-y: contain;
+  }
+
+  body {
+    overscroll-behavior-y: contain;
+  }
+}

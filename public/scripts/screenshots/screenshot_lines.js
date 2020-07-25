@@ -1,10 +1,10 @@
 $(document).ready(function(){
 
-  $("#saveButton").click(function(){
+  /*$("#saveButton").click(function(){
 
     $("#img-out").html("");
 
-    html2canvas(document.querySelector("#theToyContainer")).then(canvasa => {
+    html2canvas(document.querySelector("#defaultCanvas0")).then(canvasa => {
 
       document.getElementById('img-out').appendChild(canvasa);
 
@@ -16,8 +16,19 @@ $(document).ready(function(){
     });
   });
 
+});*/
+
+  $("#saveButton").click(function(){
+    var filename = "bimblespace" + parseInt(Math.random()*1000);
+
+    ps.saveCanvas(filename, 'png');
+
+  });
+
 });
 
+
+/*
 function saveAs(uri, filename) {
 
     var link = document.createElement('a');
@@ -36,4 +47,4 @@ function saveAs(uri, filename) {
     } else {
         window.open(uri);
     }
-}
+}*/
