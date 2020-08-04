@@ -87,6 +87,7 @@ const rotateSketch = ( p ) => {
   p.noDraw = false;
   p.drawOpen = false;
 
+
   p.setup = () => {
   //  p.frameRate(1);
 
@@ -148,13 +149,14 @@ const rotateSketch = ( p ) => {
     }
     else{
       p.blendMode(p.BLEND);
-      p.bgOpacityToUse = p.backgroundOpacity;
+      p.bgOpacityToUse = p.backgroundOpacity/3.5;
     }
 
 
     p.fill(p.red(p.backgrounds[p.chosenBackground]),p.green(p.backgrounds[p.chosenBackground]),p.blue(p.backgrounds[p.chosenBackground]),p.bgOpacityToUse);
     p.noStroke();
     p.rect(0,0,p.width,p.height);
+
 
     p.blendMode(p.BLEND);
 

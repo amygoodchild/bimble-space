@@ -80,6 +80,11 @@ $(".bgColorButton").click(function(){
   let theId = $(this).attr('id');
   theId = theId.charAt(theId.length-1);
   ps.chosenBackground = theId;
+  if (ps.backgroundOpacity == 0){
+    ps.backgroundFade = true;
+    ps.backgroundFadeCount = ps.frameCount;
+  }
+
   $("#bgColors").hide();
   let theClass;
   for (let i=0; i<5;i++){
