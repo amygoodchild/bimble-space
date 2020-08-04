@@ -5,46 +5,56 @@ block thisToyScripts
 
 
 block content
-
-  #options
-    #penColors
-      .optionText Pen
-      - for (var i = 0; i < 5; i++)
-        button(id='penColor' + i).penColorButton
-    #bgColors
-      .optionText Canvas
-      - for (var i = 0; i < 5; i++)
-        button(id='bgColor' + i).bgColorButton
-    button(id='clearAllButton').clearButton Clear
-    #otherOptions
-      #optionDrawerTitle.optionText Options
-      #optionDrawer
-        .optionText Trails
-        #trailLengthDisplay.sliderDisplay 100
-        .sliderContainer
-          input(type='range' min="0" max="10" step="1" value="5" id="trailLength").slider  
-        .optionText Pen Size 
-        #penSizeDisplay.sliderDisplay 6
-        .sliderContainer
-          input(type='range' min="6" max="90" step="1" value="10" id="penSize").slider
-
-        //.optionText Smooth
-        //#penLerpDisplay.sliderDisplay 2
-        //.sliderContainer
-          input(type='range' min="0" max="5" step="1" value="2" id="penLerp").slider
+  #rotateMenu
+    #penColorsMenu.menuOption.allUI
+      .menuIcon.allUI
+      .menuText.allUI Pen
+    #bgColorsMenu.menuOption.allUI
+      .menuIcon.allUI
+      .menuText.allUI Canvas
+    #optionsMenu.menuOption.allUI
+      .menuIcon.allUI
+      .menuText.allUI Options
+    #pairingMenu.menuOption.allUI
+      .menuIcon.allUI
+      .menuText.allUI Connect
+    #clearAllButton.menuOption.allUI
+      .menuIcon.allUI
+      .menuText.allUI Clear
+            
+  #penColors.menuDrawer
+    - for (var i = 0; i < 5; i++)
+      button(id='penColor' + i class='penColor' + i).penColorButton.allUI
+  #bgColors.menuDrawer
+    - for (var i = 0; i < 5; i++)
+      button(id='bgColor' + i class='bgColor' + i).bgColorButton.allUI
+    
+  #optionSelector
+  #options.menuDrawer
+ 
+    .optionHolder
+      .optionText Pen Size
+      .sliderBg
+        - for (var i = 1; i < 7; i++)
+          button(id='penSize' + i).penSizeButton.sliderButton.allUI #{i}
           
-        .optionText Speed
-        #spinSpeedDisplay.sliderDisplay 3
-        .sliderContainer
-          input(type='range' min="1" max="5" step="1" value="3" id="spinSpeed").slider
+    .optionHolder
+      .optionText Spin Direction
+      button(id='spinClockWise').spinButton.buttonSelected.allUI
+      button(id='spinAntiClockWise').spinButton.allUI
           
-        .optionText Spin way
-        button(id='spinClockWise').spinButton.buttonSelected
-        button(id='spinAntiClockWise').spinButton
+    .optionHolder
+      .optionText Trail Length
+      .sliderBg
+        - for (var i = 1; i < 7; i++)
+          button(id='trailLength' + i).trailLengthButton.sliderButton.allUI #{i}
+              
+    .optionHolder
+      .optionText Speed
+      .sliderBg
+        - for (var i = 0; i < 6; i++)
+          button(id='speed' + i).speedButton.sliderButton.allUI #{i}
 
-      //#divider
-      //button(id='soloButton').pairingButton
-      //button(id='byeButton').pairingButton
           
   #theToyContainer
   #img-out

@@ -6,34 +6,53 @@
 
 
 #theToyContainer {
-  width: calc(100% - 55px - 130px);
+  width: calc(100% - 55px);
   height: 100%;
-  margin-left: calc(55px + 130px);
+  margin-left: calc(55px);
   cursor: crosshair;
 }
 
-#options {
-  width: 130px;
-  height: 100vh;
+#rotateMenu{
+  position: absolute;
+  left: 70px;
+  top: 15px;
+}
+
+#rotateMenu .menuOption{
+  width: 51px;
+  height: 60px;
   float: left;
-  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+#rotateMenu .menuOption .menuIcon{
+  width: 43px;
+  height: 43px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  padding-left: 5px;
-  padding-top: 10px;
-  position: absolute;
-  left: 55px;
-  top: 0px;
-  z-index: 1;
-  background: #000000db;
-  border-right: 1px solid #565656;
+  float: left;
+  margin-bottom: 5px;
+  margin-left: 4px;
+  background-color: #000000;
+    border-radius: 25px;
 }
 
-#options .optionText{
-  font-size: 14px;
-  margin-bottom: 5px;
+.allUI{
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+#rotateMenu .menuOption .menuText{
+  font-size: 10px;
   text-align: center;
+  width: 50px;
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -45,46 +64,163 @@
 
 
 
-#otherOptions .optionText{
-  text-align: left;
-  margin-left: 8px;
-  float: left;
-  width: 75px;
+
+#penColorsMenu .menuIcon{
+  border-radius: 25px;
+  border: 2px solid #ffffff;
+  background: linear-gradient(34deg, #73bfe5, #73bfe5, #e573e5, #e573e5);
 }
 
-.sliderDisplay{
-  margin-bottom: 10px;
+#bgColorsMenu .menuIcon{
+  border: 2px solid #ffffff;
+  background: #000000;
+  border-radius: 0px;
+}
+
+#optionsMenu .menuIcon{
+  background-position: 5.5px 5.5px;
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url("../images/rotate/settings.png");
+}
+
+#pairingMenu .menuIcon{
+  background-position: 5px 4.5px;
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url("../images/rotate/pairing.png");
+}
+
+#clearAllButton .menuIcon{
+  background-position: 3px 2px;
+  background-size: 38px;
+  background-repeat: no-repeat;
+  background-image: url("../images/rotate/clear.png");
+}
+
+
+
+#options .optionHolder{
+  width: 290px;
+  height: 50px;
+  margin-top: 0px;
+  margin-bottom: 50px;
+  float: left;
+}
+
+#options .optionText{
   font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
+}
+
+.sliderBg{
+  width: 254px;
+  margin-left: 20px;
+  margin-top: 30px;
+  height: 2px;
+  background: #ff6fed;
+  overflow: visible;
+}
+
+.sliderButton{
   width: 30px;
+  height: 30px;
+  padding: 0px;
+  border: 2px solid #46c9f9;
+  border-radius: 40px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   float: left;
-  text-align: right;
-    -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Old versions of Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently
-                                    supported by Chrome, Edge, Opera and Firefox */
+  outline: 0;
+  background: #000000;
+  margin-left: 14px;
+  margin-top: -15px;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: MoonBold;
+  font-size: 15px;
+}
+
+.sliderButtonSelected{
+  width: 48px;
+  height: 48px;
+  margin-left: 8px;
+  margin-right: -8px;
+  margin-top: -24px;
+  font-size: 24px;
+  background: #143c4a;
+}
+
+.sliderButton:first-child{
+  margin-left: 0px;
 }
 
 
+.sliderButtonSelected:first-child{
+  margin-left: -6px;
+}
+
+
+
+.menuDrawer{
+  background-image: url("../images/rotate/draweropen.png");
+  background-repeat: no-repeat;
+  background-position: 19px 0px;
+  padding-top: 25px;
+}
+
+#optionSelector{
+  position: absolute;
+  top: 80px;
+  left: 191px;
+  width: 55px;
+  height: 20px;
+  background-image: url("../images/rotate/draweropen.png");
+  background-repeat: no-repeat;
+  background-position: 19px 0px;
+  display: none;
+}
 
 #penColors{
   width: 55px;
   height: 300px;
   float: left;
+  position: absolute;
+  top: 80px;
+  left: 68px;
+  display: none;
 }
 
 #bgColors{
   width: 55px;
   height: 300px;
   float: left;
-  margin-left: 5px;
+  display: none;
+  position: absolute;
+  top: 80px;
+  left: 130px;
 }
 
-#otherOptions{
-  width: 125px;
+#options{
+  width: 295px;
+  height: 400px;
   float: left;
+  position: absolute;
+  top: 100px;
+  left: 70px;
+  border: 1px #ffffff solid;
+  background: #000000c7;
+  padding-top: 25px;
+  display:none;
 }
 
 .penColorButton {
@@ -101,6 +237,7 @@
   background: #cccccc;
   margin-left: 6px;
   margin-bottom: 8px;
+  cursor: pointer;
 }
 
 .bgColorButton {
@@ -116,74 +253,39 @@
   background: #cccccc;
   margin-left: 6px;
   margin-bottom: 8px;
-}
-
-#penColor0 {
-  background: linear-gradient(34deg, #73bfe5, #73bfe5, #e573e5, #e573e5);
-}
-
-#penColor1 {
-  background: linear-gradient(34deg, #fe1fea, #fe1fea, #ffce19, #ffce19);
-}
-
-#penColor2 {
-  background: linear-gradient(34deg, #c4e900, #c4e900, #19fff5, #19fff5);
-}
-
-#penColor3 {
-  background: linear-gradient(34deg, #e90000 , #e90000, #2c19ff, #2c19ff);
-}
-
-#penColor4 {
-  background: linear-gradient(34deg, #a000e9 , #a000e9, #ff1995, #ff1995);
-}
-
-
-#bgColor0{ background: #000000; }
-#bgColor1{ background: #ffffff; }
-#bgColor2{ background: #f9ccff; }
-#bgColor3{ background: #ccedff; }
-#bgColor4{ background: #fdffcc; }
-
-
-.slidercontainer {
-  width: 100px;
-  margin-left: 5px;
-  margin-bottom: 20px;
-  float: left;
-
+  cursor: pointer;
 }
 
 
 
-/* The slider itself */
-.slider {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 105px;
-  height: 3px;
-  background: #d3d3d3;
-  outline: none;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+.penColor0 {
+  background: linear-gradient(34deg, #73bfe5, #73bfe5, #e573e5, #e573e5) !important;
 }
 
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
-  appearance: none;
-  border-radius: 10px;
-  width: 20px; /* Set a specific slider handle width */
-  height: 20px; /* Slider handle height */
-  background: #ffffff; /* Green background */
-  cursor: pointer; /* Cursor on hover */
+
+.penColor1 {
+  background: linear-gradient(34deg, #fe1fea, #fe1fea, #ffce19, #ffce19) !important;
 }
 
-.slider::-moz-range-thumb {
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: #4CAF50; /* Green background */
-  cursor: pointer; /* Cursor on hover */
+.penColor2 {
+  background: linear-gradient(34deg, #c4e900, #c4e900, #19fff5, #19fff5) !important;
 }
+
+.penColor3 {
+  background: linear-gradient(34deg, #e90000 , #e90000, #2c19ff, #2c19ff) !important;
+}
+
+.penColor4 {
+  background: linear-gradient(34deg, #a000e9 , #a000e9, #ff1995, #ff1995) !important;
+}
+
+
+.bgColor0{ background: #000000 !important; }
+.bgColor1{ background: #ffffff !important; }
+.bgColor2{ background: #f9ccff !important; }
+.bgColor3{ background: #ccedff !important; }
+.bgColor4{ background: #fdffcc !important; }
+
 
 .spinButton{
   width: 43px;
@@ -195,30 +297,37 @@
   -webkit-box-sizing: border-box;
   float: left;
   outline: 0;
-  background: #cccccc;
-  margin-left: 6px;
+  margin-left: 8px;
   margin-bottom: 15px;
+  background-color: rgba(0,0,0,0);
+  border-radius: 30px;
 }
 
 #spinClockWise{
   background-image: url("../images/rotate/clockwise.png");
+  background-size: 35px 35px;
+  background-position: 3px 2px;
+  margin-left: 95px;
 }
 
 
 #spinAntiClockWise{
   margin-left: 15px;
   background-image: url("../images/rotate/anticlockwise.png");
+  background-size: 35px 35px;
+  background-position: 3px 2px;
 }
 
 .buttonSelected{
   border: 2px solid #46c9f9;
+  background: #143c4a;
 }
 
 
 .clearButton{
   font-family: MoonBold;
   font-size: 14px;
-  width: 101px;
+  width: 103px;
   height: 43px;
   padding: 0px;
   border: 2px solid #ffffff;
@@ -228,8 +337,9 @@
   float: left;
   outline: 0;
   background: #cccccc;
-  margin-left: 6px;
+  margin-left: 8px;
   margin-bottom: 15px;
+  margin-top: 20px;
   cursor: pointer;
       -webkit-touch-callout: none; /* iOS Safari */
         -webkit-user-select: none; /* Safari */
@@ -267,25 +377,19 @@
   margin-bottom: 8px;
   margin-top: 0px;
   cursor: pointer;
-
 }
 
-#optionDrawerTitle{
-  width: 108px !important;
-  margin-bottom: 20px !important;
-  background-image: url('../images/rotate/drawerClosed.png');
-  background-repeat: no-repeat;
-  background-position: 90px 0px;
-  cursor: pointer;
+.blackBorder{
+  border: 2px solid #000000 !important;
 }
 
-.drawerOpen{
-  background-image: url('../images/rotate/drawerOpen.png') !important;
+.blackText{
+  color: #000000;
+  font-family: MoonBold;
 }
 
-#optionDrawer{
-  display: none;
-}
+
+
 
 @media (orientation: portrait) {
   #theToyContainer {
@@ -303,5 +407,46 @@
 
   body {
     overscroll-behavior-y: contain;
+    min-width: 315px;
+  }
+
+  #rotateMenu{
+    left: calc((100vw - 295px) / 2);
+    top: auto;
+    bottom: 10px;
+  }
+
+  #penColors{
+    top: auto;
+    bottom: 45px;
+    left: calc(((100vw - 295px) / 2) - 2px);
+  }
+
+  #bgColors{
+    top: auto;
+    bottom: 45px;
+    left: calc(((100vw - 295px) / 2) + 59px);
+  }
+
+  #options{
+    left: calc((100vw - 295px) / 2);
+    top: auto;
+    bottom: 95px;
+    padding-top: 20px;
+    height: 390px;
+  }
+
+  #optionSelector{
+    background-image: url("../images/rotate/draweropen-mobile.png");
+    top: auto;
+    bottom: 70px;
+    left: calc((100vw - 55px) / 2);
+  }
+
+  .menuDrawer{
+    background-image: url("../images/rotate/draweropen-mobile.png");
+    background-repeat: no-repeat;
+    background-position: 19px 255px;
+    padding-top: 0px;
   }
 }

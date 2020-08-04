@@ -81,6 +81,12 @@ const rotateSketch = ( p ) => {
   p.drawing = false;
   p.changedBg;
 
+  p.tx = 7;
+  p.ty = 100;
+
+  p.noDraw = false;
+  p.noDrawTime;
+
   p.setup = () => {
   //  p.frameRate(1);
 
@@ -94,7 +100,7 @@ const rotateSketch = ( p ) => {
 
     // Creates the canvas
     if (p.int(p.windowWidth) > p.int(p.windowHeight)){    // landscape
-      p.theWidth = p.int(p.windowWidth) - 55 - 125;
+      p.theWidth = p.int(p.windowWidth) - 55;
       p.theHeight = p.int(p.windowHeight);
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
 
@@ -135,11 +141,11 @@ const rotateSketch = ( p ) => {
 
     if (p.chosenBackground == 0){
       p.blendMode(p.DIFFERENCE);
-      p.bgOpacityToUse = p.backgroundOpacity *2.5;
+      p.bgOpacityToUse = p.backgroundOpacity;
     }
     else if (p.chosenBackground == 1){
       p.blendMode(p.ADD);
-      p.bgOpacityToUse = p.backgroundOpacity/5;
+      p.bgOpacityToUse = p.backgroundOpacity/15;
     }
     else{
       p.blendMode(p.BLEND);
@@ -150,8 +156,6 @@ const rotateSketch = ( p ) => {
     p.fill(p.red(p.backgrounds[p.chosenBackground]),p.green(p.backgrounds[p.chosenBackground]),p.blue(p.backgrounds[p.chosenBackground]),p.bgOpacityToUse);
     p.noStroke();
     p.rect(0,0,p.width,p.height);
-
-    //p.rotateCanvas();
 
     p.blendMode(p.BLEND);
 
@@ -171,38 +175,43 @@ const rotateSketch = ( p ) => {
     }
 
     if (p.backgroundFade){
-      p.background(p.red(p.backgrounds[p.chosenBackground]),p.green(p.backgrounds[p.chosenBackground]),p.blue(p.backgrounds[p.chosenBackground]),25);
-      console.log("background");
+      p.background(p.red(p.backgrounds[p.chosenBackground]),p.green(p.backgrounds[p.chosenBackground]),p.blue(p.backgrounds[p.chosenBackground]),30);
+
     }
-    if (p.frameCount > p.backgroundFadeCount +120){
+    if (p.frameCount > p.backgroundFadeCount +60){
       p.backgroundFade = false;
     }
 
-
-
+    //p.tx +=0.01;
+    //p.ty +=0.01;
   };
 
 
   p.deletePoints = () => {
-    if (p.locations.length > 800){
+    if (p.locations.length > 900){
       p.locations.splice(0,1);
     }
-  }
+  };
 
   p.getNewPoints = () => {
 
     p.lerpMouseX = p.lerp(p.lerpMouseX, p.mouseX, p.penLerp);
     p.lerpMouseY = p.lerp(p.lerpMouseY, p.mouseY, p.penLerp);
 
-    if(p.mouseIsPressed && p.mouseX > 0){
-      var newLocation = new Location(p.lerpMouseX, p.lerpMouseY, true, p.penSize);
+    if(p.mouseIsPressed && p.mouseX > 0 && !p.noDraw){
+      if (!p.drawing){
+        p.lerpMouseX = p.mouseX;
+        p.lerpMouseY = p.mouseY;
+        p.drawing = true;
+      }
+      var newLocation = new Location(p.lerpMouseX, p.lerpMouseY, true, p.penSize, p.chosenGradient, p.spinClockwise);
       p.locations.push(newLocation);
-      p.drawing = true;
+
     }
 
-    if(!p.mouseIsPressed && p.drawing == true){
+    if(!p.mouseIsPressed && p.drawing){
       p.drawing = false;
-      var newLocation = new Location(p.mouseX, p.mouseY, false, p.penSize);
+      var newLocation = new Location(p.mouseX, p.mouseY, false, p.penSize, p.chosenGradient, p.spinClockwise);
       p.locations.push(newLocation);
     }
   }
@@ -256,12 +265,13 @@ const rotateSketch = ( p ) => {
 
     p.stroke(255,0,100);
     p.strokeWeight(p.locations[0].size);
+    let chosenColor1 = p.color(p.gradients[p.locations[0].colorChoice].hue1, p.gradients[p.locations[0].colorChoice].sat1, p.gradients[p.locations[0].colorChoice].bri1);
+    let chosenColor2 = p.color(p.gradients[p.locations[0].colorChoice].hue2, p.gradients[p.locations[0].colorChoice].sat2, p.gradients[p.locations[0].colorChoice].bri2);
+
     p.noFill();
     p.beginShape()
     for (let i=1; i<p.locations.length;i++){
       if (p.locations[i].draw){
-        let chosenColor1 = p.color(p.gradients[p.chosenGradient].hue1, p.gradients[p.chosenGradient].sat1, p.gradients[p.chosenGradient].bri1);
-        let chosenColor2 = p.color(p.gradients[p.chosenGradient].hue2, p.gradients[p.chosenGradient].sat2, p.gradients[p.chosenGradient].bri2);
         let thisColor = p.lerpColor(chosenColor1, chosenColor2, p.map(i, 0, p.locations.length, 0, 1));
         p.stroke(thisColor);
         p.vertex(p.locations[i].position.x, p.locations[i].position.y);
@@ -275,8 +285,8 @@ const rotateSketch = ( p ) => {
       if (i%2==0 && i > 0 && i < p.locations.length-1){
         p.endShape();
         p.strokeWeight(p.locations[i+1].size);
-        let chosenColor1 = p.color(p.gradients[p.chosenGradient].hue1, p.gradients[p.chosenGradient].sat1, p.gradients[p.chosenGradient].bri1);
-        let chosenColor2 = p.color(p.gradients[p.chosenGradient].hue2, p.gradients[p.chosenGradient].sat2, p.gradients[p.chosenGradient].bri2);
+        chosenColor1 = p.color(p.gradients[p.locations[i+1].colorChoice].hue1, p.gradients[p.locations[i+1].colorChoice].sat1, p.gradients[p.locations[i+1].colorChoice].bri1);
+        chosenColor2 = p.color(p.gradients[p.locations[i+1].colorChoice].hue2, p.gradients[p.locations[i+1].colorChoice].sat2, p.gradients[p.locations[i+1].colorChoice].bri2);
         let thisColor = p.lerpColor(chosenColor1, chosenColor2, p.map(i, 0, p.locations.length, 0, 1));
         p.stroke(thisColor);
         p.beginShape();
@@ -303,13 +313,16 @@ const rotateSketch = ( p ) => {
 
 
   class Location{
-    constructor(x, y, draw, size){
+    constructor(x, y, draw, size, colorChoice, clockwise){
       this.position = p.createVector(x,y);       // mouseposition
-
       this.draw = draw;
       this.size = size;
+      this.colorChoice = colorChoice;
       this.vectorLocation = p.createVector(x - p.width/2, y - p.height/2); // from centre
       this.angleB = p.vector1.angleBetween(this.vectorLocation);
+      this.spinClockwise = clockwise;
+      //this.tx = tx;
+      //this.ty = ty;
 
       //this.positions = [];
       //this.positions[0] = this.position;
@@ -332,8 +345,13 @@ const rotateSketch = ( p ) => {
 
       this.position.x = p.width/2 + (this.distanceFromCentre * p.sin(p.degrees(this.angleB + p.angleA)));
       this.position.y = p.height/2 - (this.distanceFromCentre * p.cos(p.degrees(this.angleB + p.angleA)));
+      //this.position.x += p.map(p.noise(this.tx), 0, 1, -100, 100);
+      //this.position.y += p.map(p.noise(this.ty), 0, 1, -100, 100);
 
-      if (p.spinClockwise){                        
+      //this.tx += 0.3;
+      //this.ty += 0.3;
+
+      if (this.spinClockwise){
         this.angleB += p.angleA;
       }
       else{
