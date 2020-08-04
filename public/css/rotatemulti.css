@@ -414,18 +414,21 @@
     left: calc((100vw - 295px) / 2);
     top: auto;
     bottom: 10px;
+    position: fixed;
   }
 
   #penColors{
     top: auto;
     bottom: 45px;
     left: calc(((100vw - 295px) / 2) - 2px);
+    position: fixed;
   }
 
   #bgColors{
     top: auto;
     bottom: 45px;
     left: calc(((100vw - 295px) / 2) + 59px);
+    position: fixed;
   }
 
   #options{
@@ -434,6 +437,7 @@
     bottom: 95px;
     padding-top: 20px;
     height: 390px;
+    position: fixed;
   }
 
   #optionSelector{
@@ -441,6 +445,7 @@
     top: auto;
     bottom: 70px;
     left: calc((100vw - 55px) / 2);
+    position: fixed;
   }
 
   .menuDrawer{
@@ -448,5 +453,6 @@
     background-repeat: no-repeat;
     background-position: 19px 255px;
     padding-top: 0px;
+    position: fixed;
   }
 }
