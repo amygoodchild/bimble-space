@@ -12,6 +12,10 @@
   cursor: crosshair;
 }
 
+canvas{
+  pointer-events: none;
+}
+
 #rotateMenu{
   position: absolute;
   left: 70px;

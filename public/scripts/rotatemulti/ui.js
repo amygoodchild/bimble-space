@@ -8,13 +8,19 @@ $(document).ready(function(){
   });
   */
 
+
+
 $(".allUI").mouseenter(function(){
-  ps.noDraw = true;
+    if (landscape){
+      ps.noDraw = true;
+    }
 });
 
 
 $(".allUI").mouseout(function(){
-  ps.noDraw = false;
+   if (landscape){
+     ps.noDraw = false;
+   }
 });
 
 
@@ -67,6 +73,7 @@ $(".penColorButton").click(function(){
   }
   theClass = "penColor" + theId;
   $("#penColorsMenu").children(".menuIcon").addClass(theClass);
+  ps.drawOpen = false;
 });
 
 $(".bgColorButton").click(function(){
@@ -96,7 +103,7 @@ $(".bgColorButton").click(function(){
     $(".penColorButton").addClass("blackBorder");
     $(".bgColorButton").addClass("blackBorder");
   }
-
+  ps.drawOpen = false;
 });
 
 
@@ -109,9 +116,11 @@ $(".menuOption").click(function(){
     if ($('#' + theId).is(":hidden")){
       $(".menuDrawer").hide();
       $('#' + theId).show();
+      ps.drawOpen = true;
     }
     else{
       $('#' + theId).hide();
+      ps.drawOpen = false;
     }
 
     if ($('#options').is(":hidden")){

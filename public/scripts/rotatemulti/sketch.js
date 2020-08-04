@@ -65,7 +65,7 @@ const rotateSketch = ( p ) => {
   p.penSize = 2;
   p.backgroundOpacity = 0;
   p.bgOpacityToUse;
-  p.penLerp = 0.3;
+  p.penLerp = 0.1;
   p.spinClockwise = true;
   p.rotationDivision = 2.5;
   p.targetRotationDivision = 2.5;
@@ -85,11 +85,10 @@ const rotateSketch = ( p ) => {
   p.ty = 100;
 
   p.noDraw = false;
-  p.noDrawTime;
+  p.drawOpen = false;
 
   p.setup = () => {
   //  p.frameRate(1);
-
 
     // Set up some options
     p.colorMode(p.RGB,255,255,255,100);
@@ -159,7 +158,10 @@ const rotateSketch = ( p ) => {
 
     p.blendMode(p.BLEND);
 
-    p.getNewPoints();
+
+    if (p.canvasClick()){
+      p.getNewPoints();
+    }
     if (p.locations.length > 0){
       //p.drawPointsWithTrails();
       p.updatePoints();
@@ -182,8 +184,30 @@ const rotateSketch = ( p ) => {
       p.backgroundFade = false;
     }
 
+    if (p.noDrawSoon && p.millis > p.noDrawTime + 500){
+      p.noDraw = false;
+      p.noDrawSoon = false;
+    }
+
     //p.tx +=0.01;
     //p.ty +=0.01;
+  };
+
+  p.canvasClick = () => {
+    if (!landscape){
+      if (p.mouseY > ps.height - 70){
+        return false;
+      }
+      else if (p.drawOpen){
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
+    else{
+      return true;
+    }
   };
 
 
