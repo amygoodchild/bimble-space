@@ -102,7 +102,7 @@ const rotateSketch = ( p ) => {
   p.loneMessages = [];
 
   p.setup = () => {
-      p.frameRate(5);
+      p.frameRate(15);
     // Connects to server for comms
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       p.socket = io.connect('http://localhost:3000');
