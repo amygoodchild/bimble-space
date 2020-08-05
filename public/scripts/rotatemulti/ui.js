@@ -27,13 +27,13 @@ var penSizes = [0, 8, 10, 15, 30, 60, 100];
 ps.penSize = penSizes[3];
 $("#penSize3").addClass("sliderButtonSelected");
 
-var speeds = [0, 0.2, 0.55, 0.7, 0.8, 1.0, 5.0];
-ps.angleA = ps.radians(speeds[4]);
-$("#speed2").addClass("sliderButtonSelected");
+var speeds = [0, 0.2, 0.55, 0.7, 1.5, 2.0];
+ps.angleA = ps.radians(speeds[3]);
+$("#speed3").addClass("sliderButtonSelected");
 
 var backgroundOpacitys = [100, 100, 70, 30, 14, 6, 0];
 ps.backgroundOpacity = backgroundOpacitys[3]
-$("#trailLength2").addClass("sliderButtonSelected");
+$("#trailLength3").addClass("sliderButtonSelected");
 
 // Change pen size
 $(".penSizeButton").click(function(){
@@ -147,7 +147,8 @@ $(".bgColorButton").click(function(){
   var data = {
     variable : "background color",
     value: theId,
-    otherUser: ps.otherUser
+    otherUser: ps.otherUser,
+    id: $(this).attr('id')
   }
   //console.log(data);
   ps.socket.emit('iSettingRotate', data);

@@ -59,7 +59,10 @@ const rotateSketch = ( p ) => {
 //  p.idleCounting = false;
   p.frameRateLerp = 60;  // For displaying framerate more smoothly/readably
   p.disableFriendlyErrors = true; // Supposed to improve p5js performance... *shrug*
-  p.debugMode = true;    // debug and stuff for measuring time taken
+  p.debugMode = false;    // debug and stuff for measuring time taken
+
+  p.prevMillis;
+  p.newMillis;
 
   p.angle = 1;
   p.locations = [];
@@ -215,6 +218,8 @@ const rotateSketch = ( p ) => {
 
   p.draw = () => {
 
+    p.newMillis = p.millis();
+
     if (p.chosenBackground == 0){
       p.blendMode(p.DIFFERENCE);
       p.bgOpacityToUse = p.backgroundOpacity;
@@ -282,14 +287,16 @@ const rotateSketch = ( p ) => {
       if (p.frameCount % 5 == 0){
         p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 1.0);
       }
-      p.fill(0,0,0);
-      p.rect(80,0,40,90);
+      //p.fill(0,0,0);
+      //p.rect(80,0,40,90);
       p.fill(0,0,100);
       p.textSize(50);
       p.text(p.int(p.frameRateLerp), 230, 200);
       p.textSize(20);
       p.text("framerate:", 85, 200);
     }
+
+    p.prevMillis = p.millis();
 
     //p.tx +=0.01;
     //p.ty +=0.01;
@@ -336,9 +343,35 @@ const rotateSketch = ( p ) => {
 
   p.otherUserSetting = (data) => {
     console.log("setting received");
-    if (data.variable == "background colour"){
-      $(".speedButton").removeClass("sliderButtonSelected");
-      $(data.id).addClass("sliderButtonSelected");
+    if (data.variable == "background color"){
+      p.chosenBackground = data.value;
+      if (p.backgroundOpacity == 0){
+        p.backgroundFade = true;
+        p.backgroundFadeCount = p.frameCount;
+      }
+
+      if (data.value == 0){
+        $(".menuText").removeClass("blackText");
+        $("#bgColorsMenu").children(".menuIcon").removeClass("blackBorder");
+        $("#penColorsMenu").children(".menuIcon").removeClass("blackBorder");
+        $(".penColorButton").removeClass("blackBorder");
+        $(".bgColorButton").removeClass("blackBorder");
+      }
+      else{
+        $(".menuText").addClass("blackText");
+        $("#bgColorsMenu").children(".menuIcon").addClass("blackBorder");
+        $("#penColorsMenu").children(".menuIcon").addClass("blackBorder");
+        $(".penColorButton").addClass("blackBorder");
+        $(".bgColorButton").addClass("blackBorder");
+      }
+
+      let theClass;
+      for (let i=0; i<5;i++){
+        theClass = "bgColor" + i;
+        $("#bgColorsMenu").children(".menuIcon").removeClass(theClass);
+      }
+      theClass = "bgColor" + data.value;
+      $("#bgColorsMenu").children(".menuIcon").addClass(theClass);
 
     }
     if (data.variable == "background opacity"){
@@ -580,18 +613,20 @@ const rotateSketch = ( p ) => {
       //this.tx += 0.3;
       //this.ty += 0.3;
 
+      p.milliAngle = (p.angleA / 17) * (p.newMillis - p.prevMillis);
+
+
       if (this.spinClockwise){
-        this.angleB += p.angleA;
+        this.angleB += p.milliAngle;
       }
       else{
-        this.angleB -= p.angleA;
+        this.angleB -= p.milliAngle;
       }
     }
 
   	display(){
       p.fill(255,0,100);
       p.ellipse(this.position.x, this.position.y, 10,10);
-
   	}
   }
 
