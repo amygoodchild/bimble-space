@@ -57,7 +57,7 @@ const rotateSketch = ( p ) => {
 
 //  p.boids = [];
 //  p.idleCounting = false;
-  p.frameRateLerp = 30;  // For displaying framerate more smoothly/readably
+  p.frameRateLerp = 25;  // For displaying framerate more smoothly/readably
   p.disableFriendlyErrors = true; // Supposed to improve p5js performance... *shrug*
   p.debugMode = false;    // debug and stuff for measuring time taken
 
@@ -246,7 +246,7 @@ const rotateSketch = ( p ) => {
     if (p.canvasClick()){
       p.getNewPoints();
     }
-    p.milliAngle = ((p.angleA / 25) * (p.newMillis - p.prevMillis))/2;
+    p.milliAngle = ((p.angleA / 35) * (p.newMillis - p.prevMillis))/2;
 
     if (p.locations.length > 0){
       //p.drawPointsWithTrails();
