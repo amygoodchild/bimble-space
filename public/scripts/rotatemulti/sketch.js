@@ -57,12 +57,13 @@ const rotateSketch = ( p ) => {
 
 //  p.boids = [];
 //  p.idleCounting = false;
-  p.frameRateLerp = 60;  // For displaying framerate more smoothly/readably
+  p.frameRateLerp = 30;  // For displaying framerate more smoothly/readably
   p.disableFriendlyErrors = true; // Supposed to improve p5js performance... *shrug*
   p.debugMode = false;    // debug and stuff for measuring time taken
 
   p.prevMillis;
   p.newMillis;
+  p.milliAngle;
 
   p.angle = 1;
   p.locations = [];
@@ -72,7 +73,7 @@ const rotateSketch = ( p ) => {
   p.penSize = 2;
   p.backgroundOpacity = 0;
   p.bgOpacityToUse;
-  p.penLerp = 0.1;
+  p.penLerp = 0.15;
   p.spinClockwise = true;
   p.rotationDivision = 2.5;
   p.targetRotationDivision = 2.5;
@@ -102,7 +103,7 @@ const rotateSketch = ( p ) => {
   p.loneMessages = [];
 
   p.setup = () => {
-      p.frameRate(30);
+      p.frameRate(35);
     // Connects to server for comms
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       p.socket = io.connect('http://localhost:3000');
@@ -245,17 +246,23 @@ const rotateSketch = ( p ) => {
     if (p.canvasClick()){
       p.getNewPoints();
     }
+    p.milliAngle = ((p.angleA / 25) * (p.newMillis - p.prevMillis))/2;
+
     if (p.locations.length > 0){
       //p.drawPointsWithTrails();
-      p.updatePoints();
-      p.deletePoints();
-      p.drawPoints();
+      for (let j=0;j<2;j++){
+        p.updatePoints();
+        p.deletePoints();
+        p.drawPoints();
+      }
     }
 
     if (p.matchState == "paired" && p.otherLocations.length > 0){
-      p.updateOtherPoints();
-      p.deleteOtherPoints();
-      p.drawOtherPoints();
+      for (let j=0;j<2;j++){
+        p.updateOtherPoints();
+        p.deleteOtherPoints();
+        p.drawOtherPoints();
+      }
     }
 
     if (p.clearLines){
@@ -559,6 +566,7 @@ const rotateSketch = ( p ) => {
     p.endShape();
   }
 
+
   p.updateOtherPoints = () => {
       for (let i=0; i<p.otherLocations.length;i++){
         p.otherLocations[i].update();
@@ -570,6 +578,8 @@ const rotateSketch = ( p ) => {
         p.locations[i].update();
       }
   }
+
+
 
   p.keyPressed = () => {
     p.backgroundFade = true;
@@ -608,15 +618,8 @@ const rotateSketch = ( p ) => {
 
     update(){
 
-      this.position.x = p.width/2 + (this.distanceFromCentre * p.sin(p.degrees(this.angleB + p.angleA)));
-      this.position.y = p.height/2 - (this.distanceFromCentre * p.cos(p.degrees(this.angleB + p.angleA)));
-      //this.position.x += p.map(p.noise(this.tx), 0, 1, -100, 100);
-      //this.position.y += p.map(p.noise(this.ty), 0, 1, -100, 100);
-
-      //this.tx += 0.3;
-      //this.ty += 0.3;
-
-      p.milliAngle = (p.angleA / 33) * (p.newMillis - p.prevMillis);
+      this.position.x = p.width/2 + (this.distanceFromCentre * p.sin(p.degrees(this.angleB + p.milliAngle)));
+      this.position.y = p.height/2 - (this.distanceFromCentre * p.cos(p.degrees(this.angleB + p.milliAngle)));
 
 
       if (this.spinClockwise){
