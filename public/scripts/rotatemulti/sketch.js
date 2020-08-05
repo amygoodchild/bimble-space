@@ -102,7 +102,7 @@ const rotateSketch = ( p ) => {
   p.loneMessages = [];
 
   p.setup = () => {
-      p.frameRate(15);
+      p.frameRate(30);
     // Connects to server for comms
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       p.socket = io.connect('http://localhost:3000');
@@ -616,7 +616,7 @@ const rotateSketch = ( p ) => {
       //this.tx += 0.3;
       //this.ty += 0.3;
 
-      p.milliAngle = (p.angleA / 17) * (p.newMillis - p.prevMillis);
+      p.milliAngle = (p.angleA / 33) * (p.newMillis - p.prevMillis);
 
 
       if (this.spinClockwise){
