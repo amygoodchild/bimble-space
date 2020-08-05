@@ -57,6 +57,9 @@ const rotateSketch = ( p ) => {
 
 //  p.boids = [];
 //  p.idleCounting = false;
+  p.frameRateLerp = 60;  // For displaying framerate more smoothly/readably
+  p.disableFriendlyErrors = true; // Supposed to improve p5js performance... *shrug*
+  p.debugMode = true;    // debug and stuff for measuring time taken
 
   p.angle = 1;
   p.locations = [];
@@ -273,6 +276,19 @@ const rotateSketch = ( p ) => {
     if (p.noDrawSoon && p.millis > p.noDrawTime + 500){
       p.noDraw = false;
       p.noDrawSoon = false;
+    }
+
+    if(p.debugMode){
+      if (p.frameCount % 5 == 0){
+        p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 1.0);
+      }
+      p.fill(0,0,0);
+      p.rect(80,0,40,90);
+      p.fill(0,0,100);
+      p.textSize(50);
+      p.text(p.int(p.frameRateLerp), 230, 200);
+      p.textSize(20);
+      p.text("framerate:", 85, 200);
     }
 
     //p.tx +=0.01;

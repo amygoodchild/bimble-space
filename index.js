@@ -217,7 +217,7 @@ function newConnection(socket){
 
   socket.on('iSettingRotate', function(data) {
       io.to(data.otherUser).emit('otherUserSettingRotate', data);
-      console.log(data);
+
   });
 
   socket.on('aNewBoid', function(data) {

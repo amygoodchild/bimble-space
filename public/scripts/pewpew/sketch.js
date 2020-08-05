@@ -371,6 +371,7 @@ const pewpewSketch = ( p ) => {
     p.blendMode(p.BLEND);
 
     if(p.debugMode){
+      p.noStroke();
       if (p.frameCount % 5 == 0){
         p.frameRateLerp = p.lerp(p.frameRateLerp, p.frameRate(), 1.0);
       }
@@ -380,6 +381,7 @@ const pewpewSketch = ( p ) => {
       p.textSize(50);
       p.text(p.int(p.frameRateLerp), 230, 200);
       p.textSize(20);
+
       p.text("framerate:", 85, 200);
     }
 
