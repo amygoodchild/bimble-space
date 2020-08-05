@@ -187,6 +187,16 @@ $(".menuOption").click(function(){
 // Clear canvas
 $("#clearAllButton").click(function(){
       ps.clearLines = true;
+
+    var data = {
+      variable : "clear",
+      value: "0",
+      otherUser: ps.otherUser,
+      id: "0"
+    }
+    //console.log(data);
+    ps.socket.emit('iSettingRotate', data);
+
 });
 
 // Save canvas

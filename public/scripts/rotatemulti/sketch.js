@@ -102,7 +102,7 @@ const rotateSketch = ( p ) => {
   p.loneMessages = [];
 
   p.setup = () => {
-    //  p.frameRate(1);
+      p.frameRate(5);
     // Connects to server for comms
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       p.socket = io.connect('http://localhost:3000');
@@ -376,14 +376,17 @@ const rotateSketch = ( p ) => {
     }
     if (data.variable == "background opacity"){
       $(".trailLengthButton").removeClass("sliderButtonSelected");
-      $(data.id).addClass("sliderButtonSelected");
+      $("#" + data.id).addClass("sliderButtonSelected");
+      console.log(data.id);
       p.backgroundOpacity = data.value;
     }
     if (data.variable == "rotate speed"){
       $(".speedButton").removeClass("sliderButtonSelected");
-      $(data.id).addClass("sliderButtonSelected");
+      $("#" + data.id).addClass("sliderButtonSelected");
       ps.angleA = data.value;
-
+    }
+    if (data.variable == "clear"){
+      ps.clearLines = true;
     }
 
   }
