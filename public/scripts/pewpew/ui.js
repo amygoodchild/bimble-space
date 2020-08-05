@@ -56,7 +56,7 @@ $(document).ready(function(){
         pair: true
       }
 
-      ps.socket.emit('flockMatchMe', sendData);
+      ps.socket.emit('matchMe', sendData);
 
       gtag('event', "JoinChoice", {
         'event_category': "Flock",
@@ -194,7 +194,7 @@ $(document).ready(function(){
       pair: true
     }
 
-    ps.socket.emit('flockMatchMe', sendData);
+    ps.socket.emit('matchMe', sendData);
     $("#infoContent").html("Finding you a partner... <br> You can play solo in the meantime");
 
 

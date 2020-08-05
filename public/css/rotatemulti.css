@@ -16,10 +16,164 @@ canvas{
   pointer-events: none;
 }
 
+#welcome {
+  width: 400px;
+  position: absolute;
+  z-index: 5;
+  left: 200px;
+  top: 60px;
+  background: #000000eb;
+  color: #ffffff;
+  border: 1px #46c9f9 solid;
+  padding: 20px 30px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 16px;
+  font-family: MoonLight;
+  line-height: 25px;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+  font-family: RobotoLight;
+}
+
+#welcome .checkboxHolder {
+  width: 100%;
+  float: left;
+  margin-top: 30px;
+}
+
+#welcome .light {
+  font-family: robotoRegular;
+}
+
+#welcome .checkboxHolder #checkbox {
+  float: left;
+  width: 18px;
+  height: 40px;
+  background-image: url("../images/checkbox-checked.png");
+  background-repeat: no-repeat;
+}
+
+#welcome .checkboxHolder #checkBoxLabel {
+  margin-left: 7px;
+  float: left;
+  width: 240px;
+  line-height: 20px;
+}
+
+#welcome .checkboxHolder #checkBoxLabel .small {
+  font-size: 13px;
+}
+
+.checkboxUnchecked {
+  background-image: url("../images/checkbox-unchecked.png") !important;
+}
+
+#welcome .choice {
+  color: #ffffff;
+  background: #000000;
+  padding: 13px 24px;
+  margin-right: 15px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 16px;
+  font-family: MoonBold;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  margin-top: 15px;
+  border: 2px solid #ff6fed;
+  border-radius: 5px;
+  outline: 0;
+}
+
+#welcome .choice:hover {
+  background: #ff6fed;
+}
+
+#welcome .note{
+  font-size: 12px;
+  line-height: 16px;
+  margin-top: 30px;
+}
+
+#connectionInfo {
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
+  height: 45px;
+  background: #000000;
+  color: #ffffff;
+  z-index: 3;
+  padding: 5px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 14px;
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+  display: none;
+}
+
+#infoContent {
+  vertical-align: middle;
+  margin: 0px;
+  padding: 0px;
+  display: table-cell;
+}
+
+#idleWarning {
+  position: absolute;
+  top: 115px;
+  left: 140px;
+  height: 45px;
+  background: #19003b;
+  color: #ffffff;
+  z-index: 3;
+  padding: 5px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 14px;
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+  display: none;
+}
+
+#idleWarningContent {
+  vertical-align: middle;
+  margin: 0px;
+  padding: 0px;
+  display: table-cell;
+}
+
+
 #rotateMenu{
   position: absolute;
   left: 70px;
   top: 15px;
+  display: none;
 }
 
 #rotateMenu .menuOption{
@@ -28,6 +182,10 @@ canvas{
   float: left;
   margin-right: 10px;
   cursor: pointer;
+}
+
+#rotateMenu .menuOption:last-child{
+  margin-right: 0px;
 }
 
 #rotateMenu .menuOption .menuIcon{
@@ -102,6 +260,12 @@ canvas{
   background-image: url("../images/rotate/clear.png");
 }
 
+#saveButton .menuIcon{
+  background-position: 3px 2px;
+  background-size: 38px;
+  background-repeat: no-repeat;
+  background-image: url("../images/rotate/download.png");
+}
 
 
 #options .optionHolder{
@@ -225,6 +389,58 @@ canvas{
   background: #000000c7;
   padding-top: 25px;
   display:none;
+}
+
+#pairing{
+  width: 295px;
+  height: 80px;
+  float: left;
+  position: absolute;
+  top: 100px;
+  left: 70px;
+  border: 1px #ffffff solid;
+  background: #000000c7;
+  padding-top: 25px;
+  display:none;
+}
+
+.pairingDrawer{
+  display: none;
+}
+
+.pairingButtons {
+  width: 260px;
+  color: #ffffff;
+  background: #000000;
+  padding: 13px 24px;
+  margin-right: 15px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 16px;
+  font-family: MoonBold;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  border: 2px solid #ff6fed;
+  border-radius: 5px;
+  outline: 0;
+  margin-left: 20px;
+}
+
+.pairingButtons .choice:hover {
+  background: #46c9f9;
+}
+
+#pairingSelector{
+  position: absolute;
+  top: 80px;
+  left: 249px;
+  width: 55px;
+  height: 20px;
+  background-image: url("../images/rotate/draweropen.png");
+  background-repeat: no-repeat;
+  background-position: 19px 0px;
+  display: none;
 }
 
 .penColorButton {
@@ -415,23 +631,24 @@ canvas{
   }
 
   #rotateMenu{
-    left: calc((100vw - 295px) / 2);
+    left: calc((100vw - 356px) / 2);
     top: auto;
     bottom: 10px;
     position: fixed;
   }
 
+
   #penColors{
     top: auto;
     bottom: 45px;
-    left: calc(((100vw - 295px) / 2) - 2px);
+    left: calc(((100vw - 356px) / 2) - 2px);
     position: fixed;
   }
 
   #bgColors{
     top: auto;
     bottom: 45px;
-    left: calc(((100vw - 295px) / 2) + 59px);
+    left: calc(((100vw - 356px) / 2) + 59px);
     position: fixed;
   }
 
@@ -448,7 +665,22 @@ canvas{
     background-image: url("../images/rotate/draweropen-mobile.png");
     top: auto;
     bottom: 70px;
-    left: calc((100vw - 55px) / 2);
+    left: calc((100vw - 115px) / 2);
+    position: fixed;
+  }
+
+  #pairingSelector{
+    background-image: url("../images/rotate/draweropen-mobile.png");
+    top: auto;
+    bottom: 70px;
+    left: calc((100vw + 4px) / 2);
+    position: fixed;
+  }
+
+  #pairing{
+    left: calc((100vw - 295px) / 2);
+    top: auto;
+    bottom: 95px;
     position: fixed;
   }
 
@@ -459,4 +691,48 @@ canvas{
     padding-top: 0px;
     position: fixed;
   }
+
+  #welcome{
+    left: 20px;
+    width: 280px;
+  }
+
+  #connectionInfo{
+    bottom: auto;
+    top: 60px;
+    left: 10px;
+  }
+}
+
+@media only screen and (max-width: 355px) {
+    #rotateMenu{
+      width: 316px;
+      left: calc((100vw - 316px) / 2);
+      top: auto;
+      bottom: 10px;
+      position: fixed;
+    }
+
+  #penColors{
+    left: calc(((100vw - 316px) / 2) - 2px);
+  }
+
+  #bgColors{
+    left: calc(((100vw - 316px) / 2) + 51px);
+  }
+
+  #options{
+    left: calc((100vw - 295px) / 2);
+  }
+
+  #optionSelector{
+    left: calc((100vw - 106px) / 2);
+  }
+
+
+  #rotateMenu .menuOption{
+    margin-right: 2px;
+  }
+
+
 }

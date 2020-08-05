@@ -108,7 +108,8 @@ function newConnection(socket){
   socket.emit('onJoin', data);
 
   // Hear back from the client what room it's in.
-  socket.on('flockMatchMe', function(data) {
+  socket.on('matchMe', function(data) {
+    console.log("matchme");
     numPairingUsers++;
     socket.join(data.room);
     let newUser = new User(data.room, data.width, data.height, socket.id);
@@ -118,38 +119,54 @@ function newConnection(socket){
     matcher();
   });
 
-  function matcher(){// If we've got 2 users in the toMatch list, make them a match
-    if (toMatch.length>=2){
-      // add to Match array
-      let newMatch = new Match(toMatch[0], toMatch[1]);
-      matches.push(newMatch);
-      let pairMessage;
+  function matcher(){
+    console.log("matcher run");
+    let matchFound = false;
 
-      let randomNumber = Math.random();
-      for (let i = 0; i<pairMessages.length;i++){
-        if (randomNumber<=1/pairMessages.length*(i+1)){
-          pairMessage = pairMessages[i];
+    for (let i=0; i<toMatch.length;i++){
+      for (let j=0; j<toMatch.length; j++){
+        if (i!=j && toMatch[i].room == toMatch[j].room){
+          // add to Match array
+          let newMatch = new Match(toMatch[i], toMatch[j]);
+          matches.push(newMatch);
+          let pairMessage;
+          let randomNumber = Math.random();
+          for (let k = 0; k<pairMessages.length;k++){
+            if (randomNumber<=1/pairMessages.length*(k+1)){
+              pairMessage = pairMessages[k];
+              break;
+            }
+          }
+          // Let them know they're matched and who they matched with
+          let data = { otherUser: newMatch.user2.id, whoami: "user 1", myid: newMatch.user1.id, message: pairMessage,
+                        otherWidth: newMatch.user2.width, otherHeight: newMatch.user2.height
+                      }
+          io.to(newMatch.user1.id).emit('matched', data);
+
+          data = { otherUser: newMatch.user1.id, whoami: "user 2", myid: newMatch.user2.id, message: pairMessage,
+                      otherWidth: newMatch.user1.width, otherHeight: newMatch.user1.height
+                    }
+          io.to(newMatch.user2.id).emit('matched', data);
+
+          // Remove them from the un matched array
+          toMatch.splice(i,1);
+          if (j>i){
+            toMatch.splice(j-1,1);
+          }
+          else{
+            toMatch.splice(j,1);
+          }
+          console.log("matched: " + matches);
+          console.log("toMatch: " + toMatch);
+          break;
+        }
+        if (matchFound){
           break;
         }
       }
-
-      // Let them know they're matched and who they matched with
-      let data = { otherUser: newMatch.user2.id, whoami: "user 1", myid: newMatch.user1.id, message: pairMessage,
-                    otherWidth: newMatch.user2.width, otherHeight: newMatch.user2.height
-                  }
-      io.to(newMatch.user1.id).emit('matched', data);
-
-      data = { otherUser: newMatch.user1.id, whoami: "user 2", myid: newMatch.user2.id, message: pairMessage,
-                  otherWidth: newMatch.user1.width, otherHeight: newMatch.user1.height
-                }
-      io.to(newMatch.user2.id).emit('matched', data);
-
-
-      // Remove them from the un matched array
-      toMatch.splice(0,2);
-      //console.log("matcher");
-      //console.log("matched: " + matches);
-      //console.log("toMatch: " + toMatch);
+      if (matchFound){
+        break;
+      }
     }
   }
 
@@ -162,39 +179,51 @@ function newConnection(socket){
     let others = { numUsers : numUsers}
     //socket.broadcast.emit('updateUsers', others);
 
-    let found = false;
-    if (room == "swoosh"){
-      for (let i = 0; i< toMatch.length; i++){
-        if (toMatch[i].id == socket.id){
-          toMatch.splice(i,1);
-          found = true;
-          numPairingUsers--;
-          break;
-        }
+    let foundInToMatch = false;
+
+    for (let i = 0; i < toMatch.length; i++){
+      if (toMatch[i].id == socket.id){
+        toMatch.splice(i,1);
+        found = true;
+        numPairingUsers--;
+        break;
       }
-      if (!found){
-        for (let i = 0; i < matches.length; i++){
-          if (matches[i].user1.id == socket.id){
-            io.to(matches[i].user2.id).emit('unMatched', '');
-            toMatch.push(matches[i].user2);
-            matches.splice(i, 1);
-            matcher();
-            numPairingUsers--;
-          }
-          else if (matches[i].user2.id == socket.id){
-            io.to(matches[i].user1.id).emit('unMatched', '');
-            toMatch.push(matches[i].user1);
-            matches.splice(i, 1);
-            matcher();
-            numPairingUsers--;
-          }
+    }
+    if (!foundInToMatch){
+      for (let i = 0; i < matches.length; i++){
+        if (matches[i].user1.id == socket.id){
+          io.to(matches[i].user2.id).emit('unMatched', '');
+          toMatch.push(matches[i].user2);
+          matches.splice(i, 1);
+          matcher();
+          numPairingUsers--;
+        }
+        else if (matches[i].user2.id == socket.id){
+          io.to(matches[i].user1.id).emit('unMatched', '');
+          toMatch.push(matches[i].user1);
+          matches.splice(i, 1);
+          matcher();
+          numPairingUsers--;
         }
       }
     }
+
+  });
+
+  socket.on('iDrewRotate', function(data) {
+      io.to(data.otherUser).emit('otherUserDrawingRotate', data);
+      //console.log("user drawing");
+  });
+
+  socket.on('iSettingRotate', function(data) {
+      io.to(data.otherUser).emit('otherUserSettingRotate', data);
+      console.log(data);
   });
 
   socket.on('aNewBoid', function(data) {
       io.to(data.otherUser).emit('aNewBoid', data);
+      //console.log("boid drawing");
+      //console.log(data.otherUser);
   });
 
   socket.on('iResized', function(data) {
@@ -223,10 +252,12 @@ function newConnection(socket){
       }
     }
     else {
+      console.log("removing from to pair list");
       numPairingUsers--;
       for (let i = 0; i< toMatch.length; i++){
         if (toMatch[i].id == socket.id){
           toMatch.splice(i,1);
+          console.log("removed");
           break;
         }
       }

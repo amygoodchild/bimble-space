@@ -341,6 +341,7 @@ const pewpewSketch = ( p ) => {
   }
 
   p.otherUserDraws = (data) =>{
+    //console.log("drawing");
     if ( p.boids.length < p.maxBoids){
       let xposition = p.map(data.x, 0, p.otherWidth, 0, p.width);   // mapped to other user's screensize
       let yposition = p.map(data.y, 0, p.otherHeight, 0, p.height);
@@ -521,7 +522,7 @@ const pewpewSketch = ( p ) => {
                 hue : newBoid.hue,
                 sat : newBoid.sat,
                 bri : newBoid.bri,
-                otherUser : p.otherUser
+                otherUser: p.otherUser
 
               }
               // send it
@@ -607,7 +608,7 @@ const pewpewSketch = ( p ) => {
     if (ps.matchState == "searching" | ps.matchState == "paired"){
       if (p.millis() > p.idleMillis + 60000 ){
         sendData = {
-          state : ps.matchState,
+          state : "idle",
           choice: "went idle"
         }
         ps.socket.emit('playSolo', sendData);

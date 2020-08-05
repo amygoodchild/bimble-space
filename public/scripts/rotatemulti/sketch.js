@@ -60,6 +60,7 @@ const rotateSketch = ( p ) => {
 
   p.angle = 1;
   p.locations = [];
+  p.otherLocations = [];
   p.lerpMouseX;
   p.lerpMouseY;
   p.penSize = 2;
@@ -87,9 +88,22 @@ const rotateSketch = ( p ) => {
   p.noDraw = false;
   p.drawOpen = false;
 
+  p.otherWidth;          // Partner's screen size, so we can map movement from different resolutions
+  p.otherHeight;
+  p.matchState = "noPartner";
+  p.otherUser;
+  p.pairCounter = 0;
+  p.loneMessages = [];
 
   p.setup = () => {
-  //  p.frameRate(1);
+    //  p.frameRate(1);
+    // Connects to server for comms
+    if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
+      p.socket = io.connect('http://localhost:3000');
+    }
+    else{
+      p.socket = io.connect('https://desolate-dusk-28350.herokuapp.com/');
+    }
 
     // Set up some options
     p.colorMode(p.RGB,255,255,255,100);
@@ -130,11 +144,70 @@ const rotateSketch = ( p ) => {
 
     p.background(p.backgrounds[0]);
 
-    console.log(p.theWidth);
-    console.log(p.width);
+    // hee hee.
+    p.loneMessages[0] = "Like a spider";
+    p.loneMessages[1] = "such as a monk";
+    p.loneMessages[2] = "much like the moon";
+    p.loneMessages[3] = "deep";
+    p.loneMessages[4] = "hope you're having a nice time";
 
+    p.socket.on('matched', p.matched);
+    p.socket.on('otherUserDrawingRotate', p.otherUserDrawing);
+    p.socket.on('otherUserSettingRotate', p.otherUserSetting);
+    p.socket.on('unMatched', p.unmatched);          // Lets us know we've been unmatched (the other person left)
 
   };
+
+
+  p.matched = (data) =>{
+     console.log("I am: " + data.whoami);
+     console.log("My id is: " + data.myid);
+     console.log("Matched with: " + data.otherUser);
+
+     $(".pairingDrawer").css("display", "none");
+     $("#pairedButtons").css("display", "block");
+
+     p.pairCounter++;
+     //gtag('event', "Pairing", {
+     //   'event_category': "Rotate",
+     //   'event_label': p.pairCounter
+     //});
+
+     $("#infoContent").html("You're paired up - " + data.message);
+     p.otherWidth = data.otherWidth;    // map up the screen widths
+     p.otherHeight = data.otherHeight;
+
+     p.otherUser = data.otherUser;
+     p.matchState = "paired";
+  }
+
+  p.unmatched = (data) =>{
+    console.log("Unmatched :(");
+
+     $(".pairingDrawer").css("display", "none");
+     $("#searchingButtons").css("display", "block");
+
+    let randomNumber = p.random(0,1);   // to pick a lone message
+    for (let i = 0; i<=p.loneMessages.length;i++){
+      if (randomNumber<=1/p.loneMessages.length*(i+1)){
+        $("#infoContent").html("Partner left.<br>Finding you a new friend...");
+        break;
+      }
+    }
+    p.wrapWidth = p.width; // set the wrap with back to our own
+    p.wrapHeight = p.height;
+    p.matched = false;
+    //gtag('event', "Unpairing", {
+    //  'event_category': "Rotate",
+    //  'event_label': p.pairCounter
+    //});
+
+    p.matchState = "searching";
+
+    if(p.otherLocations.length > 0){
+      p.otherLocations.splice(0,p.otherLocations.length);
+    }
+  }
 
 
   p.draw = () => {
@@ -171,8 +244,19 @@ const rotateSketch = ( p ) => {
       p.drawPoints();
     }
 
-    if (p.clearLines && p.locations.length > 0){
-      p.locations.splice(0,p.locations.length);
+    if (p.matchState == "paired" && p.otherLocations.length > 0){
+      p.updateOtherPoints();
+      p.deleteOtherPoints();
+      p.drawOtherPoints();
+    }
+
+    if (p.clearLines){
+      if(p.locations.length > 0){
+        p.locations.splice(0,p.locations.length);
+      }
+      if(p.otherLocations.length > 0){
+        p.otherLocations.splice(0,p.otherLocations.length);
+      }
       p.clearLines = false;
       p.backgroundFade = true;
       p.backgroundFadeCount = p.frameCount;
@@ -212,12 +296,48 @@ const rotateSketch = ( p ) => {
     }
   };
 
+  p.deleteOtherPoints = () => {
+    if (p.otherLocations.length > 800){
+      p.otherLocations.splice(0,1);
+    }
+  };
 
   p.deletePoints = () => {
-    if (p.locations.length > 900){
+    if (p.locations.length > 800){
       p.locations.splice(0,1);
     }
   };
+
+
+  p.otherUserDrawing = (data) => {
+    let xposition = data.x/p.otherWidth * p.width;
+    let yposition = data.y/p.otherHeight * p.height;
+
+    var newLocation = new Location(xposition, yposition, data.draw, data.size, data.colorChoice, data.clockwise);
+    p.otherLocations.push(newLocation);
+    //console.log("received");
+  }
+
+  p.otherUserSetting = (data) => {
+    console.log("setting received");
+    if (data.variable == "background colour"){
+      $(".speedButton").removeClass("sliderButtonSelected");
+      $(data.id).addClass("sliderButtonSelected");
+
+    }
+    if (data.variable == "background opacity"){
+      $(".trailLengthButton").removeClass("sliderButtonSelected");
+      $(data.id).addClass("sliderButtonSelected");
+      p.backgroundOpacity = data.value;
+    }
+    if (data.variable == "rotate speed"){
+      $(".speedButton").removeClass("sliderButtonSelected");
+      $(data.id).addClass("sliderButtonSelected");
+      ps.angleA = data.value;
+
+    }
+
+  }
 
   p.getNewPoints = () => {
 
@@ -233,13 +353,34 @@ const rotateSketch = ( p ) => {
       var newLocation = new Location(p.lerpMouseX, p.lerpMouseY, true, p.penSize, p.chosenGradient, p.spinClockwise);
       p.locations.push(newLocation);
 
+      if(p.matchState == "paired"){
+        p.sendNewPoints();
+      }
     }
 
     if(!p.mouseIsPressed && p.drawing){
       p.drawing = false;
       var newLocation = new Location(p.mouseX, p.mouseY, false, p.penSize, p.chosenGradient, p.spinClockwise);
       p.locations.push(newLocation);
+      if(p.matchState == "paired"){
+        p.sendNewPoints();
+      }
     }
+  }
+    //constructor(x, y, draw, size, colorChoice, clockwise){
+  p.sendNewPoints = () =>{
+    var data = {
+      x : p.locations[p.locations.length-1].position.x,
+      y : p.locations[p.locations.length-1].position.y,
+      draw : p.locations[p.locations.length-1].draw,
+      size: p.locations[p.locations.length-1].size,
+      colorChoice : p.locations[p.locations.length-1].colorChoice,
+      clockwise : p.locations[p.locations.length-1].spinClockwise,
+      otherUser : p.otherUser
+    }
+
+    //console.log(data);
+    p.socket.emit('iDrewRotate', data);
   }
 
 
@@ -288,7 +429,6 @@ const rotateSketch = ( p ) => {
   }
 
   p.drawPoints = () => {
-
     p.stroke(255,0,100);
     p.strokeWeight(p.locations[0].size);
     let chosenColor1 = p.color(p.gradients[p.locations[0].colorChoice].hue1, p.gradients[p.locations[0].colorChoice].sat1, p.gradients[p.locations[0].colorChoice].bri1);
@@ -324,6 +464,53 @@ const rotateSketch = ( p ) => {
 
     }
     p.endShape();
+  }
+
+
+
+  p.drawOtherPoints = () => {
+    p.stroke(255,0,100);
+    p.strokeWeight(p.otherLocations[0].size);
+    let chosenColor1 = p.color(p.gradients[p.otherLocations[0].colorChoice].hue1, p.gradients[p.otherLocations[0].colorChoice].sat1, p.gradients[p.otherLocations[0].colorChoice].bri1);
+    let chosenColor2 = p.color(p.gradients[p.otherLocations[0].colorChoice].hue2, p.gradients[p.otherLocations[0].colorChoice].sat2, p.gradients[p.otherLocations[0].colorChoice].bri2);
+
+    p.noFill();
+    p.beginShape()
+    for (let i=1; i<p.otherLocations.length;i++){
+      if (p.otherLocations[i].draw){
+        let thisColor = p.lerpColor(chosenColor1, chosenColor2, p.map(i, 0, p.otherLocations.length, 0, 1));
+        p.stroke(thisColor);
+        p.vertex(p.otherLocations[i].position.x, p.otherLocations[i].position.y);
+
+      }
+      else if (i < p.otherLocations.length-1){
+        p.endShape();
+        p.strokeWeight(p.otherLocations[i+1].size);
+        p.beginShape();
+      }
+
+      if (i%2==0 && i > 0 && i < p.otherLocations.length-1){
+        p.endShape();
+        p.strokeWeight(p.otherLocations[i+1].size);
+        chosenColor1 = p.color(p.gradients[p.otherLocations[i+1].colorChoice].hue1, p.gradients[p.otherLocations[i+1].colorChoice].sat1, p.gradients[p.otherLocations[i+1].colorChoice].bri1);
+        chosenColor2 = p.color(p.gradients[p.otherLocations[i+1].colorChoice].hue2, p.gradients[p.otherLocations[i+1].colorChoice].sat2, p.gradients[p.otherLocations[i+1].colorChoice].bri2);
+        let thisColor = p.lerpColor(chosenColor1, chosenColor2, p.map(i, 0, p.otherLocations.length, 0, 1));
+        p.stroke(thisColor);
+        p.beginShape();
+        if (p.otherLocations[i].draw){
+          p.vertex(p.otherLocations[i].position.x, p.otherLocations[i].position.y);
+        }
+      //  console.log("break");
+      }
+
+    }
+    p.endShape();
+  }
+
+  p.updateOtherPoints = () => {
+      for (let i=0; i<p.otherLocations.length;i++){
+        p.otherLocations[i].update();
+      }
   }
 
   p.updatePoints = () => {

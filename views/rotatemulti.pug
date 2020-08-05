@@ -2,9 +2,35 @@ extends toy.pug
 
 block thisToyScripts
   // extra script links here if needed
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js')
 
 
 block content
+  #welcome 
+    p Hi, this is 
+      span.light Blend.
+    p
+    p If there are other people here, you can play 
+      span.light together. 
+    p
+    p
+    .checkboxHolder
+      #checkbox
+      #checkBoxLabel Pair me with other people 
+        span.small (recommended)
+      
+    button.choice#start Start 
+    p.note
+      | Please note that this space is unmoderated and, while the artist would
+      | encourage everyone to keep their drawings family friendly, if you're
+      | here with children, you may want to play unpaired. 
+  
+  #connectionInfo 
+    p#infoContent Finding you a partner... <br> You can play solo in the meantime
+  #idleWarning 
+    p#idleWarningContent
+  
+      
   #rotateMenu
     #penColorsMenu.menuOption.allUI
       .menuIcon.allUI
@@ -17,10 +43,13 @@ block content
       .menuText.allUI Options
     #pairingMenu.menuOption.allUI
       .menuIcon.allUI
-      .menuText.allUI Connect
+      .menuText.allUI Pairing
     #clearAllButton.menuOption.allUI
       .menuIcon.allUI
       .menuText.allUI Clear
+    #saveButton.menuOption.allUI
+      .menuIcon.allUI
+      .menuText.allUI Save PNG
             
   #penColors.menuDrawer
     - for (var i = 0; i < 5; i++)
@@ -31,31 +60,37 @@ block content
     
   #optionSelector
   #options.menuDrawer
- 
     .optionHolder
       .optionText Pen Size
       .sliderBg
         - for (var i = 1; i < 7; i++)
-          button(id='penSize' + i).penSizeButton.sliderButton.allUI #{i}
-          
+          button(id='penSize' + i).penSizeButton.sliderButton.allUI #{i}        
     .optionHolder
       .optionText Spin Direction
       button(id='spinClockWise').spinButton.buttonSelected.allUI
-      button(id='spinAntiClockWise').spinButton.allUI
-          
+      button(id='spinAntiClockWise').spinButton.allUI        
     .optionHolder
       .optionText Trail Length
       .sliderBg
         - for (var i = 1; i < 7; i++)
-          button(id='trailLength' + i).trailLengthButton.sliderButton.allUI #{i}
-              
+          button(id='trailLength' + i).trailLengthButton.sliderButton.allUI #{i}            
     .optionHolder
       .optionText Speed
       .sliderBg
         - for (var i = 0; i < 6; i++)
           button(id='speed' + i).speedButton.sliderButton.allUI #{i}
-
-          
+  
+  #pairingSelector
+  #pairing.menuDrawer
+    #choseSoloButtons.pairingDrawer
+      button.pairMe.pairingButtons Play paired
+    #searchingButtons.pairingDrawer
+      button.playSolo.pairingButtons Play solo instead
+    #pairedButtons.pairingDrawer
+      button.playSolo.pairingButtons Play solo instead
+    #idleButtons.pairingDrawer
+      button.pairMe.pairingButtons Pair me up
+            
   #theToyContainer
   #img-out
     
