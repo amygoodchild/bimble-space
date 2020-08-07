@@ -23,8 +23,14 @@ $(".allUI").mouseout(function(){
 
 
 // Option set ups
-var penSizes = [0, 8, 10, 15, 30, 60, 100];
-ps.penSize = penSizes[3];
+if (landscape){
+  var penSizes = [0, 8, 10, 15, 30, 60, 100];
+}
+else{
+  var penSizes = [0, 3, 5, 8, 10, 30, 60];  
+}
+  ps.penSize = penSizes[3];
+
 $("#penSize3").addClass("sliderButtonSelected");
 
 var speeds = [0, 0.2, 0.55, 0.7, 1.5, 2.0];
