@@ -389,12 +389,12 @@ const rotateSketch = ( p ) => {
       $(".trailLengthButton").removeClass("sliderButtonSelected");
       $("#" + data.id).addClass("sliderButtonSelected");
       console.log(data.id);
-      p.backgroundOpacity = data.value;
+      p.backgroundOpacity = backgroundOpacitys[data.value];
     }
     if (data.variable == "rotate speed"){
       $(".speedButton").removeClass("sliderButtonSelected");
       $("#" + data.id).addClass("sliderButtonSelected");
-      ps.angleA = data.value;
+      ps.angleA = ps.radians(speeds[data.value]]);
     }
     if (data.variable == "clear"){
       ps.clearLines = true;
