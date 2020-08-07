@@ -22,18 +22,26 @@ $(".allUI").mouseout(function(){
 });
 
 
+var penSizes;
+var speeds;
 // Option set ups
 if (landscape){
-  var penSizes = [0, 8, 10, 15, 30, 60, 100];
+  penSizes = [0, 8, 10, 15, 30, 60, 100];
 }
 else{
-  var penSizes = [0, 3, 5, 8, 10, 30, 60];  
+  penSizes = [0, 3, 5, 8, 10, 30, 60];
 }
-  ps.penSize = penSizes[3];
-
+ps.penSize = penSizes[3];
 $("#penSize3").addClass("sliderButtonSelected");
 
-var speeds = [0, 0.2, 0.55, 0.7, 1.5, 2.0];
+
+if (landscape){
+  speeds = [0, 0.2, 0.55, 0.7, 1.5, 2.0];
+}
+else{
+  speeds = [0, 0.4, 0.8, 1.5, 2.3, 3.6];
+}
+
 ps.angleA = ps.radians(speeds[3]);
 $("#speed3").addClass("sliderButtonSelected");
 
