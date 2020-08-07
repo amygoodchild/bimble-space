@@ -72,6 +72,8 @@ const rotateSketch = ( p ) => {
   p.lerpMouseY;
   p.penSize = 2;
   p.backgroundOpacity = 0;
+  p.backgroundOpacitys;
+  p.speeds;
   p.bgOpacityToUse;
   p.penLerp = 0.25;
   p.spinClockwise = true;
@@ -163,10 +165,18 @@ const rotateSketch = ( p ) => {
     p.socket.on('otherUserSettingRotate', p.otherUserSetting);
     p.socket.on('unMatched', p.unmatched);          // Lets us know we've been unmatched (the other person left)
 
-
-    if (!landscape){
-      p.penLerp = 0.35;
+    if (landscape){
+      p.penSizes = [0, 8, 10, 15, 30, 60, 100];
+      p.speeds = [0, 0.2, 0.55, 0.7, 1.5, 2.0];
     }
+
+    else {
+      p.penLerp = 0.35;
+      p.penSizes = [0, 3, 5, 8, 10, 30, 60];
+      p.speeds = [0, 0.4, 0.8, 1.5, 1.9, 2.6];
+    }
+
+    p.backgroundOpacitys = [100, 100, 70, 30, 14, 6, 0];
   };
 
 
@@ -388,13 +398,13 @@ const rotateSketch = ( p ) => {
     if (data.variable == "background opacity"){
       $(".trailLengthButton").removeClass("sliderButtonSelected");
       $("#" + data.id).addClass("sliderButtonSelected");
-      console.log(data.id);
-      p.backgroundOpacity = backgroundOpacitys[data.value];
+
+      p.backgroundOpacity = p.backgroundOpacitys[data.value];
     }
     if (data.variable == "rotate speed"){
       $(".speedButton").removeClass("sliderButtonSelected");
       $("#" + data.id).addClass("sliderButtonSelected");
-      ps.angleA = ps.radians(speeds[data.value]);
+      ps.angleA = ps.radians(p.speeds[data.value]);
     }
     if (data.variable == "clear"){
       ps.clearLines = true;
