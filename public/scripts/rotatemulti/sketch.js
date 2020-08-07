@@ -73,7 +73,7 @@ const rotateSketch = ( p ) => {
   p.penSize = 2;
   p.backgroundOpacity = 0;
   p.bgOpacityToUse;
-  p.penLerp = 0.15;
+  p.penLerp = 0.25;
   p.spinClockwise = true;
   p.rotationDivision = 2.5;
   p.targetRotationDivision = 2.5;
@@ -103,7 +103,7 @@ const rotateSketch = ( p ) => {
   p.loneMessages = [];
 
   p.setup = () => {
-      p.frameRate(35);
+    p.frameRate(60);
     // Connects to server for comms
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       p.socket = io.connect('http://localhost:3000');
