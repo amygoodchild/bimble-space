@@ -338,6 +338,23 @@ $(".pairingButtons").click(function(){
   $("#pairingSelector").css("display", "none");
 });
 
+$(document).on('mousedown', function (e) {
+    if ($(e.target).closest("#options").length === 0) {
+      if($(e.target).closest("#optionsMenu").length ===0){
+        $("#options").hide();
+        $("#optionSelector").hide();
+      }
+    }
+    if ($(e.target).closest("#pairing").length === 0) {
+      if($(e.target).closest("#pairingMenu").length ===0){
+        $("#pairing").hide();
+        $("#pairingSelector").hide();
+      }
+    }
+
+
+});
+
 
 
 });

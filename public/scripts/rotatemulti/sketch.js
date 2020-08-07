@@ -9,6 +9,17 @@ var landscape;
 
   }
 
+  $(window).blur(function () {
+      //do something
+       console.log("You left this tab");
+  });
+
+  $(window).focus(function () {
+        //do something
+         console.log("You are in this tab");
+  });
+
+
   $( window ).resize(function() {
     if (ps.windowHeight < ps.windowWidth){
       landscape = true;
@@ -107,6 +118,9 @@ const rotateSketch = ( p ) => {
   p.otherUser;
   p.pairCounter = 0;
   p.loneMessages = [];
+
+  p.maxIdle = 3000;
+  p.lastNotIdle = 0;
 
   p.setup = () => {
     p.frameRate(60);
@@ -325,6 +339,16 @@ const rotateSketch = ( p ) => {
     }
 
     p.prevMillis = p.millis();
+
+    if (p.lastNotIdle + p.maxIdle < p.millis()){
+      //console.log("idle");
+    }
+
+    if(p.mouseIsPressed){
+
+      p.lastNotIdle = p.millis();
+      //console.log(p.lastNotIdle);
+    }
 
     //p.tx +=0.01;
     //p.ty +=0.01;
