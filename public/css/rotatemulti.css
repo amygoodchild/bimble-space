@@ -1,3 +1,7 @@
+body{
+  background: #000000;
+}
+
 #img-out {
   position: absolute;
   right: 0;
@@ -608,7 +612,26 @@ canvas{
   font-family: MoonBold;
 }
 
+#notification {
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+}
 
+#notification .notificationMessage{
+  position: absolute;
+  bottom: 40px;
+  opacity: 1.0;
+  right: 30px;
+  text-align: right;
+  background: #000000c7;
+  padding: 5px;
+}
 
 
 @media (orientation: portrait) {
@@ -690,6 +713,7 @@ canvas{
     background-position: 19px 255px;
     padding-top: 0px;
     position: fixed;
+    z-index: 100;
   }
 
   #welcome{
@@ -701,6 +725,10 @@ canvas{
     bottom: auto;
     top: 60px;
     left: 10px;
+  }
+
+  #notification .notificationMessage{
+    bottom: 80px;
   }
 }
 

@@ -6,10 +6,11 @@ var landscape;
   else{
     landscape = false;
     console.log("portrait");
+
   }
 
   $( window ).resize(function() {
-    if ($( window ).height() < $( window ).width()){
+    if (ps.windowHeight < ps.windowWidth){
       landscape = true;
       $("#menu").css("width", "55px");
       $("#menu").css("height", "100%");
@@ -18,8 +19,8 @@ var landscape;
       $(".menuButtonClosedMobile").css("display", "none");
       $(".menuButtonOpenMobile").css("display", "none")
 
-      newToyWidth =  $(window).width() - 55;
-      newToyHeight = $(window).height();
+      newToyWidth =  ps.windowWidth - 55;
+      newToyHeight = ps.windowHeight;
     }
     else{
       landscape = false;
@@ -31,8 +32,8 @@ var landscape;
       $(".menuButtonClosed").css("display", "none");
       $(".menuButtonOpen").css("display", "none");
 
-      newToyWidth =  $(window).width();
-      newToyHeight = $(window).height() - 50;
+      newToyWidth =  ps.windowWidth;
+      newToyHeight = ps.windowHeight - 50;
 
     }
 
@@ -45,6 +46,9 @@ var landscape;
       newHeight : newToyHeight,
       otherUser : ps.otherUser
     }
+
+    ps.socket.emit('iResized', data);
+
 
   });
 
@@ -164,6 +168,7 @@ const rotateSketch = ( p ) => {
     p.socket.on('otherUserDrawingRotate', p.otherUserDrawing);
     p.socket.on('otherUserSettingRotate', p.otherUserSetting);
     p.socket.on('unMatched', p.unmatched);          // Lets us know we've been unmatched (the other person left)
+    p.socket.on('theyResized', p.theyResized);
 
     if (landscape){
       p.penSizes = [0, 8, 10, 15, 30, 60, 100];
@@ -233,6 +238,8 @@ const rotateSketch = ( p ) => {
 
   p.draw = () => {
 
+    p.moveNotificationsUp();
+
     p.newMillis = p.millis();
 
     if (p.chosenBackground == 0){
@@ -262,20 +269,20 @@ const rotateSketch = ( p ) => {
     }
     p.milliAngle = ((p.angleA / 35) * (p.newMillis - p.prevMillis))/2;
 
+    if (p.matchState == "paired" && p.otherLocations.length > 0){
+      for (let j=0;j<2;j++){
+        p.updateOtherPoints();
+        p.deleteOtherPoints();
+        p.drawOtherPoints();
+      }
+    }
+
     if (p.locations.length > 0){
       //p.drawPointsWithTrails();
       for (let j=0;j<2;j++){
         p.updatePoints();
         p.deletePoints();
         p.drawPoints();
-      }
-    }
-
-    if (p.matchState == "paired" && p.otherLocations.length > 0){
-      for (let j=0;j<2;j++){
-        p.updateOtherPoints();
-        p.deleteOtherPoints();
-        p.drawOtherPoints();
       }
     }
 
@@ -363,7 +370,6 @@ const rotateSketch = ( p ) => {
   }
 
   p.otherUserSetting = (data) => {
-    console.log("setting received");
     if (data.variable == "background color"){
       p.chosenBackground = data.value;
       if (p.backgroundOpacity == 0){
@@ -400,17 +406,31 @@ const rotateSketch = ( p ) => {
       $("#" + data.id).addClass("sliderButtonSelected");
 
       p.backgroundOpacity = p.backgroundOpacitys[data.value];
+
+      let message = "Trail length changed to " + data.value;
+      p.addNotification(message);
+
     }
     if (data.variable == "rotate speed"){
       $(".speedButton").removeClass("sliderButtonSelected");
       $("#" + data.id).addClass("sliderButtonSelected");
       ps.angleA = ps.radians(p.speeds[data.value]);
+
+      let message = "Speed changed to " + data.value;
+      p.addNotification(message);
     }
     if (data.variable == "clear"){
       ps.clearLines = true;
+      let message = "Canvas cleared";
+      p.addNotification(message);
     }
 
   }
+
+    p.theyResized = (data) =>{
+      p.otherWidth = data.newWidth;    // map up the screen widths
+      p.otherHeight = data.newHeight;
+    }
 
   p.getNewPoints = () => {
 
@@ -598,6 +618,45 @@ const rotateSketch = ( p ) => {
   p.keyPressed = () => {
     p.backgroundFade = true;
     p.backgroundFadeCount = p.frameCount;
+  }
+
+
+
+  p.addNotification = (message) => {
+
+      // Adds an element to the document
+      var n = document.getElementById("notification");
+      var newElement = document.createElement("div");
+
+      newElement.setAttribute('class', "notificationMessage");
+      let newID = p.int(p.random(0,50000));
+      newElement.setAttribute('id', newID);
+      newElement.innerHTML = message;
+      n.appendChild(newElement);
+  }
+
+
+  p.moveNotificationsUp = () => {
+      //notifications = document.getElementById("notification").children;
+      //console.log(notifications);
+
+        $('#notification').children().each(function () {
+          let newBottom = $(this).css("bottom");
+          newBottom = parseInt(newBottom.substring(0,newBottom.length -2));
+          newBottom += 2;
+          $(this).css("bottom", newBottom + "px");
+
+          let newOpacity = $(this).css("opacity");
+          newOpacity = parseFloat(newOpacity);
+          newOpacity -= 0.01;
+          $(this).css("opacity", newOpacity);
+
+          if (newBottom > 300){
+            $(this).remove();
+          }
+        });
+
+
   }
 
 

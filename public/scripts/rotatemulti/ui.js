@@ -90,7 +90,6 @@ $(".trailLengthButton").click(function(){
     id: $(this).attr('id'),
     otherUser: ps.otherUser
   }
-  console.log(data);
   ps.socket.emit('iSettingRotate', data);
 });
 
@@ -338,6 +337,7 @@ $(".pairingButtons").click(function(){
   $("#pairing").css("display", "none");
   $("#pairingSelector").css("display", "none");
 });
+
 
 
 });
