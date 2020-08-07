@@ -163,6 +163,10 @@ const rotateSketch = ( p ) => {
     p.socket.on('otherUserSettingRotate', p.otherUserSetting);
     p.socket.on('unMatched', p.unmatched);          // Lets us know we've been unmatched (the other person left)
 
+
+    if (!landscape){
+      p.penLerp = 0.35;
+    }
   };
 
 
