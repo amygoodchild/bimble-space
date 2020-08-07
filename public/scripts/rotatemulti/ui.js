@@ -68,7 +68,7 @@ $(".speedButton").click(function(){
 
   var data = {
     variable : "rotate speed",
-    value: theId;
+    value: theId,
     id: $(this).attr('id'),
     otherUser: ps.otherUser
   }

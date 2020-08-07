@@ -57,7 +57,7 @@ const rotateSketch = ( p ) => {
 
 //  p.boids = [];
 //  p.idleCounting = false;
-  p.frameRateLerp = 25;  // For displaying framerate more smoothly/readably
+  p.frameRateLerp = 30;  // For displaying framerate more smoothly/readably
   p.disableFriendlyErrors = true; // Supposed to improve p5js performance... *shrug*
   p.debugMode = false;    // debug and stuff for measuring time taken
 
@@ -394,7 +394,7 @@ const rotateSketch = ( p ) => {
     if (data.variable == "rotate speed"){
       $(".speedButton").removeClass("sliderButtonSelected");
       $("#" + data.id).addClass("sliderButtonSelected");
-      ps.angleA = ps.radians(speeds[data.value]]);
+      ps.angleA = ps.radians(speeds[data.value]);
     }
     if (data.variable == "clear"){
       ps.clearLines = true;
