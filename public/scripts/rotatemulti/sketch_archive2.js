@@ -363,7 +363,7 @@ const rotateSketch = ( p ) => {
     //p.tx +=0.01;
     //p.ty +=0.01;
 
-    if(p.matchState == "paired"){
+    if(p.matchState == "paired" && p.frameCount % 60 == 0){
       p.sendMyPoints();
     }
 
@@ -371,41 +371,20 @@ const rotateSketch = ( p ) => {
   };
 
   p.sendMyPoints = () =>{
-    //var newLocation = new Location(50, 100, true, 50, 1, true);
-    //newLocation.setupLocation();
+    var newLocation = new TestObj(50, 100, true, 50, 1, true);
+    newLocation.setupLocation();
 
     var data = {
-      points : p.locations,
+      points : newLocation,
       otherUser : p.otherUser
     }
     p.socket.emit('sendPoints', data);
-    //console.log("sending");
+    console.log("sending");
   }
 
   p.otherUserPoints = (data) =>{
-    //p.otherLocations = data.points;
-    //console.log(data.points[0]);
-    p.otherLocations.splice(0, p.otherLocations.length);
-
-    for (let i = 0; i < data.points.length; i++){
-      var newLocation = new Location(data.points[i].x, data.points[i].y, data.points[i].draw, data.points[i].size, data.points[i].colorChoice, data.points[i].spinClockwise);
-      newLocation.setupLocation();
-      p.otherLocations.push(newLocation);
-    }
+    p.otherLocations = data.points;
   }
-
-    p.otherUserDrawing = (data) => {
-      p.otherDrawCount++;
-      //console.log("otheruser: " + p.otherDrawCount);
-
-      let xposition = data.x/p.otherWidth * p.width;
-      let yposition = data.y/p.otherHeight * p.height;
-
-      var newLocation = new Location(xposition, yposition, data.draw, data.size, data.colorChoice, data.clockwise);
-      newLocation.setupLocation();
-      p.otherLocations.push(newLocation);
-      //console.log("received");
-    }
 
   p.canvasClick = () => {
     if (!landscape){
@@ -437,7 +416,18 @@ const rotateSketch = ( p ) => {
   };
 
 
+  p.otherUserDrawing = (data) => {
+    p.otherDrawCount++;
+    //console.log("otheruser: " + p.otherDrawCount);
 
+    let xposition = data.x/p.otherWidth * p.width;
+    let yposition = data.y/p.otherHeight * p.height;
+
+    var newLocation = new Location(xposition, yposition, data.draw, data.size, data.colorChoice, data.clockwise);
+    newLocation.setupLocation();
+    p.otherLocations.push(newLocation);
+    //console.log("received");
+  }
 
   p.otherUserSetting = (data) => {
     if (data.variable == "background color"){
@@ -532,6 +522,70 @@ const rotateSketch = ( p ) => {
       //}
     }
   }
+    //constructor(x, y, draw, size, colorChoice, clockwise){
+  p.sendNewPoints = () =>{
+    var data = {
+      x : p.locations[p.locations.length-1].position.x,
+      y : p.locations[p.locations.length-1].position.y,
+      draw : p.locations[p.locations.length-1].draw,
+      size: p.locations[p.locations.length-1].size,
+      colorChoice : p.locations[p.locations.length-1].colorChoice,
+      clockwise : p.locations[p.locations.length-1].spinClockwise,
+      otherUser : p.otherUser
+    }
+
+
+    //console.log(data);
+    p.socket.emit('iDrewRotate', data);
+
+    p.myDrawCount++;
+    //console.log("me: " + p.myDrawCount);
+  }
+
+
+  p.drawPointsWithTrails = () => {
+
+    for (let j = p.locations[0].positions.length; j>0; j--){
+
+      p.stroke(255,0,100);
+      p.strokeWeight(p.locations[0].size);
+      p.noFill();
+      p.beginShape()
+      for (let i=1; i<p.locations.length;i++){
+        if(p.locations[i].positions.length > j){
+          if (p.locations[i].draw){
+            let opacity = p.map(j, 1, 15, 0, 100);
+            let chosenColor1 = p.color(p.gradients[p.chosenGradient].hue1, p.gradients[p.chosenGradient].sat1, p.gradients[p.chosenGradient].bri1, opacity);
+            let chosenColor2 = p.color(p.gradients[p.chosenGradient].hue2, p.gradients[p.chosenGradient].sat2, p.gradients[p.chosenGradient].bri2, opacity);
+            let thisColor = p.lerpColor(chosenColor1, chosenColor2, p.map(i, 0, p.locations.length, 0, 1));
+            p.stroke(thisColor);
+            p.vertex(p.locations[i].positions[j].x, p.locations[i].positions[j].y);
+          }
+          else if (i < p.locations.length-1){
+            p.endShape();
+            p.strokeWeight(p.locations[i+1].size);
+            p.beginShape();
+          }
+
+          if (i%2==0 && i > 0 && i < p.locations.length-1){
+            p.endShape();
+            p.strokeWeight(p.locations[i+1].size);
+            let opacity = p.map(j, 1, 15, 0, 100);
+            let chosenColor1 = p.color(p.gradients[p.chosenGradient].hue1, p.gradients[p.chosenGradient].sat1, p.gradients[p.chosenGradient].bri1, opacity);
+            let chosenColor2 = p.color(p.gradients[p.chosenGradient].hue2, p.gradients[p.chosenGradient].sat2, p.gradients[p.chosenGradient].bri2, opacity);
+            let thisColor = p.lerpColor(chosenColor1, chosenColor2, p.map(i, 0, p.locations.length, 0, 1));
+            p.stroke(thisColor);
+            p.beginShape();
+            if (p.locations[i].draw){
+              p.vertex(p.locations[i].positions[j].x, p.locations[i].positions[j].y);
+            }
+          //  console.log("break");
+          }
+        }
+      }
+      p.endShape();
+    }
+  }
 
   p.drawPoints = () => {
     p.stroke(255,0,100);
@@ -545,7 +599,7 @@ const rotateSketch = ( p ) => {
       if (p.locations[i].draw){
         let thisColor = p.lerpColor(chosenColor1, chosenColor2, p.map(i, 0, p.locations.length, 0, 1));
         p.stroke(thisColor);
-        p.vertex(p.locations[i].x, p.locations[i].y);
+        p.vertex(p.locations[i].position.x, p.locations[i].position.y);
       }
       else if (i < p.locations.length-1){
         p.endShape();
@@ -562,7 +616,7 @@ const rotateSketch = ( p ) => {
         p.stroke(thisColor);
         p.beginShape();
         if (p.locations[i].draw){
-          p.vertex(p.locations[i].x, p.locations[i].y);
+          p.vertex(p.locations[i].position.x, p.locations[i].position.y);
         }
       //  console.log("break");
       }
@@ -585,7 +639,7 @@ const rotateSketch = ( p ) => {
       if (p.otherLocations[i].draw){
         let thisColor = p.lerpColor(chosenColor1, chosenColor2, p.map(i, 0, p.otherLocations.length, 0, 1));
         p.stroke(thisColor);
-        p.vertex(p.otherLocations[i].x, p.otherLocations[i].y);
+        p.vertex(p.otherLocations[i].position.x, p.otherLocations[i].position.y);
 
       }
       else if (i < p.otherLocations.length-1){
@@ -603,7 +657,7 @@ const rotateSketch = ( p ) => {
         p.stroke(thisColor);
         p.beginShape();
         if (p.otherLocations[i].draw){
-          p.vertex(p.otherLocations[i].x, p.otherLocations[i].y);
+          p.vertex(p.otherLocations[i].position.x, p.otherLocations[i].position.y);
         }
       //  console.log("break");
       }
@@ -712,20 +766,26 @@ const rotateSketch = ( p ) => {
       this.draw = draw;
       this.size = size;
       this.colorChoice = colorChoice;
-      this.spinClockwise = clockwise;
-      this.vectorLocationX = this.x - p.width/2;
-      this.vectorLocationY = this.y - p.height/2;
+      this.clockwise = clockwise;
 
+      this.position;
+      this.VectorLocation;
       this.angleB;
+      this.spinClockWise;
       this.distanceFromCentre;
 
       this.setup = false;
   	}
 
     setupLocation(){
-      let tempVec = p.createVector(this.vectorLocationX, this.vectorLocationY);
+      this.position = p.createVector(this.x,this.y);       // mouseposition
+      this.draw = this.draw;
+      this.size = this.size;
+      this.colorChoice = this.colorChoice;
+      this.vectorLocation = p.createVector(this.x - p.width/2, this.y - p.height/2); // from centre
+      this.angleB = p.vector1.angleBetween(this.vectorLocation);
+      this.spinClockwise = this.clockwise;
 
-      this.angleB = p.vector1.angleBetween(tempVec);
       this.distanceFromCentre = p.dist(p.width/2, p.height/2, this.x, this.y);
       this.setup = true;
 
@@ -736,8 +796,9 @@ const rotateSketch = ( p ) => {
         this.setupLocation();
       }
 
-      this.x = p.width/2 + (this.distanceFromCentre * p.sin(p.degrees(this.angleB + p.milliAngle)));
-      this.y = p.height/2 - (this.distanceFromCentre * p.cos(p.degrees(this.angleB + p.milliAngle)));
+      this.position.x = p.width/2 + (this.distanceFromCentre * p.sin(p.degrees(this.angleB + p.milliAngle)));
+      this.position.y = p.height/2 - (this.distanceFromCentre * p.cos(p.degrees(this.angleB + p.milliAngle)));
+
 
       if (this.spinClockwise){
         this.angleB += p.milliAngle;
@@ -746,7 +807,10 @@ const rotateSketch = ( p ) => {
         this.angleB -= p.milliAngle;
       }
     }
-
+  	display(){
+      p.fill(255,0,100);
+      p.ellipse(this.position.x, this.position.y, 10,10);
+  	}
   }
 
   class PenGradient{

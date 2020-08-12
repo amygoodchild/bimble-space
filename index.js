@@ -230,6 +230,11 @@ function newConnection(socket){
       io.to(data.otherUser).emit('theyResized', data);
   });
 
+  socket.on('sendPoints', function(data) {
+    //console.log("received");
+    io.to(data.otherUser).emit('otherUserPoints', data);
+  });
+
 
   socket.on('playSolo', function(data) {
     console.log("user " + socket.id + " " + data.choice + " state: " + data.state);
