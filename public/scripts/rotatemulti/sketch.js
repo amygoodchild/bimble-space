@@ -252,9 +252,9 @@ const rotateSketch = ( p ) => {
 
   p.draw = () => {
 
-    p.moveNotificationsUp();
-
     p.newMillis = p.millis();
+
+    p.moveNotificationsUp();
 
     if (p.chosenBackground == 0){
       p.blendMode(p.DIFFERENCE);
@@ -281,6 +281,7 @@ const rotateSketch = ( p ) => {
     if (p.canvasClick()){
       p.getNewPoints();
     }
+
     p.milliAngle = ((p.angleA / 35) * (p.newMillis - p.prevMillis))/2;
 
     if (p.matchState == "paired" && p.otherLocations.length > 0){
@@ -338,7 +339,7 @@ const rotateSketch = ( p ) => {
       p.text("framerate:", 85, 200);
     }
 
-    p.prevMillis = p.millis();
+
 
     if (p.lastNotIdle + p.maxIdle < p.millis()){
       //console.log("idle");
@@ -352,6 +353,8 @@ const rotateSketch = ( p ) => {
 
     //p.tx +=0.01;
     //p.ty +=0.01;
+
+    p.prevMillis = p.millis();
   };
 
   p.canvasClick = () => {
