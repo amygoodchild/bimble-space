@@ -123,7 +123,7 @@ const rotateSketch = ( p ) => {
   p.lastNotIdle = 0;
 
   p.setup = () => {
-    p.frameRate(60);
+    p.frameRate(5);
     // Connects to server for comms
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       p.socket = io.connect('http://localhost:3000');
