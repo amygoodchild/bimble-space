@@ -289,8 +289,8 @@ const rotateSketch = ( p ) => {
       p.getNewPoints();
     }
 
-    //p.milliAngle = ((p.angleA/16) * (p.newMillis - p.prevMillis))/2;
-    p.milliAngle = p.angleA/3;
+    p.milliAngle = ((p.angleA/16) * (p.newMillis - p.prevMillis))/2;
+    //p.milliAngle = p.angleA/3;
     //console.log("milli: " + p.milliAngle);
     //console.log("angle: " + p.angleA);
     //console.log("--");
