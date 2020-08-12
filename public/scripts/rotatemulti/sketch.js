@@ -363,17 +363,12 @@ const rotateSketch = ( p ) => {
     //p.tx +=0.01;
     //p.ty +=0.01;
 
-    if(p.matchState == "paired"){
-      p.sendMyPoints();
-    }
-
     p.prevMillis = p.millis();
   };
 
   p.sendMyPoints = () =>{
     //var newLocation = new Location(50, 100, true, 50, 1, true);
     //newLocation.setupLocation();
-
     var data = {
       points : p.locations,
       otherUser : p.otherUser
@@ -383,13 +378,8 @@ const rotateSketch = ( p ) => {
   }
 
   p.otherUserPoints = (data) =>{
-    //p.otherLocations = data.points;
-    //console.log(data.points[0]);
-    p.otherLocations.splice(0, p.otherLocations.length);
 
-
-
-    for (let i = 0; i < data.points.length; i++){
+    for (let i = p.otherLocations.length; i < data.points.length; i++){
       let xposition = data.points[i].x/p.otherWidth * p.width;
       let yposition = data.points[i].y/p.otherHeight * p.height;
 
@@ -398,8 +388,6 @@ const rotateSketch = ( p ) => {
       p.otherLocations.push(newLocation);
     }
   }
-
-
 
   p.canvasClick = () => {
     if (!landscape){
@@ -524,6 +512,10 @@ const rotateSketch = ( p ) => {
       //if(p.matchState == "paired"){
       //  p.sendNewPoints();
       //}
+
+      if(p.matchState == "paired"){
+        p.sendMyPoints();
+      }
     }
   }
 
@@ -609,7 +601,7 @@ const rotateSketch = ( p ) => {
 
   p.updateOtherPoints = () => {
       for (let i=0; i<p.otherLocations.length;i++){
-        //p.otherLocations[i].update();
+        p.otherLocations[i].update();
       }
   }
 
@@ -740,7 +732,6 @@ const rotateSketch = ( p ) => {
         this.angleB -= p.milliAngle;
       }
     }
-
   }
 
   class PenGradient{
