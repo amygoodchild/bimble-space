@@ -80,6 +80,9 @@ const rotateSketch = ( p ) => {
   p.newMillis;
   p.milliAngle;
 
+  p.myDrawCount = 0;
+  p.otherDrawCount = 0;
+
   p.angle = 1;
   p.locations = [];
   p.otherLocations = [];
@@ -393,6 +396,9 @@ const rotateSketch = ( p ) => {
 
 
   p.otherUserDrawing = (data) => {
+    p.otherDrawCount++;
+    console.log("otheruser: " + p.otherDrawCount);
+
     let xposition = data.x/p.otherWidth * p.width;
     let yposition = data.y/p.otherHeight * p.height;
 
@@ -504,8 +510,12 @@ const rotateSketch = ( p ) => {
       otherUser : p.otherUser
     }
 
+
     //console.log(data);
     p.socket.emit('iDrewRotate', data);
+
+    p.myDrawCount++;
+    console.log("otheruser: " + p.myDrawCount);
   }
 
 
