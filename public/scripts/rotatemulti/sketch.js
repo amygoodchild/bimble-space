@@ -609,7 +609,7 @@ const rotateSketch = ( p ) => {
 
   p.updateOtherPoints = () => {
       for (let i=0; i<p.otherLocations.length;i++){
-        p.otherLocations[i].update();
+        //p.otherLocations[i].update();
       }
   }
 
