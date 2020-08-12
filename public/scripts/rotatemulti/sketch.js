@@ -361,7 +361,7 @@ const rotateSketch = ( p ) => {
       //console.log(p.lastNotIdle);
     }
 
-    if(p.matchState == "paired" && p.frameCount % 30 == 0){
+    if(p.matchState == "paired"){
       p.sendMyPoints();
     }
 
