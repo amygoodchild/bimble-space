@@ -387,25 +387,19 @@ const rotateSketch = ( p ) => {
     //console.log(data.points[0]);
     p.otherLocations.splice(0, p.otherLocations.length);
 
+
+
     for (let i = 0; i < data.points.length; i++){
-      var newLocation = new Location(data.points[i].x, data.points[i].y, data.points[i].draw, data.points[i].size, data.points[i].colorChoice, data.points[i].spinClockwise);
+      let xposition = data.points[i].x/p.otherWidth * p.width;
+      let yposition = data.points[i].y/p.otherHeight * p.height;
+
+      var newLocation = new Location(xposition, yposition, data.points[i].draw, data.points[i].size, data.points[i].colorChoice, data.points[i].spinClockwise);
       newLocation.setupLocation();
       p.otherLocations.push(newLocation);
     }
   }
 
-    p.otherUserDrawing = (data) => {
-      p.otherDrawCount++;
-      //console.log("otheruser: " + p.otherDrawCount);
 
-      let xposition = data.x/p.otherWidth * p.width;
-      let yposition = data.y/p.otherHeight * p.height;
-
-      var newLocation = new Location(xposition, yposition, data.draw, data.size, data.colorChoice, data.clockwise);
-      newLocation.setupLocation();
-      p.otherLocations.push(newLocation);
-      //console.log("received");
-    }
 
   p.canvasClick = () => {
     if (!landscape){
