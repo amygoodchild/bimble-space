@@ -123,7 +123,7 @@ const rotateSketch = ( p ) => {
   p.lastNotIdle = 0;
 
   p.setup = () => {
-    p.frameRate(5);
+    //p.frameRate(5);
     // Connects to server for comms
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       p.socket = io.connect('http://localhost:3000');
@@ -286,9 +286,9 @@ const rotateSketch = ( p ) => {
 
 
     p.milliAngle = ((p.angleA / 35) * (p.newMillis - p.prevMillis))/2;
-    console.log("milli angle : " + p.milliAngle);
-    console.log("angle : " + p.angleA);
-    console.log("--");
+    //console.log("milli angle : " + p.milliAngle);
+    //console.log("angle : " + p.angleA);
+    //console.log("--");
     if (p.matchState == "paired" && p.otherLocations.length > 0){
       for (let j=0;j<2;j++){
         p.updateOtherPoints();
