@@ -289,9 +289,9 @@ const rotateSketch = ( p ) => {
 
 
     p.milliAngle = ((p.angleA / 35) * (p.newMillis - p.prevMillis))/2;
-    //console.log("milli angle : " + p.milliAngle);
-    //console.log("angle : " + p.angleA);
-    //console.log("--");
+    console.log("milli: " + p.milliAngle);
+    console.log("angle: " + p.angleA);
+    console.log("--");
     if (p.matchState == "paired" && p.otherLocations.length > 0){
       for (let j=0;j<2;j++){
         p.updateOtherPoints();
@@ -397,7 +397,7 @@ const rotateSketch = ( p ) => {
 
   p.otherUserDrawing = (data) => {
     p.otherDrawCount++;
-    console.log("otheruser: " + p.otherDrawCount);
+    //console.log("otheruser: " + p.otherDrawCount);
 
     let xposition = data.x/p.otherWidth * p.width;
     let yposition = data.y/p.otherHeight * p.height;
@@ -515,7 +515,7 @@ const rotateSketch = ( p ) => {
     p.socket.emit('iDrewRotate', data);
 
     p.myDrawCount++;
-    console.log("otheruser: " + p.myDrawCount);
+    //console.log("me: " + p.myDrawCount);
   }
 
 
