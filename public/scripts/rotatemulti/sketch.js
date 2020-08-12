@@ -288,10 +288,10 @@ const rotateSketch = ( p ) => {
     }
 
 
-    p.milliAngle = ((p.angleA / 35) * (p.newMillis - p.prevMillis))/2;
-    console.log("milli: " + p.milliAngle);
-    console.log("angle: " + p.angleA);
-    console.log("--");
+    p.milliAngle = ((p.angleA/16) * (p.newMillis - p.prevMillis))/2;
+    //console.log("milli: " + p.milliAngle);
+    //console.log("angle: " + p.angleA);
+    //console.log("--");
     if (p.matchState == "paired" && p.otherLocations.length > 0){
       for (let j=0;j<2;j++){
         p.updateOtherPoints();
