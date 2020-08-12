@@ -730,8 +730,8 @@ const rotateSketch = ( p ) => {
         this.setupLocation();
       }
 
-      this.x = p.width/2 + (this.distanceFromCentre * p.sin(p.degrees(this.angleB + p.milliAngle)));
-      this.y = p.height/2 - (this.distanceFromCentre * p.cos(p.degrees(this.angleB + p.milliAngle)));
+      this.x = p.width/2 + (this.distanceFromCentre * p.sin(p.degrees(this.angleB + p.angleA)));
+      this.y = p.height/2 - (this.distanceFromCentre * p.cos(p.degrees(this.angleB + p.angleA)));
 
       if (this.spinClockwise){
         this.angleB += p.milliAngle;
