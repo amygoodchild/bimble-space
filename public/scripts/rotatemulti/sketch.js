@@ -289,7 +289,8 @@ const rotateSketch = ( p ) => {
       p.getNewPoints();
     }
 
-    p.milliAngle = ((p.angleA/16) * (p.newMillis - p.prevMillis))/2;
+    //p.milliAngle = ((p.angleA/16) * (p.newMillis - p.prevMillis))/2;
+    p.milliAngle = p.angleA/2;
     //console.log("milli: " + p.milliAngle);
     //console.log("angle: " + p.angleA);
     //console.log("--");
@@ -722,8 +723,8 @@ const rotateSketch = ( p ) => {
         this.setupLocation();
       }
 
-      this.x = p.width/2 + (this.distanceFromCentre * p.sin(p.degrees(this.angleB + p.angleA)));
-      this.y = p.height/2 - (this.distanceFromCentre * p.cos(p.degrees(this.angleB + p.angleA)));
+      this.x = p.width/2 + (this.distanceFromCentre * p.sin(p.degrees(this.angleB + p.milliAngle)));
+      this.y = p.height/2 - (this.distanceFromCentre * p.cos(p.degrees(this.angleB + p.milliAngle)));
 
       if (this.spinClockwise){
         this.angleB += p.milliAngle;
