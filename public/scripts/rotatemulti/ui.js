@@ -39,7 +39,8 @@ if (landscape){
   speeds = [0, 0.2, 0.55, 0.7, 1.5, 2.0];
 }
 else{
-  speeds = [0, 0.4, 0.8, 1.5, 1.9, 2.6];
+  speeds = [0, 0.2, 0.55, 0.7, 1.5, 2.0];
+  //speeds = [0, 0.4, 0.8, 1.5, 1.9, 2.6];
 }
 
 ps.angleA = ps.radians(speeds[3]);

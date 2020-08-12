@@ -192,7 +192,9 @@ const rotateSketch = ( p ) => {
     else {
       p.penLerp = 0.35;
       p.penSizes = [0, 3, 5, 8, 10, 30, 60];
-      p.speeds = [0, 0.4, 0.8, 1.5, 1.9, 2.6];
+      p.speeds = [0, 0.2, 0.55, 0.7, 1.5, 2.0];
+
+      //p.speeds = [0, 0.4, 0.8, 1.5, 1.9, 2.6];
     }
 
     p.backgroundOpacitys = [100, 100, 70, 30, 14, 6, 0];
