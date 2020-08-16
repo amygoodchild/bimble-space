@@ -361,9 +361,9 @@ const rotateSketch = ( p ) => {
       //console.log(p.lastNotIdle);
     }
 
-    if(p.matchState == "paired"){
-      p.sendMyPoints();
-    }
+    //if(p.matchState == "paired" ){
+    //  p.sendMyPoints();
+    //}
 
     //p.tx +=0.01;
     //p.ty +=0.01;
@@ -381,6 +381,20 @@ const rotateSketch = ( p ) => {
     p.socket.emit('sendPoints', data);
     //console.log("sending");
   }
+
+  p.otherUserDrawing = (data) => {
+    p.otherDrawCount++;
+    //console.log("otheruser: " + p.otherDrawCount);
+
+    let xposition = data.x/p.otherWidth * p.width;
+    let yposition = data.y/p.otherHeight * p.height;
+
+    var newLocation = new Location(xposition, yposition, data.draw, data.size, data.colorChoice, data.clockwise);
+    newLocation.setupLocation();
+    p.otherLocations.push(newLocation);
+    //console.log("received");
+  }
+
 
   p.otherUserPoints = (data) =>{
 
@@ -504,9 +518,9 @@ const rotateSketch = ( p ) => {
       newLocation.setupLocation();
       p.locations.push(newLocation);
 
-      //if(p.matchState == "paired"){
-      //  p.sendNewPoints();
-      //}
+      if(p.matchState == "paired"){
+        p.sendNewPoints();
+      }
     }
 
     if(!p.mouseIsPressed && p.drawing){
@@ -514,11 +528,29 @@ const rotateSketch = ( p ) => {
       var newLocation = new Location(p.mouseX, p.mouseY, false, p.penSize, p.chosenGradient, p.spinClockwise);
       p.locations.push(newLocation);
 
-      //if(p.matchState == "paired"){
-      //  p.sendNewPoints();
-      //}
+      if(p.matchState == "paired"){
+        p.sendNewPoints();
+      }
 
     }
+  }
+
+  p.sendNewPoints = () =>{
+    var data = {
+      x : p.locations[p.locations.length-1].x,
+      y : p.locations[p.locations.length-1].y,
+      draw : p.locations[p.locations.length-1].draw,
+      size: p.locations[p.locations.length-1].size,
+      colorChoice : p.locations[p.locations.length-1].colorChoice,
+      clockwise : p.locations[p.locations.length-1].spinClockwise,
+      otherUser : p.otherUser
+    }
+
+    //console.log(data);
+    p.socket.emit('iDrewRotate', data);
+
+    p.myDrawCount++;
+    //console.log("me: " + p.myDrawCount);
   }
 
   p.drawPoints = () => {
