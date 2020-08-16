@@ -259,7 +259,7 @@ const rotateSketch = ( p ) => {
 
   p.draw = () => {
 
-    p.newMillis = p.millis();
+
 
     p.moveNotificationsUp();
 
@@ -288,8 +288,10 @@ const rotateSketch = ( p ) => {
     if (p.canvasClick()){
       p.getNewPoints();
     }
-
+    p.newMillis = p.millis();
     p.milliAngle = ((p.angleA/16) * (p.newMillis - p.prevMillis))/2;
+    p.prevMillis = p.millis();
+
     //p.milliAngle = p.angleA/3;
     //console.log("milli: " + p.milliAngle);
     //console.log("angle: " + p.angleA);
@@ -368,7 +370,7 @@ const rotateSketch = ( p ) => {
     //p.tx +=0.01;
     //p.ty +=0.01;
 
-    p.prevMillis = p.millis();
+
   };
 
   p.sendMyPoints = () =>{
