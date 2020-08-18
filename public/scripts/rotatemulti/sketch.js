@@ -288,6 +288,7 @@ const rotateSketch = ( p ) => {
     if (p.canvasClick()){
       p.getNewPoints();
     }
+
     p.newMillis = p.millis();
     p.milliAngle = ((p.angleA/16) * (p.newMillis - p.prevMillis))/2;
     p.prevMillis = p.millis();
@@ -394,6 +395,12 @@ const rotateSketch = ( p ) => {
     var newLocation = new Location(xposition, yposition, data.draw, data.size, data.colorChoice, data.clockwise);
     newLocation.setupLocation();
     p.otherLocations.push(newLocation);
+
+    if (!data.draw){
+      for (let i = 0; i<p.otherLocations.length;i++){
+        p.otherLocations[i].rotate = true;
+      }
+    }
     //console.log("received");
   }
 
@@ -532,6 +539,10 @@ const rotateSketch = ( p ) => {
 
       if(p.matchState == "paired"){
         p.sendNewPoints();
+      }
+
+      for (let i = 0; i<p.locations.length;i++){
+        p.locations[i].rotate = true;
       }
 
     }
@@ -693,38 +704,6 @@ const rotateSketch = ( p ) => {
 
   }
 
-  class TestObj{
-    constructor(x, y, draw, size, colorChoice, clockwise){
-      this.x = x;
-      this.y = y;
-      this.draw = draw;
-      this.size = size;
-      this.colorChoice = colorChoice;
-      this.clockwise = clockwise;
-
-      this.position;
-      this.VectorLocation;
-      this.angleB;
-      this.spinClockWise;
-      this.distanceFromCentre;
-
-      this.setup = false;
-  	}
-
-    setupLocation(){
-      this.position = p.createVector(this.x,this.y);       // mouseposition
-      this.draw = this.draw;
-      this.size = this.size;
-      this.colorChoice = this.colorChoice;
-      this.vectorLocation = p.createVector(this.x - p.width/2, this.y - p.height/2); // from centre
-      this.angleB = p.vector1.angleBetween(this.vectorLocation);
-      this.spinClockwise = this.clockwise;
-
-      this.distanceFromCentre = p.dist(p.width/2, p.height/2, this.x, this.y);
-      this.setup = true;
-
-    }
-  }
 
 
   class Location{
@@ -732,6 +711,7 @@ const rotateSketch = ( p ) => {
       this.x = x;
       this.y = y;
       this.draw = draw;
+      this.rotate = false;
       this.size = size;
       this.colorChoice = colorChoice;
       this.spinClockwise = clockwise;
@@ -758,14 +738,16 @@ const rotateSketch = ( p ) => {
         this.setupLocation();
       }
 
-      this.x = p.width/2 + (this.distanceFromCentre * p.sin(p.degrees(this.angleB + p.milliAngle)));
-      this.y = p.height/2 - (this.distanceFromCentre * p.cos(p.degrees(this.angleB + p.milliAngle)));
+      if (this.rotate){
+        this.x = p.width/2 + (this.distanceFromCentre * p.sin(p.degrees(this.angleB + p.milliAngle)));
+        this.y = p.height/2 - (this.distanceFromCentre * p.cos(p.degrees(this.angleB + p.milliAngle)));
 
-      if (this.spinClockwise){
-        this.angleB += p.milliAngle;
-      }
-      else{
-        this.angleB -= p.milliAngle;
+        if (this.spinClockwise){
+          this.angleB += p.milliAngle;
+        }
+        else{
+          this.angleB -= p.milliAngle;
+        }
       }
     }
   }
