@@ -1,3 +1,73 @@
+var landscape;
+
+if ($( window ).height() < $( window ).width()){
+  landscape = true;
+  console.log("landscape");
+}
+else{
+  landscape = false;
+  console.log("portrait");
+}
+
+$(window).blur(function () {
+    //do something
+    console.log("You left this tab");
+});
+
+$(window).focus(function () {
+      //do something
+    console.log("You are in this tab");
+});
+
+$( window ).resize(function() {
+  if (ps.windowHeight < ps.windowWidth){
+    landscape = true;
+    $("#menu").css("width", "55px");
+    $("#menu").css("height", "100%");
+    $(".menuButtonClosed").css("display", "inline-block");
+    $(".menuButtonOpen").css("display", "none");
+    $(".menuButtonClosedMobile").css("display", "none");
+    $(".menuButtonOpenMobile").css("display", "none")
+
+    newToyWidth =  ps.windowWidth - 55;
+    newToyHeight = ps.windowHeight;
+  }
+  else{
+    landscape = false;
+
+    $("#menu").css("height", "50px");
+    $("#menu").css("width", "100%");
+    $(".menuButtonClosedMobile").css("display", "inline-block");
+    $(".menuButtonOpenMobile").css("display", "none");
+    $(".menuButtonClosed").css("display", "none");
+    $(".menuButtonOpen").css("display", "none");
+
+    newToyWidth =  ps.windowWidth;
+    newToyHeight = ps.windowHeight - 50;
+
+  }
+
+  $("#theToyContainer").css({ 'width': newToyWidth });
+  $("#theToyContainer").css({ 'height': newToyHeight });
+  ps.resizeCanvas(parseInt($("#theToyContainer").width()), parseInt($("#theToyContainer").height()));
+
+  data = {
+    newWidth : newToyWidth,
+    newHeight : newToyHeight,
+    otherUser : ps.otherUser
+  }
+
+  ps.socket.emit('iResized', data);
+
+
+});
+
+
+function sortOutWindowResize(){
+
+}
+
+
 $(document).ready(function(){
 
 /*
@@ -7,19 +77,11 @@ $(".colorButton").click(function(){
 });
 */
 
+
+
+
 var choosePaired = true;
 
-$(".allUI").mouseenter(function(){
-    if (landscape){
-      ps.noDraw = true;
-    }
-});
-
-$(".allUI").mouseout(function(){
-   if (landscape){
-     ps.noDraw = false;
-   }
-});
 
 
 var penSizes;
@@ -200,7 +262,7 @@ $(".menuOption").click(function(){
 
 // Clear canvas
 $("#clearAllButton").click(function(){
-      ps.clearLines = true;
+    clearPoints();
 
     var data = {
       variable : "clear",
@@ -352,10 +414,24 @@ $(document).on('mousedown', function (e) {
         $("#pairingSelector").hide();
       }
     }
-
-
+});
 });
 
 
+function moveNotificationsUp(){
+  $('#notification').children().each(function () {
+    let newBottom = $(this).css("bottom");
+    newBottom = parseInt(newBottom.substring(0,newBottom.length -2));
+    newBottom += 2;
+    $(this).css("bottom", newBottom + "px");
 
-});
+    let newOpacity = $(this).css("opacity");
+    newOpacity = parseFloat(newOpacity);
+    newOpacity -= 0.01;
+    $(this).css("opacity", newOpacity);
+
+    if (newBottom > 300){
+      $(this).remove();
+    }
+  });
+}

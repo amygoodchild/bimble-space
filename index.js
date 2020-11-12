@@ -63,6 +63,10 @@ app.get('/rotatemulti', function (req, res) {
   res.render('rotatemulti', { title: 'Rotate - Multi', path: 'rotatemulti', theScripts:[]})
 })
 
+app.get('/rotatecanvas', function (req, res) {
+  res.render('rotate-tidied', { title: 'Rotate - Multi', path: 'rotate-tidied', theScripts:[]})
+})
+
 app.get('/linesidea', function (req, res) {
   res.render('linesidea', { title: 'Lines', path: 'linesidea', theScripts:[]})
 })
@@ -210,13 +214,12 @@ function newConnection(socket){
 
   });
 
-  socket.on('iDrewRotate', function(data) {
-      io.to(data.otherUser).emit('otherUserDrawingRotate', data);
-      //console.log("user drawing");
+  socket.on('sendNewPoint', function(data) {
+      io.to(data.partnerID).emit('passNewPoint', data);
   });
 
-  socket.on('iSettingRotate', function(data) {
-      io.to(data.otherUser).emit('otherUserSettingRotate', data);
+  socket.on('sendSettingChange', function(data) {
+      io.to(data.partnerID).emit('otherUserSettingRotate', data);
 
   });
 

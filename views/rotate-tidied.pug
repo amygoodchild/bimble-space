@@ -3,10 +3,14 @@ extends toy.pug
 block thisToyScripts
   // extra script links here if needed
   script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js')
-  script(src='../scripts/rotatemulti/drawing.js')
-  script(src='../scripts/rotatemulti/points.js')
-  script(src='../scripts/rotatemulti/comms.js')
-  script(src='../scripts/rotatemulti/data.js')
+  script(src='../scripts/rotate-tidied/canvasHandler.js')  
+  script(src='../scripts/rotate-tidied/pointsHandler.js')  
+  script(src='../scripts/rotate-tidied/commsHandler.js')  
+  script(src='../scripts/rotate-tidied/settingHandler.js') 
+  script(src='../scripts/rotate-tidied/commsUI.js')
+  script(src='../scripts/rotate-tidied/settingsUI.js')
+    
+  script(src='../scripts/rotate-tidied/drawing.js')
 
 
 block content
@@ -19,7 +23,7 @@ block content
     p
     p
     .checkboxHolder
-      #checkbox
+      .checkbox
       #checkBoxLabel Pair me with other people 
         span.small (recommended)
       
