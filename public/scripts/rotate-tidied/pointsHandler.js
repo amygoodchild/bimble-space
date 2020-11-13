@@ -2,7 +2,7 @@ $(document).ready(function(){
 
   var mouseIsDown = false;
 
-  $("#theToyContainer")
+  /*$("#theToyContainer")
   .mousedown(function() {
     mouseIsDown = true;
   })
@@ -19,7 +19,7 @@ $(document).ready(function(){
   .mouseup(function() {
     mouseIsDown = false;
     ps.pointsHandler.mouseEvent(false);
-  });
+  });*/
 });
 
 class PointsHandler{

@@ -56,6 +56,15 @@ const rotateSketch = function(p){
     p.backgroundFadeCount = p.frameCount;
   }
 
+  p.mouseDragged = () => {
+    p.pointsHandler.mouseEvent(true);
+  }
+
+  p.mouseReleased = () => {
+    p.pointsHandler.mouseEvent(false);
+  }
+
+
 
 
   p.addNotification = (message) => {
