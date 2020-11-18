@@ -1,0 +1,770 @@
+body{
+  background: #000000;
+}
+
+#img-out {
+  position: absolute;
+  right: 0;
+  z-index: -10;
+}
+
+
+#theToyContainer {
+  width: calc(100% - 55px);
+  height: 100%;
+  margin-left: calc(55px);
+  cursor: crosshair;
+}
+
+canvas{
+  pointer-events: none;
+}
+
+.white-link{
+  color: #ffffff;
+}
+
+#welcome {
+  width: 400px;
+  position: absolute;
+  z-index: 5;
+  left: 200px;
+  top: 60px;
+  background: #000000eb;
+  color: #ffffff;
+  border: 1px #46c9f9 solid;
+  padding: 20px 30px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 16px;
+  font-family: MoonLight;
+  line-height: 25px;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+  font-family: RobotoLight;
+}
+
+#welcome .checkboxHolder {
+  width: 100%;
+  float: left;
+  margin-top: 30px;
+}
+
+#welcome .light {
+  font-family: robotoRegular;
+}
+
+#welcome .checkboxHolder .checkbox {
+  float: left;
+  width: 18px;
+  height: 40px;
+  background-image: url("../images/checkbox-checked.png");
+  background-repeat: no-repeat;
+}
+
+#welcome .checkboxHolder #checkBoxLabel {
+  margin-left: 7px;
+  float: left;
+  width: 240px;
+  line-height: 20px;
+}
+
+#welcome .checkboxHolder #checkBoxLabel .small {
+  font-size: 13px;
+}
+
+.checkboxUnchecked {
+  background-image: url("../images/checkbox-unchecked.png") !important;
+}
+
+#welcome .choice {
+  color: #ffffff;
+  background: #000000;
+  padding: 13px 24px;
+  margin-right: 15px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 16px;
+  font-family: MoonBold;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  margin-top: 15px;
+  border: 2px solid #ff6fed;
+  border-radius: 5px;
+  outline: 0;
+}
+
+#welcome .choice:hover {
+  background: #ff6fed;
+}
+
+#welcome .note{
+  font-size: 12px;
+  line-height: 16px;
+  margin-top: 30px;
+}
+
+#connectionInfo {
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
+  height: 45px;
+  background: #000000;
+  color: #ffffff;
+  z-index: 3;
+  padding: 5px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 14px;
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+  display: none;
+}
+
+#infoContent {
+  vertical-align: middle;
+  margin: 0px;
+  padding: 0px;
+  display: table-cell;
+}
+
+#idleWarning {
+  position: absolute;
+  top: 115px;
+  left: 140px;
+  height: 45px;
+  background: #19003b;
+  color: #ffffff;
+  z-index: 3;
+  padding: 5px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 14px;
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+  display: none;
+}
+
+#idleWarningContent {
+  vertical-align: middle;
+  margin: 0px;
+  padding: 0px;
+  display: table-cell;
+}
+
+
+#rotateMenu{
+  position: absolute;
+  left: 70px;
+  top: 15px;
+  display: none;
+}
+
+#rotateMenu .menuOption{
+  width: 51px;
+  height: 60px;
+  float: left;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+#rotateMenu .menuOption:last-child{
+  margin-right: 0px;
+}
+
+#rotateMenu .menuOption .menuIcon{
+  width: 43px;
+  height: 43px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  float: left;
+  margin-bottom: 5px;
+  margin-left: 4px;
+  background-color: #000000;
+    border-radius: 25px;
+}
+
+.allUI{
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+#rotateMenu .menuOption .menuText{
+  font-size: 10px;
+  text-align: center;
+  width: 50px;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+
+
+
+#penColorsMenu .menuIcon{
+  border-radius: 25px;
+  border: 2px solid #ffffff;
+  background: linear-gradient(34deg, #73bfe5, #73bfe5, #e573e5, #e573e5);
+}
+
+#bgColorsMenu .menuIcon{
+  border: 2px solid #ffffff;
+  background: #000000;
+  border-radius: 0px;
+}
+
+#optionsMenu .menuIcon{
+  background-position: 5.5px 5.5px;
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url("../images/rotate/settings.png");
+}
+
+#pairingMenu .menuIcon{
+  background-position: 5px 4.5px;
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-image: url("../images/rotate/pairing.png");
+}
+
+#clearAllButton .menuIcon{
+  background-position: 3px 2px;
+  background-size: 38px;
+  background-repeat: no-repeat;
+  background-image: url("../images/rotate/clear.png");
+}
+
+#saveButton .menuIcon{
+  background-position: 3px 2px;
+  background-size: 38px;
+  background-repeat: no-repeat;
+  background-image: url("../images/rotate/download.png");
+}
+
+
+#options .optionHolder{
+  width: 290px;
+  height: 50px;
+  margin-top: 0px;
+  margin-bottom: 50px;
+  float: left;
+}
+
+#options .optionText{
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
+}
+
+.sliderBg{
+  width: 254px;
+  margin-left: 20px;
+  margin-top: 30px;
+  height: 2px;
+  background: #ff6fed;
+  overflow: visible;
+}
+
+.sliderButton{
+  width: 30px;
+  height: 30px;
+  padding: 0px;
+  border: 2px solid #46c9f9;
+  border-radius: 40px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  float: left;
+  outline: 0;
+  background: #000000;
+  margin-left: 14px;
+  margin-top: -15px;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: MoonBold;
+  font-size: 15px;
+}
+
+.sliderButtonSelected{
+  width: 48px;
+  height: 48px;
+  margin-left: 8px;
+  margin-right: -8px;
+  margin-top: -24px;
+  font-size: 24px;
+  background: #143c4a;
+}
+
+.sliderButton:first-child{
+  margin-left: 0px;
+}
+
+
+.sliderButtonSelected:first-child{
+  margin-left: -6px;
+}
+
+
+
+.menuDrawer{
+  background-image: url("../images/rotate/draweropen.png");
+  background-repeat: no-repeat;
+  background-position: 19px 0px;
+  padding-top: 25px;
+}
+
+#optionSelector{
+  position: absolute;
+  top: 80px;
+  left: 191px;
+  width: 55px;
+  height: 20px;
+  background-image: url("../images/rotate/draweropen.png");
+  background-repeat: no-repeat;
+  background-position: 19px 0px;
+  display: none;
+}
+
+#penColors{
+  width: 55px;
+  height: 300px;
+  float: left;
+  position: absolute;
+  top: 80px;
+  left: 68px;
+  display: none;
+}
+
+#bgColors{
+  width: 55px;
+  height: 300px;
+  float: left;
+  display: none;
+  position: absolute;
+  top: 80px;
+  left: 130px;
+}
+
+#options{
+  width: 295px;
+  height: 400px;
+  float: left;
+  position: absolute;
+  top: 100px;
+  left: 70px;
+  border: 1px #ffffff solid;
+  background: #000000c7;
+  padding-top: 25px;
+  display:none;
+}
+
+#pairing{
+  width: 295px;
+  height: 80px;
+  float: left;
+  position: absolute;
+  top: 100px;
+  left: 70px;
+  border: 1px #ffffff solid;
+  background: #000000c7;
+  padding-top: 25px;
+  display:none;
+}
+
+.pairingDrawer{
+  display: none;
+}
+
+.pairingButtons {
+  width: 260px;
+  color: #ffffff;
+  background: #000000;
+  padding: 13px 24px;
+  margin-right: 15px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 16px;
+  font-family: MoonBold;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  border: 2px solid #ff6fed;
+  border-radius: 5px;
+  outline: 0;
+  margin-left: 20px;
+}
+
+.pairingButtons .choice:hover {
+  background: #46c9f9;
+}
+
+#pairingSelector{
+  position: absolute;
+  top: 80px;
+  left: 249px;
+  width: 55px;
+  height: 20px;
+  background-image: url("../images/rotate/draweropen.png");
+  background-repeat: no-repeat;
+  background-position: 19px 0px;
+  display: none;
+}
+
+.penColorButton {
+  width: 43px;
+  height: 43px;
+  border-radius: 25px;
+  padding: 0px;
+  border: 2px solid #ffffff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  float: left;
+  outline: 0;
+  background: #cccccc;
+  margin-left: 6px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.bgColorButton {
+  width: 43px;
+  height: 43px;
+  padding: 0px;
+  border: 2px solid #ffffff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  float: left;
+  outline: 0;
+  background: #cccccc;
+  margin-left: 6px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+
+
+.penColor0 {
+  background: linear-gradient(34deg, #73bfe5, #73bfe5, #e573e5, #e573e5) !important;
+}
+
+
+.penColor1 {
+  background: linear-gradient(34deg, #fe1fea, #fe1fea, #ffce19, #ffce19) !important;
+}
+
+.penColor2 {
+  background: linear-gradient(34deg, #c4e900, #c4e900, #19fff5, #19fff5) !important;
+}
+
+.penColor3 {
+  background: linear-gradient(34deg, #e90000 , #e90000, #2c19ff, #2c19ff) !important;
+}
+
+.penColor4 {
+  background: linear-gradient(34deg, #a000e9 , #a000e9, #ff1995, #ff1995) !important;
+}
+
+
+.bgColor0{ background: #000000 !important; }
+.bgColor1{ background: #ffffff !important; }
+.bgColor2{ background: #f9ccff !important; }
+.bgColor3{ background: #ccedff !important; }
+.bgColor4{ background: #fdffcc !important; }
+
+
+.spinButton{
+  width: 43px;
+  height: 43px;
+  padding: 0px;
+  border: 2px solid #ffffff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  float: left;
+  outline: 0;
+  margin-left: 8px;
+  margin-bottom: 15px;
+  background-color: rgba(0,0,0,0);
+  border-radius: 30px;
+}
+
+#spinClockWise{
+  background-image: url("../images/rotate/clockwise.png");
+  background-size: 35px 35px;
+  background-position: 3px 2px;
+  margin-left: 95px;
+}
+
+
+#spinAntiClockWise{
+  margin-left: 15px;
+  background-image: url("../images/rotate/anticlockwise.png");
+  background-size: 35px 35px;
+  background-position: 3px 2px;
+}
+
+.buttonSelected{
+  border: 2px solid #46c9f9;
+  background: #143c4a;
+}
+
+
+.clearButton{
+  font-family: MoonBold;
+  font-size: 14px;
+  width: 103px;
+  height: 43px;
+  padding: 0px;
+  border: 2px solid #ffffff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  float: left;
+  outline: 0;
+  background: #cccccc;
+  margin-left: 8px;
+  margin-bottom: 15px;
+  margin-top: 20px;
+  cursor: pointer;
+      -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+         -khtml-user-select: none; /* Konqueror HTML */
+           -moz-user-select: none; /* Old versions of Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; /* Non-prefixed version, currently
+                                      supported by Chrome, Edge, Opera and Firefox */
+}
+
+
+
+#divider{
+    width: 101px;
+    margin-left: 6px;
+    float: left;
+    height: 1px;
+    background: #dddddd;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.pairingButton{
+  width: 101px;
+  height: 43px;
+  padding: 0px;
+  border: 2px solid #ffffff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  float: left;
+  outline: 0;
+  background: #cccccc;
+  margin-left: 6px;
+  margin-bottom: 8px;
+  margin-top: 0px;
+  cursor: pointer;
+}
+
+.blackBorder{
+  border: 2px solid #000000 !important;
+}
+
+.blackText{
+  color: #000000;
+  font-family: MoonBold;
+}
+
+#notification {
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+}
+
+#notification .notificationMessage{
+  position: absolute;
+  bottom: 40px;
+  opacity: 1.0;
+  right: 30px;
+  text-align: right;
+  background: #000000c7;
+  padding: 5px;
+}
+
+
+@media (orientation: portrait) {
+  #theToyContainer {
+    width: 100%;
+    height: calc(100% - 50px);
+    margin-left: 0px;
+    margin-top: 50px;
+    overscroll-behavior-y: contain;
+    cursor: crosshair;
+  }
+
+  canvas {
+    overscroll-behavior-y: contain;
+  }
+
+  body {
+    overscroll-behavior-y: contain;
+    min-width: 315px;
+  }
+
+  #rotateMenu{
+    left: calc((100vw - 356px) / 2);
+    top: auto;
+    bottom: 10px;
+    position: fixed;
+  }
+
+
+  #penColors{
+    top: auto;
+    bottom: 45px;
+    left: calc(((100vw - 356px) / 2) - 2px);
+    position: fixed;
+  }
+
+  #bgColors{
+    top: auto;
+    bottom: 45px;
+    left: calc(((100vw - 356px) / 2) + 59px);
+    position: fixed;
+  }
+
+  #options{
+    left: calc((100vw - 295px) / 2);
+    top: auto;
+    bottom: 95px;
+    padding-top: 20px;
+    height: 390px;
+    position: fixed;
+  }
+
+  #optionSelector{
+    background-image: url("../images/rotate/draweropen-mobile.png");
+    top: auto;
+    bottom: 70px;
+    left: calc((100vw - 115px) / 2);
+    position: fixed;
+  }
+
+  #pairingSelector{
+    background-image: url("../images/rotate/draweropen-mobile.png");
+    top: auto;
+    bottom: 70px;
+    left: calc((100vw + 4px) / 2);
+    position: fixed;
+  }
+
+  #pairing{
+    left: calc((100vw - 295px) / 2);
+    top: auto;
+    bottom: 95px;
+    position: fixed;
+  }
+
+  .menuDrawer{
+    background-image: url("../images/rotate/draweropen-mobile.png");
+    background-repeat: no-repeat;
+    background-position: 19px 255px;
+    padding-top: 0px;
+    position: fixed;
+    z-index: 100;
+  }
+
+  #welcome{
+    left: 20px;
+    width: 280px;
+  }
+
+  #connectionInfo{
+    bottom: auto;
+    top: 60px;
+    left: 10px;
+  }
+
+  #notification .notificationMessage{
+    bottom: 80px;
+  }
+}
+
+@media only screen and (max-width: 355px) {
+    #rotateMenu{
+      width: 316px;
+      left: calc((100vw - 316px) / 2);
+      top: auto;
+      bottom: 10px;
+      position: fixed;
+    }
+
+  #penColors{
+    left: calc(((100vw - 316px) / 2) - 2px);
+  }
+
+  #bgColors{
+    left: calc(((100vw - 316px) / 2) + 51px);
+  }
+
+  #options{
+    left: calc((100vw - 295px) / 2);
+  }
+
+  #optionSelector{
+    left: calc((100vw - 106px) / 2);
+  }
+
+
+  #rotateMenu .menuOption{
+    margin-right: 2px;
+  }
+
+
+}

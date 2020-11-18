@@ -55,6 +55,11 @@ app.get('/swoosh', function (req, res) {
   res.render('swoosh', { title: 'Swoosh', path: 'swoosh', theScripts:[]})
 })
 
+app.get('/blend', function (req, res) {
+  res.render('blend-holding', { title: 'Blend', path: 'blend-holding', theScripts:[]})
+})
+
+
 app.get('/rotate', function (req, res) {
   res.render('rotate', { title: 'Rotate', path: 'rotate', theScripts:[]})
 })
