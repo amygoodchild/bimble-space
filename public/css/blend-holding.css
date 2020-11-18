@@ -41,7 +41,6 @@ canvas{
   font-family: MoonLight;
   line-height: 25px;
   letter-spacing: 0.2px;
-  cursor: pointer;
   -webkit-user-select: none;
   /* Safari */
   -moz-user-select: none;
