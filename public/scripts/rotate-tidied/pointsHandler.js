@@ -23,10 +23,10 @@ class PointsHandler{
     this.mouseYLerped = ps.mouseY;
 
     if (ps.canvasHandler.landscape){
-      this.lerpAmount = 0.02;
+      this.lerpAmount = 0.05;
     }
     else {
-      this.lerpAmount = 0.02;
+      this.lerpAmount = 0.4;
     }
 
     this.lastTime = 0;

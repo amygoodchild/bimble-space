@@ -44,10 +44,10 @@ const rotateSketch = function(p){
 
     p.pointsHandler.calcAngle();
 
-    for (let i = 0; i < 3; i++){
+    //for (let i = 0; i < 3; i++){
       p.pointsHandler.updatePoints();
       p.pointsHandler.drawPoints();
-    }
+    //}
 
     if(p.debugMode){
       p.canvasHandler.debugMode();
