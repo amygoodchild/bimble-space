@@ -1,8 +1,8 @@
 
 $(document).ready(function(){
 
-  var idleWarningAt = 5000;
-  var idleAt = 8000;
+  var idleWarningAt = 40000;
+  var idleAt = 60000;
 
   // Will execute myCallback every 0.5 seconds
   var idleCheckInterval = window.setInterval(checkIdleness, 3000);

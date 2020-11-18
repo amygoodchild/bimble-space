@@ -7,7 +7,14 @@ class PointsHandler{
 
     this.mouseXLerped = ps.mouseX;
     this.mouseYLerped = ps.mouseY;
-    this.lerpAmount = 0.02;
+
+    if (ps.canvasHandler.landscape){
+      this.lerpAmount = 0.02;
+    }
+    else {
+      this.lerpAmount = 0.2;
+    }
+
   }
 
   mouseEvent(down){

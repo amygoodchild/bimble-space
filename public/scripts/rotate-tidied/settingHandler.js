@@ -16,9 +16,8 @@ class SettingHandler{
       this.speeds = [0.004, 0.005, 0.006, 0.010];
     }
     else {
-      this.penLerp = 0.35;
-      this.penSizes = [0, 3, 5, 8, 10, 30, 60];
-      this.speeds = [0.005, 0.006, 0.008, 0.010];
+      this.penSizes = [0, 4, 6, 12, 15, 30, 60];
+      this.speeds = [0.012, 0.015, 0.018, 0.030];
     }
 
     this.backgrounds[0] = ps.color(15,15,15);
