@@ -1,3 +1,17 @@
+$(window).blur(function () {
+    //do something
+    console.log("You left this tab");
+
+});
+
+$(window).focus(function () {
+      //do something
+
+console.log("You came back -------------------------------");
+});
+
+
+
 class PointsHandler{
   constructor(){
     this.points = [];
@@ -12,8 +26,14 @@ class PointsHandler{
       this.lerpAmount = 0.02;
     }
     else {
-      this.lerpAmount = 0.2;
+      this.lerpAmount = 0.02;
     }
+
+    this.lastTime = 0;
+    this.rotateAngle = 0;
+    this.angleLerpAmount = 0.4;
+
+    this.awayTracker = false;
 
   }
 
@@ -63,7 +83,15 @@ class PointsHandler{
       ps.commsHandler.sendNewPoint(this.mouseXLerped, this.mouseYLerped, toDraw,
                         ps.settingHandler.currentPen.getSize(), ps.settingHandler.currentPen.getGradient(), ps.settingHandler.currentCanvas.getClockwise());
     }
+  }
 
+
+
+  calcAngle(){
+    let timePassed = ps.millis() - this.lastTime;
+    this.lastTime = ps.millis();
+    let ratio = (timePassed/0.016)/1000;
+    this.rotateAngle = ps.lerp(this.rotateAngle, ratio * ps.settingHandler.speeds[ps.settingHandler.currentCanvas.getSpeed()], this.angleLerpAmount);
   }
 
   updatePoints(){
@@ -71,10 +99,12 @@ class PointsHandler{
     this.mouseYLerped = ps.lerp(this.mouseYLerped, ps.mouseY, this.lerpAmount);
     for (let i=0; i<this.points.length;i++){
       this.points[i].update();
+
     }
     for (let i=0; i<this.partnerPoints.length;i++){
       this.partnerPoints[i].update();
     }
+
   }
 
   deletePoints(){
@@ -189,10 +219,13 @@ class Point{
     this.y = ps.height/2 - (this.distanceFromCentre * Math.cos(this.angle));
 
     if (ps.settingHandler.currentCanvas.getClockwise()){
-      this.angle += ps.settingHandler.speeds[ps.settingHandler.currentCanvas.getSpeed()];
+      //this.angle += ps.settingHandler.speeds[ps.settingHandler.currentCanvas.getSpeed()];
+      this.angle = (this.angle + ps.pointsHandler.rotateAngle)%ps.TWO_PI;
+      //console.log(this.angle);
     }
     else{
-      this.angle -= ps.settingHandler.speeds[ps.settingHandler.currentCanvas.getSpeed()];
+      //this.angle -= ps.settingHandler.speeds[ps.settingHandler.currentCanvas.getSpeed()];
+      this.angle = (this.angle - ps.pointsHandler.rotateAngle)%ps.TWO_PI;
     }
   }
 }

@@ -29,11 +29,7 @@ class CommsUI{
       }
     }
   }
-
-
 }
-
-
 
 $(document).ready(function(){
   // Paring checkbox

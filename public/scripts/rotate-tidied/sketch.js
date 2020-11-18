@@ -33,6 +33,7 @@ const rotateSketch = function(p){
   };
 
   p.draw = function(){
+
     // Animate the notifications about settings being changed by partner
     moveNotificationsUp();
 
@@ -40,6 +41,8 @@ const rotateSketch = function(p){
     p.canvasHandler.drawBackground();
 
     p.pointsHandler.deletePoints();
+
+    p.pointsHandler.calcAngle();
 
     for (let i = 0; i < 3; i++){
       p.pointsHandler.updatePoints();
@@ -50,9 +53,6 @@ const rotateSketch = function(p){
       p.canvasHandler.debugMode();
     }
 
-    if (p.lastNotIdle + p.maxIdle < p.millis()){
-      //console.log("idle");
-    }
   };
 
   p.mouseDragged = () => {
