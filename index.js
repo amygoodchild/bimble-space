@@ -3,11 +3,12 @@ var http = require('http');
 const app = express();
 const path = require('path');
 
-//var enforce = require('express-sslify');
-//app.use(enforce.HTTPS({ trustProtoHeader: true }))
+var enforce = require('express-sslify');
+app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
 app.set('view engine', 'pug');
 app.set('views', './views');
+
 
 // Set public path
 app.use(express.static(path.join(__dirname, 'public')));
