@@ -1,59 +1,32 @@
-$(document).ready(function(){
-
-  var mouseIsDown = false;
-
-  /*$("#theToyContainer")
-  .mousedown(function() {
-    mouseIsDown = true;
-  })
-  .mousemove(function() {
-    if(mouseIsDown){
-      ps.pointsHandler.mouseEvent(true);
-    }
-  })
-  .mouseleave(function() {
-    if (mouseIsDown){
-      ps.pointsHandler.mouseEvent(false);
-    }
-  })
-  .mouseup(function() {
-    mouseIsDown = false;
-    ps.pointsHandler.mouseEvent(false);
-  });*/
-});
-
 class PointsHandler{
   constructor(){
     this.points = [];
     this.partnerPoints = [];
 
-    this.angleA = 0.012;
-    this.newMillis = ps.millis();
-    this.prevMillis = ps.millis();
-    this.milliAngle = ((this.angleA/16) * (this.newMillis - this.prevMillis));
     this.mousePressed = false;
-
-    this.idle = false;
-    this.lastNotIdle = ps.millis();
 
     this.mouseXLerped = ps.mouseX;
     this.mouseYLerped = ps.mouseY;
-
-    this.drawOptions = {
-      penSize: 3,
-      chosenGradient: 1,
-      spinClockwise: true
-    };
+    this.lerpAmount = 0.02;
   }
 
   mouseEvent(down){
     if (down){
       this.mousePressed = true;
       this.newPoint(this.mousePressed);
+
+      //if (ps.commsHandler.matchState == "idle"){
+
+    //  }
+
+      ps.idleHandler.setActivity();
     }
     else{
       this.mousePressed = false;
       this.newPoint(this.mousePressed);
+      ps.idleHandler.setActivity();
+      $("#idleWarning").css("display", "none");
+      $("#idleNotification").css("display", "none");
     }
   }
 
@@ -72,28 +45,28 @@ class PointsHandler{
     else{
       toDraw = false;
     }
-    this.mouseXLerped = ps.lerp(this.mouseXLerped, ps.mouseX, 0.1);
-    this.mouseYLerped = ps.lerp(this.mouseYLerped, ps.mouseY, 0.1);
+    this.mouseXLerped = ps.lerp(this.mouseXLerped, ps.mouseX, this.lerpAmount);
+    this.mouseYLerped = ps.lerp(this.mouseYLerped, ps.mouseY, this.lerpAmount);
 
     var newPoint = new Point(this.mouseXLerped, this.mouseYLerped, toDraw,
-                        this.drawOptions.penSize, this.drawOptions.chosenGradient, this.drawOptions.spinClockwise);
+                        ps.settingHandler.currentPen.getSize(), ps.settingHandler.currentPen.getGradient(), ps.settingHandler.currentCanvas.getClockwise());
     this.points.push(newPoint);
 
-    ps.commsHandler.sendNewPoint(this.mouseXLerped, this.mouseYLerped, toDraw,
-                        this.drawOptions.penSize, this.drawOptions.chosenGradient, this.drawOptions.spinClockwise);
-
-    //(x, y, draw, size, colorChoice, clockwise)
+    if(ps.commsHandler.getMatchState()){
+      ps.commsHandler.sendNewPoint(this.mouseXLerped, this.mouseYLerped, toDraw,
+                        ps.settingHandler.currentPen.getSize(), ps.settingHandler.currentPen.getGradient(), ps.settingHandler.currentCanvas.getClockwise());
+    }
 
   }
 
   updatePoints(){
-        this.mouseXLerped = ps.lerp(this.mouseXLerped, ps.mouseX, 0.03);
-        this.mouseYLerped = ps.lerp(this.mouseYLerped, ps.mouseY, 0.03);
+    this.mouseXLerped = ps.lerp(this.mouseXLerped, ps.mouseX, this.lerpAmount);
+    this.mouseYLerped = ps.lerp(this.mouseYLerped, ps.mouseY, this.lerpAmount);
     for (let i=0; i<this.points.length;i++){
-      this.points[i].update(this.angleA);
+      this.points[i].update();
     }
     for (let i=0; i<this.partnerPoints.length;i++){
-      this.partnerPoints[i].update(this.angleA);
+      this.partnerPoints[i].update();
     }
   }
 
@@ -108,9 +81,24 @@ class PointsHandler{
     }
   }
 
+  deleteAllPoints(){
+    if(this.points.length > 0){
+      this.points.splice(0,this.points.length);
+    }
+    if(this.partnerPoints.length > 0){
+      this.partnerPoints.splice(0,this.partnerPoints.length);
+    }
+  }
+
+  partnerUnmatched(){
+    if(this.partnerPoints.length > 0){
+      this.partnerPoints.splice(0,this.partnerPoints.length);
+    }
+  }
+
   drawPoints(){
     for (let i=1; i<this.points.length;i++){
-      ps.strokeWeight(8);
+      ps.strokeWeight(ps.settingHandler.penSizes[this.points[i].size]);
       if (this.points[i].draw == true && this.points[i-1].draw){
 
         let chosenColor1 = ps.color(ps.settingHandler.gradients[this.points[i].colorChoice].hue1,
@@ -121,7 +109,7 @@ class PointsHandler{
                                    ps.settingHandler.gradients[this.points[i].colorChoice].sat2,
                                    ps.settingHandler.gradients[this.points[i].colorChoice].bri2);
 
-        let thisColor = ps.lerpColor(chosenColor1, chosenColor2, ps.map(i, 0, ps.max(300,this.points.length), 0, 1));
+        let thisColor = ps.lerpColor(chosenColor1, chosenColor2, ps.map(i, 0, ps.max(150,this.points.length), 0, 1));
 
         ps.stroke(thisColor);
         ps.line(this.points[i].x, this.points[i].y,
@@ -129,8 +117,10 @@ class PointsHandler{
       }
     }
     for (let i=1; i<this.partnerPoints.length;i++){
-      ps.strokeWeight(8);
+      ps.strokeWeight(ps.settingHandler.penSizes[this.partnerPoints[i].size]);
       if (this.partnerPoints[i].draw == true && this.partnerPoints[i-1].draw){
+
+
         let chosenColor1 = ps.color(ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].hue1,
                                    ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].sat1,
                                    ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].bri1);
@@ -147,6 +137,7 @@ class PointsHandler{
       }
     }
   }
+
   clearPoints(){
     if(this.points.length > 0){
       this.points.splice(0,this.points.length);
@@ -186,16 +177,15 @@ class Point{
     return Math.sqrt(a*a + b*b);
   }
 
-  update(milliAngle){
+  update(){
     this.x = ps.width/2 + (this.distanceFromCentre * Math.sin(this.angle));
     this.y = ps.height/2 - (this.distanceFromCentre * Math.cos(this.angle));
 
-    if (this.spinClockwise){
-      this.angle += milliAngle;
+    if (ps.settingHandler.currentCanvas.getClockwise()){
+      this.angle += ps.settingHandler.speeds[ps.settingHandler.currentCanvas.getSpeed()];
     }
     else{
-      this.angle -= milliAngle;
+      this.angle -= ps.settingHandler.speeds[ps.settingHandler.currentCanvas.getSpeed()];
     }
-
   }
 }

@@ -7,180 +7,214 @@ class CommsHandler{
     else{                                                   // CAUTION!!!!!!
       this.socket = io.connect('https://desolate-dusk-28350.herokuapp.com/');
     }
-    this.socket.on('matched', matched);
-    this.socket.on('passNewPoint', partnerNewPoint);
-    this.socket.on('otherUserSettingRotate', otherUserSetting);
-    this.socket.on('unMatched', unmatched);
-    this.socket.on('theyResized', theyResized);
+    this.socket.on('matched', this.matched);
+    this.socket.on('passNewPoint', this.partnerNewPoint);
+    this.socket.on('passSetting', this.partnerNewSetting);
+    this.socket.on('passResize', this.partnerResized);
+    this.socket.on('unMatched', this.unmatched);
 
+    this.partner = new Partner(0, 0, 0);
     this.matchState = "solo";
-    this.partnerID = "test";
 
-    console.log("constructor");
-
-    this.partnerWidth;
-    this.partnerHeight; //////////////////////////////
   }
 
+  search(){
+    this.matchState = "searching";
+    let sendData = {
+      room : "rotate",
+      width : ps.canvasHandler.width,
+      height : ps.canvasHandler.height,
+      pair: true
+    }
+    this.socket.emit('matchMe', sendData);
+  }
 
-  search(matchState){
-    console.log("searching");
-    this.matchState = matchState;
-    if (this.matchState == "searching"){
-      let sendData = {
-        room : "rotate",
-        width : ps.width,
-        height : ps.height,
-        pair: true
-      }
-      this.socket.emit('matchMe', sendData);
+  solo(){
+    this.matchState = "solo";
+  }
+
+  goSolo(){
+    let data = {
+      state : this.matchState,
+      choice: "--"
+    }
+    this.socket.emit('goSolo', data);
+    this.matchState = "solo";
+  }
+
+  goIdle(){
+    let data = {
+      state : this.matchState,
+      choice: "--"
+    }
+    this.socket.emit('goSolo', data);
+    this.matchState = "idle";
+  }
+
+  getMatchState(){
+    if (this.matchState == "paired"){
+      return true;
     }
     else{
-      this.matchState = "solo";
+      return false;
     }
   }
-
 
   sendNewPoint(x, y, draw, size, colorChoice, clockwise){
-    let id = this.partnerID;
-    let data = {
-      partnerID : id,
-      x : x,
-      y : y,
-      draw : draw,
-      size: size,
-      colorChoice : colorChoice,
-      clockwise : clockwise
+    if (this.getMatchState()){
+      let data = {
+        partnerID : this.partner.getId(),
+        x : x,
+        y : y,
+        draw : draw,
+        size: size,
+        colorChoice : colorChoice,
+        clockwise : clockwise
+     }
+     this.socket.emit('sendNewPoint', data);
     }
-    this.socket.emit('sendNewPoint', data);
   }
 
-  sendSettingChange(setting, value, cssID){
-    let id = this.partnerID;
+  sendNewSetting(setting, cssID){
+    let value = cssID;
+    value = value.charAt(value.length-1);
     var data = {
       setting : setting,
       value: value,
       cssID: cssID,
-      otherUser : id
+      partnerID : this.partner.getId()
     }
-    ps.socket.emit('sendSettingChange', data);
+    this.socket.emit('sendNewSetting', data);
+  }
+
+  sendResize(){
+    let data = {
+      newWidth : ps.canvasHandler.width,
+      newHeight : ps.canvasHandler.height,
+      partnerID : this.partner.getId()
+    }
+    this.socket.emit('sendNewSize', data);
+  }
+
+  partnerNewPoint(data){
+    let xposition = data.x/ps.commsHandler.partner.getWidth() * ps.width;
+    let yposition = data.y/ps.commsHandler.partner.getHeight() * ps.height;
+    ps.pointsHandler.newPartnerPoint(xposition, yposition, data.draw, data.size, data.colorChoice, data.clockwise);
+  }
+
+  matched(data){
+    $(".pairingDrawer").css("display", "none");
+    $("#pairedButtons").css("display", "block");
+
+    $("#infoContent").html("You're paired up - " + data.message);
+    ps.commsHandler.partner = new Partner(data.partnerID, data.partnerWidth, data.partnerHeight);
+    ps.commsHandler.matchState = "paired";
+
+    console.log("I am: " + data.whoami);
+    console.log("My id is: " + data.myid);
+    console.log("Matched with: " + ps.commsHandler.partner.getId());
+    console.log(ps.commsHandler.partner);
+  }
+
+  unmatched(data){
+    console.log("Unmatched :(");
+
+     $(".pairingDrawer").css("display", "none");
+     $("#searchingButtons").css("display", "block");
+
+    let randomNumber = ps.random(0,1);   // to pick a lone message
+    for (let i = 0; i<=ps.commsUI.loneMessages.length;i++){
+      if (randomNumber<=1/ps.commsUI.loneMessages.length*(i+1)){
+        $("#infoContent").html("Partner left.<br>Finding you a new friend...");
+        break;
+      }
+    }
+    ps.wrapWidth = ps.width; // set the wrap with back to our own
+    ps.wrapHeight = ps.height;
+    ps.commsHandler.matchState = "searching";
+
+    ps.pointsHandler.partnerUnmatched();
+  }
+
+  partnerNewSetting(data){
+    if (data.setting == "background color"){
+      ps.settingHandler.currentCanvas.setBgColor(data.cssID);
+      ps.settingUI.backgroundColorChange(data.cssID);
+
+      let message = "Background color changed"
+      ps.settingUI.addNotification(message);
+    }
+    if (data.setting == "background opacity"){
+      ps.settingHandler.currentCanvas.setBgOpacity(data.cssID);
+      ps.settingUI.bgOpacityChange(data.cssID);
+
+      let message = "Trail length changed to " + data.value;
+      ps.settingUI.addNotification(message);
+    }
+    if (data.setting == "rotate speed"){
+      ps.settingHandler.currentCanvas.setSpeed(data.cssID);
+      ps.settingUI.speedChange(data.cssID);
+
+      let message = "Speed changed to " + data.value;
+      ps.settingUI.addNotification(message);
+    }
+    if (data.setting == "clear"){
+      ps.pointsHandler.deleteAllPoints();
+      ps.canvasHandler.backgroundFade = true;
+      ps.canvasHandler.backgroundFadeCount = ps.frameCount;
+      let message = "Canvas cleared";
+      ps.settingUI.addNotification(message);
+    }
+    if (data.setting == "clockwise"){
+      ps.settingHandler.currentCanvas.setClockwise(true);
+      ps.settingUI.setClockwise();
+      let message = "Rotation direction changed";
+      ps.settingUI.addNotification(message);
+    }
+    if (data.setting == "anti clockwise"){
+      ps.settingHandler.currentCanvas.setClockwise(false);
+      ps.settingUI.setAntiClockwise();
+      let message = "Rotation direction changed";
+      ps.settingUI.addNotification(message);
+    }
+
+  }
+
+  partnerResized(data){
+    ps.commsHandler.partner.setWidth(data.newWidth);    // map up the screen widths
+    ps.commsHandler.partner.setHeight(data.newHeight);
   }
 }
 
-function partnerNewPoint(data){
-  let xposition = data.x/ps.commsHandler.partnerWidth * ps.width;
-  let yposition = data.y/ps.commsHandler.partnerHeight * ps.height;
-  ps.pointsHandler.newPartnerPoint(xposition, yposition, data.draw, data.size, data.colorChoice, data.clockwise);
-}
-
-
-function matched(data){
-  console.log("I am: " + data.whoami);
-  console.log("My id is: " + data.myid);
-  console.log("Matched with: " + data.otherUser);
-
-  $(".pairingDrawer").css("display", "none");
-  $("#pairedButtons").css("display", "block");
-
-  $("#infoContent").html("You're paired up - " + data.message);
-
-  ps.commsHandler.partnerWidth = data.otherWidth;    // map up the screen widths
-  ps.commsHandler.partnerHeight = data.otherHeight;
-
-  ps.commsHandler.partnerID = data.otherUser;
-  this.matchState = "paired";
-}
-
-// When your partner leaves
-function unmatched(data){
-  console.log("Unmatched :(");
-
-   $(".pairingDrawer").css("display", "none");
-   $("#searchingButtons").css("display", "block");
-
-  let randomNumber = ps.random(0,1);   // to pick a lone message
-  for (let i = 0; i<=ps.loneMessages.length;i++){
-    if (randomNumber<=1/ps.loneMessages.length*(i+1)){
-      $("#infoContent").html("Partner left.<br>Finding you a new friend...");
-      break;
-    }
+class Partner{
+  constructor(id, width, height){
+    this.id = id;
+    this.width = width;
+    this.height = height;
   }
-  ps.wrapWidth = ps.width; // set the wrap with back to our own
-  ps.wrapHeight = ps.height;
-  ps.matched = false;
-  //gtag('event', "Unpairing", {
-  //  'event_category': "Rotate",
-  //  'event_label': ps.pairCounter
-  //});
 
-  ps.matchState = "searching";
-
-  if(ps.otherLocations.length > 0){
-    ps.otherLocations.splice(0,ps.otherLocations.length);
+  getId(){
+    return this.id;
   }
-}
 
-
-// When partner changes a setting
-function otherUserSetting(data){
-  if (data.variable == "background color"){
-    ps.chosenBackground = data.value;
-    if (ps.backgroundOpacity == 0){
-      ps.backgroundFade = true;
-      ps.backgroundFadeCount = ps.frameCount;
-    }
-
-    if (data.value == 0){
-      $(".menuText").removeClass("blackText");
-      $("#bgColorsMenu").children(".menuIcon").removeClass("blackBorder");
-      $("#penColorsMenu").children(".menuIcon").removeClass("blackBorder");
-      $(".penColorButton").removeClass("blackBorder");
-      $(".bgColorButton").removeClass("blackBorder");
-    }
-    else{
-      $(".menuText").addClass("blackText");
-      $("#bgColorsMenu").children(".menuIcon").addClass("blackBorder");
-      $("#penColorsMenu").children(".menuIcon").addClass("blackBorder");
-      $(".penColorButton").addClass("blackBorder");
-      $(".bgColorButton").addClass("blackBorder");
-    }
-
-    let theClass;
-    for (let i=0; i<5;i++){
-      theClass = "bgColor" + i;
-      $("#bgColorsMenu").children(".menuIcon").removeClass(theClass);
-    }
-    theClass = "bgColor" + data.value;
-    $("#bgColorsMenu").children(".menuIcon").addClass(theClass);
-
+  getWidth(){
+    return this.width;
   }
-  if (data.variable == "background opacity"){
-    $(".trailLengthButton").removeClass("sliderButtonSelected");
-    $("#" + data.id).addClass("sliderButtonSelected");
 
-    ps.backgroundOpacity = ps.backgroundOpacitys[data.value];
-
-    let message = "Trail length changed to " + data.value;
-    ps.addNotification(message);
-
+  getHeight(){
+    return this.height;
   }
-  if (data.variable == "rotate speed"){
-    $(".speedButton").removeClass("sliderButtonSelected");
-    $("#" + data.id).addClass("sliderButtonSelected");
-    ps.angleA = ps.radians(ps.speeds[data.value]);
 
-    let message = "Speed changed to " + data.value;
-    ps.addNotification(message);
+  setId(id){
+    this.id = id;
   }
-  if (data.variable == "clear"){
-    clearPoints();
-    let message = "Canvas cleared";
-    ps.addNotification(message);
-  }
-}
 
-// Partner changed their screen size
-function theyResized(data){
-  ps.otherWidth = data.newWidth;    // map up the screen widths
-  ps.otherHeight = data.newHeight;
+  setWidth(newWidth){
+    this.width = newWidth;
+  }
+
+  setHeight(newHeight){
+    this.height = newHeight;
+  }
+
 }

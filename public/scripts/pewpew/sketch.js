@@ -289,9 +289,9 @@ const pewpewSketch = ( p ) => {
   }
 
   p.matched = (data) =>{
-     //console.log("I am: " + data.whoami);
-     //console.log("My id is: " + data.myid);
-     //console.log("Matched with: " + data.otherUser);
+     console.log("I am: " + data.whoami);
+     console.log("My id is: " + data.myid);
+     console.log("Matched with: " + data.partnerID);
      p.pairCounter++;
      gtag('event', "Pairing", {
        'event_category': "Flock",
@@ -299,8 +299,8 @@ const pewpewSketch = ( p ) => {
      });
 
      $("#infoContent").html("You're paired up - " + data.message);
-     p.otherWidth = data.otherWidth;    // map up the screen widths
-     p.otherHeight = data.otherHeight;
+     p.otherWidth = data.partnerWidth;    // map up the screen widths
+     p.otherHeight = data.partnerHeight;
      if (p.otherWidth > p.width){
        p.wrapWidth = p.otherWidth;
      }
@@ -308,11 +308,11 @@ const pewpewSketch = ( p ) => {
        p.wrapHeight = p.otherHeight;
      }
      p.matched = true;
-     p.otherUser = data.otherUser;
+     p.otherUser = data.partnerID;
      p.matchState = "paired";
   }
 
-  p.theyResized = (data) =>{
+  p.passResize = (data) =>{
     p.otherWidth = data.newWidth;    // map up the screen widths
     p.otherHeight = data.newHeight;
     if (p.otherWidth > p.width){
@@ -341,7 +341,7 @@ const pewpewSketch = ( p ) => {
   }
 
   p.otherUserDraws = (data) =>{
-    //console.log("drawing");
+    console.log("other person drawing");
     if ( p.boids.length < p.maxBoids){
       let xposition = p.map(data.x, 0, p.otherWidth, 0, p.width);   // mapped to other user's screensize
       let yposition = p.map(data.y, 0, p.otherHeight, 0, p.height);

@@ -147,13 +147,13 @@ function newConnection(socket){
             }
           }
           // Let them know they're matched and who they matched with
-          let data = { otherUser: newMatch.user2.id, whoami: "user 1", myid: newMatch.user1.id, message: pairMessage,
-                        otherWidth: newMatch.user2.width, otherHeight: newMatch.user2.height
+          let data = { partnerID: newMatch.user2.id, whoami: "user 1", myid: newMatch.user1.id, message: pairMessage,
+                        partnerWidth: newMatch.user2.width, partnerHeight: newMatch.user2.height
                       }
           io.to(newMatch.user1.id).emit('matched', data);
 
-          data = { otherUser: newMatch.user1.id, whoami: "user 2", myid: newMatch.user2.id, message: pairMessage,
-                      otherWidth: newMatch.user1.width, otherHeight: newMatch.user1.height
+          data = { partnerID: newMatch.user1.id, whoami: "user 2", myid: newMatch.user2.id, message: pairMessage,
+                      partnerWidth: newMatch.user1.width, partnerHeight: newMatch.user1.height
                     }
           io.to(newMatch.user2.id).emit('matched', data);
 
@@ -220,22 +220,21 @@ function newConnection(socket){
   });
 
   socket.on('sendNewPoint', function(data) {
+      console.log(data.partnerID);
       io.to(data.partnerID).emit('passNewPoint', data);
   });
 
-  socket.on('sendSettingChange', function(data) {
-      io.to(data.partnerID).emit('otherUserSettingRotate', data);
-
+  socket.on('sendNewSetting', function(data) {
+      io.to(data.partnerID).emit('passSetting', data);
   });
 
   socket.on('aNewBoid', function(data) {
       io.to(data.otherUser).emit('aNewBoid', data);
       //console.log("boid drawing");
-      //console.log(data.otherUser);
   });
 
-  socket.on('iResized', function(data) {
-      io.to(data.otherUser).emit('theyResized', data);
+  socket.on('sendNewSize', function(data) {
+      io.to(data.partnerID).emit('passResize', data);
   });
 
   socket.on('sendPoints', function(data) {
@@ -244,7 +243,7 @@ function newConnection(socket){
   });
 
 
-  socket.on('playSolo', function(data) {
+  socket.on('goSolo', function(data) {
     console.log("user " + socket.id + " " + data.choice + " state: " + data.state);
     if (data.state == "paired"){
       numPairingUsers--;

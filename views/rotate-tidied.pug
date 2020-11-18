@@ -7,21 +7,18 @@ block thisToyScripts
   script(src='../scripts/rotate-tidied/pointsHandler.js')  
   script(src='../scripts/rotate-tidied/commsHandler.js')  
   script(src='../scripts/rotate-tidied/settingHandler.js') 
+  script(src='../scripts/rotate-tidied/idleHandler.js') 
+  
   script(src='../scripts/rotate-tidied/commsUI.js')
   script(src='../scripts/rotate-tidied/settingsUI.js')
     
-  script(src='../scripts/rotate-tidied/drawing.js')
-
 
 block content
   #welcome 
-    p Hi, this is 
-      span.light Blend.
+    p Hi, this is Blend.
     p
-    p If there are other people here, you can play 
+    p If there are other people here, you will be paired up to draw 
       span.light together. 
-    p
-    p
     .checkboxHolder
       .checkbox
       #checkBoxLabel Pair me with other people 
@@ -32,13 +29,25 @@ block content
       | Please note that this space is unmoderated and, while the artist would
       | encourage everyone to keep their drawings family friendly, if you're
       | here with children, you may want to play unpaired. 
+    
+  #credit
+    p Blend is a project by artist #[a(href="https://www.instagram.com/amy_goodchild/" class="white-link") Amy Goodchild].
+    p Presented as part of #[a(href="https://www.watermans.org.uk/events/blend-a-multiplayer-online-experience/" class="white-link") Waterman's Digital Weekender].
+      
   
   #connectionInfo 
     p#infoContent Finding you a partner... <br> You can play solo in the meantime
-  #idleWarning 
+  #idleWarning.idleMessage
     p#idleWarningContent
-  
+      p Just drag your finger or mouse on the screen to draw :)
+      p (If you don't draw anything, we'll disconnect you so your partner can play with someone else)
+  #idleNotification.idleMessage
+    p#idleWarningContent
+      p Unfortunately you didn't draw anything for a while so we disconnected you. 
+      p Just start drawing to carry on. 
+      p Select "Play Paired" from the pairing option above to reconnect.
       
+  
   #rotateMenu
     #penColorsMenu.menuOption.allUI
       .menuIcon.allUI
@@ -79,18 +88,17 @@ block content
       button(id='spinAntiClockWise').spinButton.allUI        
     .optionHolder
       .optionText Trail Length
-      .sliderBg
-        - for (var i = 1; i < 7; i++)
+      .sliderBg.smallSliderBg
+        - for (var i = 1; i < 4; i++)
           button(id='trailLength' + i).trailLengthButton.sliderButton.allUI #{i}            
     .optionHolder
       .optionText Speed
-      .sliderBg
-        - for (var i = 0; i < 6; i++)
+      .sliderBg.smallSliderBg
+        - for (var i = 1; i < 4; i++)
           button(id='speed' + i).speedButton.sliderButton.allUI #{i}
   
   #notification
-    
-
+  
   
   #pairingSelector
   #pairing.menuDrawer
