@@ -7,7 +7,7 @@ $(window).blur(function () {
 $(window).focus(function () {
       //do something
 
-console.log("You came back -------------------------------");
+      console.log("You came back -------------------------------");
 });
 
 
