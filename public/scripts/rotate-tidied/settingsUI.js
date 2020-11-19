@@ -82,17 +82,39 @@ class SettingUI{
   }
 }
 
+
+function googleTags(cssID){
+  let eventName = cssID;
+  let value = eventName.charAt(eventName.length - 1);
+  eventName = eventName.substring(0, eventName.length - 1);
+  gtag('event', eventName, {
+    'event_category': "Blend",
+    'event_label': value
+  });
+}
+
+function googleTagsNoValue(cssID){
+  let eventName = cssID;
+  gtag('event', eventName, {
+    'event_category': "Blend",
+    'event_label': ""
+  });
+}
+
+
 $(document).ready(function(){
   // Change pen colour
   $(".penColorButton").click(function(){
     ps.settingHandler.currentPen.setGradient($(this).attr('id'));
     ps.settingUI.penGradientChange($(this).attr('id'));
+    googleTags($(this).attr('id'));
   });
 
   // Change pen size
   $(".penSizeButton").click(function(){
     ps.settingHandler.currentPen.setSize($(this).attr('id'));
     ps.settingUI.penSizeChange($(this).attr('id'));
+    googleTags($(this).attr('id'));
   });
 
   // Change rotate speed
@@ -100,6 +122,7 @@ $(document).ready(function(){
     ps.settingHandler.currentCanvas.setSpeed($(this).attr('id'));
     ps.settingUI.speedChange($(this).attr('id'));
     ps.commsHandler.sendNewSetting("rotate speed", $(this).attr('id'));
+    googleTags($(this).attr('id'));
   });
 
   // Change background opacity / trail length
@@ -107,6 +130,7 @@ $(document).ready(function(){
     ps.settingHandler.currentCanvas.setBgOpacity($(this).attr('id'));
     ps.settingUI.bgOpacityChange($(this).attr('id'));
     ps.commsHandler.sendNewSetting("background opacity", $(this).attr('id'));
+    googleTags($(this).attr('id'));
   });
 
   // Change spin direction of pen
@@ -114,12 +138,14 @@ $(document).ready(function(){
     ps.settingHandler.currentCanvas.setClockwise(true);
     ps.settingUI.setClockwise();
     ps.commsHandler.sendNewSetting("clockwise", $(this).attr('id'));
+    googleTagsNoValue($(this).attr('id'));
   });
 
   $("#spinAntiClockWise").click(function(){
     ps.settingHandler.currentCanvas.setClockwise(false);
     ps.settingUI.setAntiClockwise();
     ps.commsHandler.sendNewSetting("anti clockwise", $(this).attr('id'));
+    googleTagsNoValue($(this).attr('id'));
   });
 
   // Change canvas colour
@@ -127,6 +153,7 @@ $(document).ready(function(){
     ps.settingHandler.currentCanvas.setBgColor($(this).attr('id'));
     ps.settingUI.backgroundColorChange($(this).attr('id'));
     ps.commsHandler.sendNewSetting("background color", $(this).attr('id'));
+    googleTags($(this).attr('id'));
   });
 
   // Clear canvas
@@ -135,12 +162,14 @@ $(document).ready(function(){
     ps.canvasHandler.backgroundFade = true;
     ps.canvasHandler.backgroundFadeCount = ps.frameCount;
     ps.commsHandler.sendNewSetting("clear", "0", "0");
+    googleTagsNoValue($(this).attr('id'));
   });
 
   // Save canvas
   $("#saveButton").click(function(){
     name = "bimblespace_blend_" + ps.int(ps.random(0,50000) + ps.millis());
     ps.saveCanvas(name, 'png');
+    googleTagsNoValue($(this).attr('id'));
   });
 
   // Click through menu options
@@ -186,8 +215,6 @@ $(document).ready(function(){
       }
     }
   });
-
-
 
 });
 

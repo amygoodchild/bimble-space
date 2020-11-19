@@ -4,6 +4,9 @@ class CommsHandler{
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       this.socket = io.connect('http://localhost:3000');
     }
+    else if (location.hostname === "192.168.0.57"){
+      this.socket = io.connect('192.168.0.57:3000');
+    }
     else{                                                   // CAUTION!!!!!!
       this.socket = io.connect('https://desolate-dusk-28350.herokuapp.com/');
     }
@@ -15,6 +18,8 @@ class CommsHandler{
 
     this.partner = new Partner(0, 0, 0);
     this.matchState = "solo";
+
+    this.numPairings = 0;
 
   }
 
@@ -114,7 +119,15 @@ class CommsHandler{
     console.log("My id is: " + data.myid);
     console.log("Matched with: " + ps.commsHandler.partner.getId());
     console.log(ps.commsHandler.partner);
+    ps.commsHandler.numPairings++;
+
+    gtag('event', "Found a partner", {
+      'event_category': "Blend",
+      'event_label': ps.commsHandler.numPairings
+    });
   }
+
+
 
   unmatched(data){
     console.log("Unmatched :(");
@@ -134,6 +147,11 @@ class CommsHandler{
     ps.commsHandler.matchState = "searching";
 
     ps.pointsHandler.partnerUnmatched();
+
+    gtag('event', "Unmatched from partner", {
+      'event_category': "Blend",
+      'event_label': ""
+    });
   }
 
   partnerNewSetting(data){

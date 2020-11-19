@@ -25,10 +25,6 @@ class CanvasHandler{
     this.backgroundFaceCount = 0;
   }
 
-  backgroundFade(){
-
-
-  }
 
   drawBackground(){
     ps.settingHandler.currentCanvas.setupBackgroundColor();
@@ -39,13 +35,13 @@ class CanvasHandler{
     if (this.backgroundFade){
       ps.settingHandler.backgrounds[ps.settingHandler.currentCanvas.getBgColor()]
 
-      ps.blendMode(ps.DIFFERENCE);
+      ps.blendMode(ps.MULTIPLY);
       ps.background(ps.red(ps.settingHandler.backgrounds[ps.settingHandler.currentCanvas.getBgColor()]),
                     ps.green(ps.settingHandler.backgrounds[ps.settingHandler.currentCanvas.getBgColor()]),
                     ps.blue(ps.settingHandler.backgrounds[ps.settingHandler.currentCanvas.getBgColor()]),
-                    40);
+                    60);
     }
-    if (ps.frameCount > this.backgroundFadeCount + 70){
+    if (ps.frameCount > this.backgroundFadeCount + 20){
       this.backgroundFade = false;
     }
   }

@@ -8,7 +8,7 @@ $(document).ready(function(){
   var idleCheckInterval = window.setInterval(checkIdleness, 3000);
 
   function checkIdleness() {
-    if(ps.commsHandler.getMatchState()){
+    if(ps.commsHandler.getMatchState() || ps.commsHandler.matchState == "searching"){
       if (ps.idleHandler.getIdleTime() > idleAt){
         ps.commsHandler.goIdle();
         ps.commsUI.solo();

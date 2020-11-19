@@ -4,6 +4,7 @@ class SettingHandler{
     this.pensizes = [];
     this.speeds = [];
     this.backgrounds = [];
+    this.maxPoints;
 
     this.gradients[0] = new PenGradient(115, 191, 229, 229, 115, 229);
     this.gradients[1] = new PenGradient(254, 31, 234,255, 206, 25);
@@ -13,14 +14,18 @@ class SettingHandler{
 
     if (ps.canvasHandler.landscape){
       this.penSizes = [0, 8, 10, 15, 30, 60, 100];
-      //this.speeds = [0.004, 0.005, 0.006, 0.010];
-      this.speeds = [0.016, 0.015, 0.018, 0.030];
-      console.log("hi");
+      this.speeds = [0.004, 0.005, 0.006, 0.010];
+      //this.speeds = [0.016, 0.015, 0.018, 0.030];
+      this.backgroundOpacitys = [100, 30, 10, 0];
+      this.maxPoints = 300;
     }
     else {
       this.penSizes = [0, 4, 6, 12, 15, 30, 60];
-      //this.speeds = [0.004, 0.005, 0.006, 0.010];
-      this.speeds = [0.016, 0.015, 0.018, 0.030];
+      this.speeds = [0.004, 0.005, 0.006, 0.010];
+      //this.speeds = [0.016, 0.015, 0.018, 0.030];
+      this.backgroundOpacitys = [100, 60, 40, 0];
+      this.maxPoints = 100;
+      console.log("new");
     }
 
     this.backgrounds[0] = ps.color(15,15,15);
@@ -29,7 +34,7 @@ class SettingHandler{
     this.backgrounds[3] = ps.color('#ccedff');
     this.backgrounds[4] = ps.color('#fdffcc');
 
-    this.backgroundOpacitys = [100, 30, 10, 0];
+
 
     this.currentPen = new CurrentPen();
     this.currentCanvas = new CurrentCanvas();
@@ -42,7 +47,7 @@ class SettingHandler{
 class CurrentPen{
   constructor(){
     this.size = 3;
-    this.gradient = 1;
+    this.gradient = 0;
   }
 
   getSize(){

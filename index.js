@@ -3,8 +3,8 @@ var http = require('http');
 const app = express();
 const path = require('path');
 
-var enforce = require('express-sslify');
-app.use(enforce.HTTPS({ trustProtoHeader: true }))
+//var enforce = require('express-sslify');
+//app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -119,7 +119,7 @@ function newConnection(socket){
 
   // Hear back from the client what room it's in.
   socket.on('matchMe', function(data) {
-    console.log("matchme");
+    //console.log("matchme");
     numPairingUsers++;
     socket.join(data.room);
     let newUser = new User(data.room, data.width, data.height, socket.id);
@@ -130,7 +130,7 @@ function newConnection(socket){
   });
 
   function matcher(){
-    console.log("matcher run");
+    //console.log("matcher run");
     let matchFound = false;
 
     for (let i=0; i<toMatch.length;i++){
@@ -221,7 +221,6 @@ function newConnection(socket){
   });
 
   socket.on('sendNewPoint', function(data) {
-      console.log(data.partnerID);
       io.to(data.partnerID).emit('passNewPoint', data);
   });
 
@@ -245,7 +244,7 @@ function newConnection(socket){
 
 
   socket.on('goSolo', function(data) {
-    console.log("user " + socket.id + " " + data.choice + " state: " + data.state);
+    //console.log("user " + socket.id + " " + data.choice + " state: " + data.state);
     if (data.state == "paired"){
       numPairingUsers--;
       for (let i = 0; i < matches.length; i++){

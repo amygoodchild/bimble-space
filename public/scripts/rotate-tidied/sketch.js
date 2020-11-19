@@ -14,26 +14,21 @@ const rotateSketch = function(p){
   p.settingUI;
   p.idleHandler;
 
+  p.newPointThisFrame = false;
+
   p.setup = function() {
-    //p.frameRate(1);
-    //console.log("a");
     p.commsHandler = new CommsHandler();
-    //console.log("b");
     p.canvasHandler = new CanvasHandler();
-  //  console.log("c");
     p.pointsHandler = new PointsHandler();
-  //  console.log("d");
     p.settingHandler = new SettingHandler();
-    //console.log("e");
     p.commsUI = new CommsUI();
-    //console.log("f");
     p.settingUI = new SettingUI();
-    //console.log("g");
     p.idleHandler = new IdleHandler();
   };
 
   p.draw = function(){
 
+    p.newPointThisFrame = false;
     // Animate the notifications about settings being changed by partner
     moveNotificationsUp();
 
@@ -44,17 +39,19 @@ const rotateSketch = function(p){
 
     p.pointsHandler.calcAngle();
 
-    //for (let i = 0; i < 3; i++){
+    for (let i = 0; i < 3; i++){
       p.pointsHandler.updatePoints();
       p.pointsHandler.drawPoints();
-    //}
+    }
 
     if(p.debugMode){
       p.canvasHandler.debugMode();
     }
-
   };
 
+  p.mousePressed = () => {
+    p.pointsHandler.mouseEvent(true);
+  }
   p.mouseDragged = () => {
     p.pointsHandler.mouseEvent(true);
   }

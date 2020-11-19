@@ -1,29 +1,22 @@
-$(window).blur(function () {
+/*$(window).blur(function () {
     //do something
-    console.log("You left this tab");
-
 });
 
 $(window).focus(function () {
       //do something
-
-      console.log("You came back -------------------------------");
 });
-
-
-
+*/
 class PointsHandler{
   constructor(){
     this.points = [];
     this.partnerPoints = [];
 
     this.mousePressed = false;
-
     this.mouseXLerped = ps.mouseX;
     this.mouseYLerped = ps.mouseY;
 
     if (ps.canvasHandler.landscape){
-      this.lerpAmount = 0.05;
+      this.lerpAmount = 0.02;
     }
     else {
       this.lerpAmount = 0.4;
@@ -32,20 +25,13 @@ class PointsHandler{
     this.lastTime = 0;
     this.rotateAngle = 0;
     this.angleLerpAmount = 0.4;
-
     this.awayTracker = false;
-
   }
 
   mouseEvent(down){
     if (down){
       this.mousePressed = true;
       this.newPoint(this.mousePressed);
-
-      //if (ps.commsHandler.matchState == "idle"){
-
-    //  }
-
       ps.idleHandler.setActivity();
     }
     else{
@@ -65,27 +51,35 @@ class PointsHandler{
   newPoint(pressed){
     this.lastNotIdle = ps.millis();
     let toDraw;
+    let createPoint = true;
 
     if(pressed){
       toDraw = true;
+      let distance = ps.dist(ps.mouseX, ps.mouseY, ps.pmouseX, ps.pmouseY);
+      if (distance < 2){
+        //createPoint = false;
+      }
     }
     else{
       toDraw = false;
     }
+
     this.mouseXLerped = ps.lerp(this.mouseXLerped, ps.mouseX, this.lerpAmount);
     this.mouseYLerped = ps.lerp(this.mouseYLerped, ps.mouseY, this.lerpAmount);
 
-    var newPoint = new Point(this.mouseXLerped, this.mouseYLerped, toDraw,
-                        ps.settingHandler.currentPen.getSize(), ps.settingHandler.currentPen.getGradient(), ps.settingHandler.currentCanvas.getClockwise());
-    this.points.push(newPoint);
+    if (createPoint){
+      var newPoint = new Point(this.mouseXLerped, this.mouseYLerped, toDraw,
+                          ps.settingHandler.currentPen.getSize(), ps.settingHandler.currentPen.getGradient(), ps.settingHandler.currentCanvas.getClockwise());
+      this.points.push(newPoint);
 
-    if(ps.commsHandler.getMatchState()){
-      ps.commsHandler.sendNewPoint(this.mouseXLerped, this.mouseYLerped, toDraw,
-                        ps.settingHandler.currentPen.getSize(), ps.settingHandler.currentPen.getGradient(), ps.settingHandler.currentCanvas.getClockwise());
+      if(ps.commsHandler.getMatchState()){
+        ps.commsHandler.sendNewPoint(this.mouseXLerped, this.mouseYLerped, toDraw,
+                          ps.settingHandler.currentPen.getSize(), ps.settingHandler.currentPen.getGradient(), ps.settingHandler.currentCanvas.getClockwise());
+      }
     }
+    //console.log(this.points.length);
+
   }
-
-
 
   calcAngle(){
     let timePassed = ps.millis() - this.lastTime;
@@ -99,21 +93,19 @@ class PointsHandler{
     this.mouseYLerped = ps.lerp(this.mouseYLerped, ps.mouseY, this.lerpAmount);
     for (let i=0; i<this.points.length;i++){
       this.points[i].update();
-
     }
     for (let i=0; i<this.partnerPoints.length;i++){
       this.partnerPoints[i].update();
     }
-
   }
 
   deletePoints(){
-    if (this.points.length > 300){
-      let overflow = this.points.length - 300;
+    if (this.points.length > ps.settingHandler.maxPoints){
+      let overflow = this.points.length - ps.settingHandler.maxPoints;
       this.points.splice(0,overflow);
     }
-    if (this.partnerPoints.length > 300){
-      let overflow = this.partnerPoints.length - 300;
+    if (this.partnerPoints.length > ps.settingHandler.maxPoints){
+      let overflow = this.partnerPoints.length - ps.settingHandler.maxPoints;
       this.partnerPoints.splice(0,overflow);
     }
   }
@@ -134,10 +126,9 @@ class PointsHandler{
   }
 
   drawPoints(){
-    for (let i=1; i<this.points.length;i++){
-      ps.strokeWeight(ps.settingHandler.penSizes[this.points[i].size]);
-      if (this.points[i].draw == true && this.points[i-1].draw){
+    for (let i=0; i<this.points.length;i++){
 
+      if (this.points[i].draw == true){
         let chosenColor1 = ps.color(ps.settingHandler.gradients[this.points[i].colorChoice].hue1,
                                    ps.settingHandler.gradients[this.points[i].colorChoice].sat1,
                                    ps.settingHandler.gradients[this.points[i].colorChoice].bri1);
@@ -148,14 +139,15 @@ class PointsHandler{
 
         let thisColor = ps.lerpColor(chosenColor1, chosenColor2, ps.map(i, 0, ps.max(150,this.points.length), 0, 1));
 
-        ps.stroke(thisColor);
-        ps.line(this.points[i].x, this.points[i].y,
-        this.points[i-1].x, this.points[i-1].y,)
+        ps.fill(thisColor);
+        ps.noStroke();
+        ps.ellipse(this.points[i].x, this.points[i].y, ps.settingHandler.penSizes[this.points[i].size]);
+        //ps.line(this.points[i].x, this.points[i].y,
+        //this.points[i-1].x, this.points[i-1].y,)
       }
     }
     for (let i=1; i<this.partnerPoints.length;i++){
-      ps.strokeWeight(ps.settingHandler.penSizes[this.partnerPoints[i].size]);
-      if (this.partnerPoints[i].draw == true && this.partnerPoints[i-1].draw){
+      if (this.partnerPoints[i].draw == true){
 
 
         let chosenColor1 = ps.color(ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].hue1,
@@ -166,11 +158,12 @@ class PointsHandler{
                                    ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].sat2,
                                    ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].bri2);
 
-        let thisColor = ps.lerpColor(chosenColor1, chosenColor2, ps.map(i, 0, ps.max(300,this.points.length), 0, 1));
-
-        ps.stroke(thisColor);
-        ps.line(this.partnerPoints[i].x, this.partnerPoints[i].y,
-        this.partnerPoints[i-1].x, this.partnerPoints[i-1].y,)
+        let thisColor = ps.lerpColor(chosenColor1, chosenColor2, ps.map(i, 0, ps.max(150,this.points.length), 0, 1));
+        ps.fill(thisColor);
+        ps.noStroke();
+        ps.ellipse(this.partnerPoints[i].x, this.partnerPoints[i].y, ps.settingHandler.penSizes[this.partnerPoints[i].size])
+        //ps.line(this.partnerPoints[i].x, this.partnerPoints[i].y,
+        //this.partnerPoints[i-1].x, this.partnerPoints[i-1].y,)
       }
     }
   }
@@ -220,12 +213,12 @@ class Point{
 
     if (ps.settingHandler.currentCanvas.getClockwise()){
       //this.angle += ps.settingHandler.speeds[ps.settingHandler.currentCanvas.getSpeed()];
-      this.angle = (this.angle + ps.pointsHandler.rotateAngle)%ps.TWO_PI;
-      //console.log(this.angle);
+      this.angle = (this.angle + ps.pointsHandler.rotateAngle) % 360;
     }
     else{
       //this.angle -= ps.settingHandler.speeds[ps.settingHandler.currentCanvas.getSpeed()];
-      this.angle = (this.angle - ps.pointsHandler.rotateAngle)%ps.TWO_PI;
+      this.angle = (this.angle - ps.pointsHandler.rotateAngle) % 360;
     }
+
   }
 }
