@@ -11,7 +11,7 @@ class SettingUI{
   penGradientChange(penColorID){
     $("#penColors").hide();
     let theClass;
-    for (let i=0; i<5;i++){
+    for (let i=0; i<6;i++){
       theClass = "penColor" + i;
       $("#penColorsMenu").children(".menuIcon").removeClass(theClass);
     }

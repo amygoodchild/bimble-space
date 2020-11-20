@@ -95,3 +95,7 @@ $( window ).resize(function() {
 
   ps.commsHandler.sendResize();
 });
+
+function sortOutWindowResize(){
+  // this function left intentionally blank due to poor planning.
+}

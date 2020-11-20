@@ -10,7 +10,7 @@ class SettingHandler{
     this.gradients[1] = new PenGradient(254,  31, 234,  255, 206,  25);
     this.gradients[2] = new PenGradient(142, 233, 189,   40, 171, 255);
     this.gradients[3] = new PenGradient(255, 113, 175,   83,   0, 209);
-    this.gradients[4] = new PenGradient(255, 211,  79,  255,  58, 181);
+    this.gradients[4] = new PenGradient(252, 147,   0,  255,   0, 100);
     this.gradients[5] = new PenGradient(255,   0, 130,  203,  75, 228);
 
     if (ps.canvasHandler.landscape){
@@ -19,7 +19,7 @@ class SettingHandler{
       //this.speeds = [0.016, 0.015, 0.018, 0.030];
       this.backgroundOpacitys = [100, 30, 10, 0];
       let resolution = ps.width * ps.height;
-      this.maxPoints = resolution / 2500;
+      this.maxPoints = resolution / 1500;
     }
     else {
       this.penSizes = [0, 4, 6, 12, 15, 30, 60];

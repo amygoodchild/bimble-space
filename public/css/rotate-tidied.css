@@ -110,7 +110,7 @@ canvas{
 }
 
 #welcome .note{
-  font-size: 12px;
+  font-size: 13px;
   line-height: 16px;
   margin-top: 30px;
 }
@@ -121,7 +121,7 @@ canvas{
   position: absolute;
   z-index: 5;
   left: 100px;
-  top: 350px;
+  top: 360px;
   background: #000000eb;
   color: #ffffff;
   border: 1px #46c9f9 solid;
@@ -423,7 +423,7 @@ canvas{
 
 #penColors{
   width: 55px;
-  height: 300px;
+  height: 335px;
   float: left;
   position: absolute;
   top: 80px;
@@ -555,15 +555,15 @@ canvas{
 }
 
 .penColor3 {
-  background: linear-gradient(34deg, #5300cb , #5300cb, #ff71af, #ff71af) !important;
+  background: linear-gradient(34deg, #ff71af, #ff71af, #5300cb , #5300cb) !important;
 }
 
 .penColor4 {
-  background: linear-gradient(34deg, #ff3ab5, #ff3ab5, #ffd34f, #ffd34f) !important;
+  background: linear-gradient(34deg, #fc9300, #fc9300, #ff0064, #ff0064) !important;
 }
 
 .penColor5 {
-  background: linear-gradient(34deg, #cb4bff, #cb4bff, #ff0082, #ff0082) !important;
+  background: linear-gradient(34deg, #ff0082, #ff0082, #cb4bff, #cb4bff) !important;
 }
 
 .bgColor0{ background: #000000 !important; }
@@ -722,7 +722,6 @@ canvas{
     position: fixed;
   }
 
-
   #penColors{
     top: auto;
     bottom: 45px;
@@ -782,15 +781,16 @@ canvas{
     left: 20px;
     top: 70px;
     width: 90%;
-    padding: 20px;
+    padding: 15px;
   }
 
   #credit{
-    bottom: 0px;
-    left: 0px;
-    top: auto;
-    width: 100%;
-    line-height: 20px;
+    left: 20px;
+    top: 470px;
+    width: 90%;
+    line-height: 25px;
+    padding: 10px;
+    font-size: 14px;
   }
 
   #connectionInfo{
@@ -809,13 +809,13 @@ canvas{
 }
 
 @media only screen and (max-width: 355px) {
-    #rotateMenu{
-      width: 316px;
-      left: calc((100vw - 316px) / 2);
-      top: auto;
-      bottom: 10px;
-      position: fixed;
-    }
+  #rotateMenu{
+    width: 316px;
+    left: calc((100vw - 316px) / 2);
+    top: auto;
+    bottom: 10px;
+    position: fixed;
+  }
 
   #penColors{
     left: calc(((100vw - 316px) / 2) - 2px);
@@ -833,9 +833,22 @@ canvas{
     left: calc((100vw - 106px) / 2);
   }
 
+  #welcome{
+    padding: 15px;
+    left: 5%;
+  }
+
+  #welcome p{
+    font-size: 14px;
+    line-height: 17px;
+    margin: 5px 0px;
+  }
+
   #credit{
+    left: 5%;
+    top: 420px;
     font-size: 12px;
-    padding: 10px 20px;
+    padding: 15px;
   }
 
 

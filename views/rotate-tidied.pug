@@ -11,6 +11,19 @@ block thisToyScripts
   
   script(src='../scripts/rotate-tidied/commsUI.js')
   script(src='../scripts/rotate-tidied/settingsUI.js')
+  //- Facebook Open Graph Meta Data
+  meta(property="og:url" content="https://in.bimble.space/blend")
+  meta(property="og:title" content="Blend - A multiplayer art experience")
+  meta(property="og:description" content="Draw beautiful swirling gradients. Connect with strangers on the same canvas.")
+  meta(property="og:image" content="../images/rotate/blend.jpg")
+
+  //- Twitter Meta Data
+  meta(name="twitter:card" content="summary_large_image")
+  meta(name="twitter:site" content="Bimble Space")
+  meta(name="twitter:creator" content="Amy Goodchild")
+  meta(name="twitter:title" content="Blend - A multiplayer art experience")
+  meta(name="twitter:description" content="Draw beautiful swirling gradients. Connect with strangers on the same canvas")
+  meta(name="twitter:image" content="../images/rotate/blend.jpg")
     
 
 block content
@@ -26,13 +39,13 @@ block content
       
     button.choice#start Start 
     p.note
-      | Please note that this space is unmoderated and, while the artist would
-      | encourage everyone to keep their drawings family friendly, if you're
-      | here with children, you may want to play unpaired. 
+      | If you are here with children, please note that this space is unmoderated and,
+      | while the artist would encourage everyone to keep their drawings family friendly,
+      | you may want to play unpaired. 
     
   #credit
-    p Blend is a project by artist #[a(href="https://www.instagram.com/amy_goodchild/" class="white-link") Amy Goodchild].
-    p Presented as part of #[a(href="https://www.watermans.org.uk/events/blend-a-multiplayer-online-experience/" class="white-link") Waterman's Digital Weekender].
+    p Artist - #[a(href="https://www.instagram.com/amy_goodchild/" class="white-link") Amy Goodchild]
+    p Presented by - #[a(href="https://www.watermans.org.uk/events/blend-a-multiplayer-online-experience/" class="white-link") Waterman's Digital Weekender]
       
   
   #connectionInfo 
