@@ -68,7 +68,7 @@ canvas{
   float: left;
   width: 18px;
   height: 40px;
-  background-image: url("../images/checkbox-checked.png");
+  background-image: url("../images/rotate/checkbox-checked.png");
   background-repeat: no-repeat;
 }
 
@@ -84,7 +84,7 @@ canvas{
 }
 
 .checkboxUnchecked {
-  background-image: url("../images/checkbox-unchecked.png") !important;
+  background-image: url("../images/rotate/checkbox-unchecked.png") !important;
 }
 
 #welcome .choice {
