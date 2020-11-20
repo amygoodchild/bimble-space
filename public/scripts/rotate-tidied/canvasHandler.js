@@ -35,7 +35,7 @@ class CanvasHandler{
     if (this.backgroundFade){
       ps.settingHandler.backgrounds[ps.settingHandler.currentCanvas.getBgColor()]
 
-      ps.blendMode(ps.MULTIPLY);
+      ps.blendMode(ps.BLEND);
       ps.background(ps.red(ps.settingHandler.backgrounds[ps.settingHandler.currentCanvas.getBgColor()]),
                     ps.green(ps.settingHandler.backgrounds[ps.settingHandler.currentCanvas.getBgColor()]),
                     ps.blue(ps.settingHandler.backgrounds[ps.settingHandler.currentCanvas.getBgColor()]),

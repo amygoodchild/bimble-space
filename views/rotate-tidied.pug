@@ -45,7 +45,7 @@ block content
     p#idleWarningContent
       p Unfortunately you didn't draw anything for a while so we disconnected you. 
       p Just start drawing to carry on. 
-      p Select "Play Paired" from the pairing option above to reconnect.
+      p Select "Play Paired" from the pairing menu to reconnect.
       
   
   #rotateMenu
@@ -69,7 +69,7 @@ block content
       .menuText.allUI Save PNG
             
   #penColors.menuDrawer
-    - for (var i = 0; i < 5; i++)
+    - for (var i = 0; i < 6; i++)
       button(id='penColor' + i class='penColor' + i).penColorButton.allUI
   #bgColors.menuDrawer
     - for (var i = 0; i < 5; i++)

@@ -4,6 +4,8 @@ class SettingUI{
     $("#speed2").addClass("sliderButtonSelected");
     $("#trailLength2").addClass("sliderButtonSelected");
 
+    let penCSS = "penColor" + ps.settingHandler.currentPen.gradient;
+    this.penGradientChange(penCSS);
   }
 
   penGradientChange(penColorID){

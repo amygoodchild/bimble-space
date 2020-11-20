@@ -100,6 +100,9 @@ class PointsHandler{
   }
 
   deletePoints(){
+
+
+
     if (this.points.length > ps.settingHandler.maxPoints){
       let overflow = this.points.length - ps.settingHandler.maxPoints;
       this.points.splice(0,overflow);

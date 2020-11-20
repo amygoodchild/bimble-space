@@ -551,17 +551,20 @@ canvas{
 }
 
 .penColor2 {
-  background: linear-gradient(34deg, #c4e900, #c4e900, #19fff5, #19fff5) !important;
+  background: linear-gradient(34deg, #8ee9bd, #8ee9bd, #28abff, #28abff) !important;
 }
 
 .penColor3 {
-  background: linear-gradient(34deg, #e90000 , #e90000, #2c19ff, #2c19ff) !important;
+  background: linear-gradient(34deg, #5300cb , #5300cb, #ff71af, #ff71af) !important;
 }
 
 .penColor4 {
-  background: linear-gradient(34deg, #a000e9 , #a000e9, #ff1995, #ff1995) !important;
+  background: linear-gradient(34deg, #ff3ab5, #ff3ab5, #ffd34f, #ffd34f) !important;
 }
 
+.penColor5 {
+  background: linear-gradient(34deg, #cb4bff, #cb4bff, #ff0082, #ff0082) !important;
+}
 
 .bgColor0{ background: #000000 !important; }
 .bgColor1{ background: #ffffff !important; }
