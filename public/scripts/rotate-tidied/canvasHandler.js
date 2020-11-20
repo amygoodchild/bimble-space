@@ -92,7 +92,6 @@ $( window ).resize(function() {
   this.width = newToyWidth;
   this.height = newToyHeight;
   ps.canvasHandler = new CanvasHandler();
-
   ps.commsHandler.sendResize();
 });
 

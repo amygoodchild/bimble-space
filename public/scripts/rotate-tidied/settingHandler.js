@@ -19,7 +19,7 @@ class SettingHandler{
       //this.speeds = [0.016, 0.015, 0.018, 0.030];
       this.backgroundOpacitys = [100, 30, 10, 0];
       let resolution = ps.width * ps.height;
-      this.maxPoints = resolution / 1500;
+      this.maxPoints = resolution / 1200;
     }
     else {
       this.penSizes = [0, 4, 6, 12, 15, 30, 60];
