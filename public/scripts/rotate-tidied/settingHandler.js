@@ -19,7 +19,7 @@ class SettingHandler{
       //this.speeds = [0.016, 0.015, 0.018, 0.030];
       this.backgroundOpacitys = [100, 30, 10, 0];
       let resolution = ps.width * ps.height;
-      this.maxPoints = resolution / 1200;
+      this.maxPoints = resolution / 3000;
     }
     else {
       this.penSizes = [0, 4, 6, 12, 15, 30, 60];
@@ -30,6 +30,7 @@ class SettingHandler{
       this.maxPoints = resolution / 1500;
     }
 
+    console.log(this.maxPoints);
     this.backgrounds[0] = ps.color(15,15,15);
     this.backgrounds[1] = ps.color(255,255,255);
     this.backgrounds[2] = ps.color('#f9ccff');
