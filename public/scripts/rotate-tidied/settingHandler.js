@@ -29,9 +29,7 @@ class SettingHandler{
       let resolution = ps.width * ps.height;
       this.maxPoints = resolution / 1500;
     }
-    console.log(this.maxPoints);
 
-console.log("maxpoints: " + this.maxPoints);
     this.backgrounds[0] = ps.color(15,15,15);
     this.backgrounds[1] = ps.color(255,255,255);
     this.backgrounds[2] = ps.color('#f9ccff');

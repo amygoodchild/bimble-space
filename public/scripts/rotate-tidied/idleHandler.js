@@ -1,8 +1,8 @@
 
 $(document).ready(function(){
 
-  var idleWarningAt = 40000;
-  var idleAt = 60000;
+  var idleWarningAt = 80000;
+  var idleAt = 100000;
 
   // Will execute myCallback every 0.5 seconds
   var idleCheckInterval = window.setInterval(checkIdleness, 3000);
@@ -20,7 +20,7 @@ $(document).ready(function(){
         ps.idleHandler.idleWarningOn = true;
       }
       else{
-        console.log("not idle");
+        //console.log("not idle");
       }
     }
   }
