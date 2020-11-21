@@ -118,7 +118,8 @@ class PointsHandler{
   partnerUnmatched(){
     for (let i=0; i<this.points.length;i++){
       if (this.points[i].partnerPoint == true){
-        this.partnerPoints.splice(i, 1);
+        this.points.splice(i, 1);
+        i--;
       }
     }
   }
@@ -156,7 +157,7 @@ class PointsHandler{
 }
 
 class Point{
-  constructor(x, y, draw, size, colorChoice, clockwise, partnerDot){
+  constructor(x, y, draw, size, colorChoice, clockwise, partnerPoint){
     this.x = x;
     this.y = y;
     this.draw = draw;
@@ -164,7 +165,7 @@ class Point{
     this.colorChoice = colorChoice;
     this.spinClockwise = clockwise;
     this.distanceFromCentre = this.dist();
-    this.partnerDot = partnerDot;
+    this.partnerPoint = partnerPoint;
 
     let opp = this.x - ps.width/2;
     let adj = ps.height/2 - this.y;
