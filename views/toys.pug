@@ -8,7 +8,7 @@ block content
   #page
     #pageContent
       h1= title
-      each page in ["spirograph", "flock"]
+      each page in ["spirograph", "flock", "blend"]
         if (title==page)
           a.toyLink(href="/" + page)
             img(src="/images/toythumbs/" + page + ".jpg")
