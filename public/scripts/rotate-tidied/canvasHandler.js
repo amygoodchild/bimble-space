@@ -3,13 +3,16 @@ class CanvasHandler{
     this.landscape;
 
     if ($(window).width() > $(window).height()){  // landscape
-      this.width = Math.floor( $(window).width() ) - 55;
-      this.height = Math.floor( $(window).height() );
+      this.width = Math.floor( $(document).width() ) - 55;
+      this.height = Math.floor( $(document).height() );
       this.landscape = true;
+
+      console.log("landscape");
+      console.log(this.height);
     }
     else{                                         // portrait
-      this.width = Math.floor( $(window).width() );
-      this.height = Math.floor( $(window).height() ) - 50;
+      this.width = Math.floor( $(document).width() );
+      this.height = Math.floor( $(document).height() ) - 50;
       this.landscape = false;
     }
 

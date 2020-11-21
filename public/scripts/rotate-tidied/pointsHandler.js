@@ -136,8 +136,26 @@ class PointsHandler{
   }
 
   drawPoints(){
-    for (let i=0; i<this.points.length;i++){
+    for (let i=0; i<this.partnerPoints.length;i++){
+      if (this.partnerPoints[i].draw == true){
+        let chosenColor1 = ps.color(ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].hue1,
+                                   ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].sat1,
+                                   ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].bri1);
 
+        let chosenColor2 = ps.color(ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].hue2,
+                                   ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].sat2,
+                                   ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].bri2);
+
+        let thisColor = ps.lerpColor(chosenColor1, chosenColor2, ps.map(i, 0, ps.max(150,this.points.length), 0, 1));
+        ps.fill(thisColor);
+        ps.noStroke();
+        ps.ellipse(this.partnerPoints[i].x, this.partnerPoints[i].y, ps.settingHandler.penSizes[this.partnerPoints[i].size])
+        //ps.line(this.partnerPoints[i].x, this.partnerPoints[i].y,
+        //this.partnerPoints[i-1].x, this.partnerPoints[i-1].y,)
+      }
+    }
+
+    for (let i=0; i<this.points.length;i++){
       if (this.points[i].draw == true){
         let chosenColor1 = ps.color(ps.settingHandler.gradients[this.points[i].colorChoice].hue1,
                                    ps.settingHandler.gradients[this.points[i].colorChoice].sat1,
@@ -156,26 +174,7 @@ class PointsHandler{
         //this.points[i-1].x, this.points[i-1].y,)
       }
     }
-    for (let i=0; i<this.partnerPoints.length;i++){
-      if (this.partnerPoints[i].draw == true){
 
-
-        let chosenColor1 = ps.color(ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].hue1,
-                                   ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].sat1,
-                                   ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].bri1);
-
-        let chosenColor2 = ps.color(ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].hue2,
-                                   ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].sat2,
-                                   ps.settingHandler.gradients[this.partnerPoints[i].colorChoice].bri2);
-
-        let thisColor = ps.lerpColor(chosenColor1, chosenColor2, ps.map(i, 0, ps.max(150,this.points.length), 0, 1));
-        ps.fill(thisColor);
-        ps.noStroke();
-        ps.ellipse(this.partnerPoints[i].x, this.partnerPoints[i].y, ps.settingHandler.penSizes[this.partnerPoints[i].size])
-        //ps.line(this.partnerPoints[i].x, this.partnerPoints[i].y,
-        //this.partnerPoints[i-1].x, this.partnerPoints[i-1].y,)
-      }
-    }
   }
 
   clearPoints(){
