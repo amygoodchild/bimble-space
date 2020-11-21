@@ -3,8 +3,8 @@ var http = require('http');
 const app = express();
 const path = require('path');
 
-//var enforce = require('express-sslify');
-//app.use(enforce.HTTPS({ trustProtoHeader: true }))
+var enforce = require('express-sslify');
+app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -56,7 +56,7 @@ app.get('/swoosh', function (req, res) {
   res.render('swoosh', { title: 'Swoosh', path: 'swoosh', theScripts:[]})
 })
 
-app.get('/blend', function (req, res) {
+app.get('/blend-holding', function (req, res) {
   res.render('blend-holding', { title: 'Blend', path: 'blend-holding', theScripts:[]})
 })
 
@@ -69,8 +69,8 @@ app.get('/rotatemulti', function (req, res) {
   res.render('rotatemulti', { title: 'Rotate - Multi', path: 'rotatemulti', theScripts:[]})
 })
 
-app.get('/rotatecanvas', function (req, res) {
-  res.render('rotate-tidied', { title: 'Rotate - Multi', path: 'rotate-tidied', theScripts:[]})
+app.get('/blend', function (req, res) {
+  res.render('rotate-tidied', { title: 'Blend', path: 'rotate-tidied', theScripts:[]})
 })
 
 app.get('/linesidea', function (req, res) {
