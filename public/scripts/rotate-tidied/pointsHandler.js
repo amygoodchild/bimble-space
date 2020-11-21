@@ -149,7 +149,7 @@ class PointsHandler{
         //this.points[i-1].x, this.points[i-1].y,)
       }
     }
-    for (let i=1; i<this.partnerPoints.length;i++){
+    for (let i=0; i<this.partnerPoints.length;i++){
       if (this.partnerPoints[i].draw == true){
 
 
