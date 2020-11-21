@@ -100,11 +100,13 @@ class PointsHandler{
   }
 
   deletePoints(){
+    let maxPointsToUse = ps.settingHandler.maxPoints;
+    if(this.partnerPoints.length ==0){
+      maxPointsToUse = ps.settingHandler.maxPoints*2;
+    }
 
-
-
-    if (this.points.length > ps.settingHandler.maxPoints){
-      let overflow = this.points.length - ps.settingHandler.maxPoints;
+    if (this.points.length > maxPointsToUse){
+      let overflow = this.points.length - maxPointsToUse;
       this.points.splice(0,overflow);
     }
     if (this.partnerPoints.length > ps.settingHandler.maxPoints){

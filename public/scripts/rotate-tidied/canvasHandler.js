@@ -62,7 +62,6 @@ class CanvasHandler{
 
 
 $( window ).resize(function() {
-  console.log("resize");
   if (ps.windowHeight < ps.windowWidth){
     landscape = true;
     $("#menu").css("width", "55px");
@@ -92,7 +91,9 @@ $( window ).resize(function() {
   this.width = newToyWidth;
   this.height = newToyHeight;
   ps.canvasHandler = new CanvasHandler();
-  ps.commsHandler.sendResize();
+  if (ps.commsHandler){
+    ps.commsHandler.sendResize();
+  }
 });
 
 function sortOutWindowResize(){

@@ -115,10 +115,10 @@ class CommsHandler{
     ps.commsHandler.partner = new Partner(data.partnerID, data.partnerWidth, data.partnerHeight);
     ps.commsHandler.matchState = "paired";
 
-    console.log("I am: " + data.whoami);
-    console.log("My id is: " + data.myid);
-    console.log("Matched with: " + ps.commsHandler.partner.getId());
-    console.log(ps.commsHandler.partner);
+    //console.log("I am: " + data.whoami);
+    //console.log("My id is: " + data.myid);
+    //console.log("Matched with: " + ps.commsHandler.partner.getId());
+    //console.log(ps.commsHandler.partner);
     ps.commsHandler.numPairings++;
 
     gtag('event', "Found a partner", {
@@ -201,6 +201,7 @@ class CommsHandler{
   partnerResized(data){
     ps.commsHandler.partner.setWidth(data.newWidth);    // map up the screen widths
     ps.commsHandler.partner.setHeight(data.newHeight);
+
   }
 }
 
