@@ -16,10 +16,10 @@ class PointsHandler{
     this.mouseYLerped = ps.mouseY;
 
     if (ps.canvasHandler.landscape){
-      this.lerpAmount = 0.02;
+      this.lerpAmount = 0.01;
     }
     else {
-      this.lerpAmount = 0.4;
+      this.lerpAmount = 0.2;
     }
 
     this.lastTime = 0;
@@ -46,6 +46,11 @@ class PointsHandler{
   newPartnerPoint(xposition, yposition, draw, size, colorChoice, clockwise){
     var newPoint = new Point(xposition, yposition, draw, size, colorChoice, clockwise);
     this.partnerPoints.push(newPoint);
+  }
+
+  catchUpMobileMouse(){
+    this.mouseXLerped = ps.mouseX;
+    this.mouseYLerped = ps.mouseY;
   }
 
   newPoint(pressed){

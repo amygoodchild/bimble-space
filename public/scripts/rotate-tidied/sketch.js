@@ -50,12 +50,12 @@ const rotateSketch = function(p){
   };
 
   p.mousePressed = () => {
+    p.pointsHandler.catchUpMobileMouse();
     p.pointsHandler.mouseEvent(true);
   }
   p.mouseDragged = () => {
     p.pointsHandler.mouseEvent(true);
   }
-
   p.mouseReleased = () => {
     p.pointsHandler.mouseEvent(false);
   }
