@@ -161,12 +161,12 @@ const pewpewSketch = ( p ) => {
   p.idleCounting = false;
 
   p.setup = () => {
-    // Connects to server for comms
+    // Connects to server for comms - uses current origin so works with custom domains (e.g. in.bimble.space)
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
       p.socket = io.connect('http://localhost:3000');
     }
     else{
-      p.socket = io.connect('https://desolate-dusk-28350.herokuapp.com/');
+      p.socket = io.connect();  // Uses current page's origin
     }
 
     /*p.separationSlider = p.createSlider(0, 5, 1.5, 0.1);

@@ -89,7 +89,13 @@ var server = app.listen(process.env.PORT || 3000, function(){
   console.log('Server is running');
 });
 
-var io = socket(server);
+var io = socket(server, {
+  cors: {
+    origin: ["https://in.bimble.space", "https://desolate-dusk-28350.herokuapp.com", "http://localhost:3000", "http://localhost:3001"],
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
 var ownID;
 var otherID;
 var numUsers = 0;
