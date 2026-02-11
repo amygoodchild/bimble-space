@@ -243,6 +243,6 @@ $(document).ready(function(){
 
 
 // Auto-start in solo mode for development
-setTimeout(() => {
-  startGame();
-}, 100);
+// setTimeout(() => {
+//   startGame();
+// }, 100);

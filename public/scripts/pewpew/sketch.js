@@ -662,7 +662,7 @@ const pewpewSketch = ( p ) => {
 
       }
 
-      else if (p.millis() > p.idleMillis + 50000){
+      else if (p.millis() > p.idleMillis + 120000){
         p.idleCounting = true;
         $("#idleWarning").css("display", "table");
         let seconds = 60 - (p.int((p.millis() - p.idleMillis) / 1000));
