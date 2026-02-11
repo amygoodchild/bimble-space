@@ -130,7 +130,7 @@ function newConnection(socket){
     socket.join(data.room);
     let newUser = new User(data.room, data.width, data.height, socket.id);
     room = data.room;
-    // When a client joins swoosh, add its object to the array of un matched users
+    // When a client joins, add its object to the array of un matched users
     toMatch.push(newUser);
     matcher();
   });

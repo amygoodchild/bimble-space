@@ -209,8 +209,8 @@ const pewpewSketch = ( p ) => {
       p.theWidth = p.int(p.windowWidth);
       p.theHeight = p.int(p.windowHeight) - 50;
       p.rippleCanvas = p.createCanvas(p.theWidth, p.theHeight);
-      p.maxSize = 27;         // Size the boids will grow to
-      p.minSize = 17;
+      p.maxSize = 10;         // Size the boids will grow to
+      p.minSize = 3;
       p.startSpeed = 4;
 
     }
