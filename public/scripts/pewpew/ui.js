@@ -23,6 +23,17 @@ $(document).ready(function(){
     $(this).addClass('colorButtonOn');
   });
 
+  // Function to select a random color
+  window.selectRandomColor = function(){
+    var randomColor = Math.floor(Math.random() * 12);
+    ps.colorChoice = randomColor;
+    $(".colorButton").removeClass('colorButtonOn');
+    $("#color" + randomColor).addClass('colorButtonOn');
+  };
+
+  // Auto-select random color on page load
+  selectRandomColor();
+
   /*$("#welcome").click(function(){
     $("#welcome").css("display", "none");
     gtag('event', "Close welcome", {
@@ -39,7 +50,10 @@ $(document).ready(function(){
     choosePaired = !choosePaired;
   });
 
-  $("#start").click(function(){
+  // Extracted start function so it can be called programmatically
+  window.startGame = function(){
+
+
 
     if (choosePaired){
       $("#welcome").css("display", "none");
@@ -56,7 +70,7 @@ $(document).ready(function(){
         pair: true
       }
 
-      ps.socket.emit('matchMe', sendData);
+      if (ps.socket) ps.socket.emit('matchMe', sendData);
 
       gtag('event', "JoinChoice", {
         'event_category': "Flock",
@@ -85,6 +99,10 @@ $(document).ready(function(){
         }
       }
     }
+  };
+
+  $("#start").click(function(){
+    window.startGame();
   });
 
 
@@ -221,6 +239,10 @@ $(document).ready(function(){
     });
 
   }
-
-
 });
+
+
+// Auto-start in solo mode for development
+setTimeout(() => {
+  startGame();
+}, 100);

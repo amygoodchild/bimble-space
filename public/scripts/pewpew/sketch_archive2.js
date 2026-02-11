@@ -21,8 +21,8 @@ var landscape;
       newToyWidth =  $(window).width() - 55;
       newToyHeight = $(window).height();
 
-      ps.maxSize = 12;         // Size the boids will grow to
-      ps.minSize = 5;
+      ps.maxSize = 32;         // Size the boids will grow to
+      ps.minSize = 20;
 
     }
     else{
@@ -38,8 +38,8 @@ var landscape;
       newToyWidth =  $(window).width();
       newToyHeight = $(window).height() - 50;
 
-      ps.maxSize = 10;         // Size the boids will grow to
-      ps.minSize = 3;
+      ps.maxSize = 27;         // Size the boids will grow to
+      ps.minSize = 17;
     }
 
     $("#theToyContainer").css({ 'width': newToyWidth });
@@ -72,6 +72,7 @@ function registerOwnID(data){
 }
 
 function sortOutWindowResize(){
+
 }
 
 const pewpewSketch = ( p ) => {
@@ -79,24 +80,18 @@ const pewpewSketch = ( p ) => {
   p.boids = [];
 
   // Spawning variables
-  p.duplicates= 2;          // how many spawn per frame (looks cool if loads shoot out at once, but hits max boids quicker)
+  p.duplicates= 1;          // how many spawn per frame (looks cool if loads shoot out at once, but hits max boids quicker)
   p.spawnRandomness = 20;   // gives a bit of randomness to the position of spawning
   p.id = 0;                 // gives each boid an ID - useful for debugging because it's possible to log out details of one boid
 
 
-  p.colorJitter = 20;       // colours are picked from a set of pre selected ones, but with a little randomness built into the hues for depth
-  p.wiggleAmount = {
-    min: 2,
-    max: 3
-  }
-  p.noiseSpeed = {
-    min: 0.02,
-    max: 0.1
-  }
+  p.colorJitter = 12;       // colours are picked from a set of pre selected ones, but with a little randomness built into the hues for depth
+  p.wiggleAmount = 3;
+  p.noiseSpeed = 0.05;
 
-  p.maxSize = 10;         // Size the boids will grow to
-  p.minSize = 3;
-  p.deleteDiameter = 5;   // size the boids get deleted at
+  p.maxSize = 25;         // Size the boids will grow to
+  p.minSize = 15;
+  p.deleteDiameter = 12;   // size the boids get deleted at
 
   p.previousMouseX = 0;   // To figure out what direction the mouse is going in
   p.previousMouseY = 0;
@@ -104,9 +99,9 @@ const pewpewSketch = ( p ) => {
   p.mouseSpeedMax = 550;
   p.minInitialSpeed = -300;
   p.initialSpeed = 300;      // how much the mouse direction affects initial velocity
-  p.startSpeed = 4;          // how fast the mousedirection pushes a boid
+  p.startSpeed = 5;          // how fast the mousedirection pushes a boid
 
-  p.maxBoids = 500;      // Max number of boids, changes to be lower if framerate is struggling
+  p.maxBoids = 200;      // Max number of boids, changes to be lower if framerate is struggling
   p.topMaxBoids = 180;
   p.lowMaxBoids = 20;
 
@@ -142,8 +137,8 @@ const pewpewSketch = ( p ) => {
   // flock variables
   p.perceptionRadius = 75;
   p.desiredSeparation = 15;
-  p.separationAmount = 1.0;
-  p.separationDistanceAmount = 10;
+  p.separationAmount = 1.2;
+  p.separationDistanceAmount = 30;
   p.alignAmount = 2.0;
   p.cohesionAmount = 0.3;
   p.forceAmount = 0.6;
@@ -193,7 +188,6 @@ const pewpewSketch = ( p ) => {
     p.colorMode(p.HSB,360,100,100, 100);
     p.noStroke();
     p.noiseSeed(100);   // So that each session gets the same perlin noise
-    p.angleMode(p.DEGREES);
 
     //p.frameRate(1);  // for debugging
 
@@ -217,11 +211,12 @@ const pewpewSketch = ( p ) => {
 
     p.rippleCanvas.parent('theToyContainer');
 
-    p.background(200,50,20);
+    p.background(0,0,20);
 
     // default wrap width (changes if you are paired with someone with a bigger screen)
     p.wrapWidth = p.width;
     p.wrapHeight = p.height;
+
 
     // Stores some nice colour options to pick from.
     p.colorCollections[0] = new ColorCollection( p.color('#e2d810'), p.color('#d9138a'), p.color('#12a4d9'), 0.33, 0.33, 0.33 );
@@ -244,16 +239,14 @@ const pewpewSketch = ( p ) => {
     p.loneMessages[3] = "deep";
     p.loneMessages[4] = "hope you're having a nice time";
 
-    if (p.socket){
-      p.socket.on('onJoin', p.onJoin);  // Tell the server our deets.
-      p.socket.on('whatsyourinfo', p.whatsmyinfo);  // Tell the server our deets.
-      p.socket.on('updateUsers', p.updateUsers);  // Tell the server our deets.
-      p.socket.on('matched', p.matched);              // Lets us know we've been matched
-      p.socket.on('aNewBoid', p.otherUserDraws);      // When a boid from our partner arrives
-      p.socket.on('theyResized', p.theyResized);          // Lets us know we've been unmatched (the other person left)
-      p.socket.on('unMatched', p.unmatched);          // Lets us know we've been unmatched (the other person left)
-      p.socket.on('goodbye', p.goodbye);          // Other person sent a goodbye
-    }
+    p.socket.on('onJoin', p.onJoin);  // Tell the server our deets.
+    p.socket.on('whatsyourinfo', p.whatsmyinfo);  // Tell the server our deets.
+    p.socket.on('updateUsers', p.updateUsers);  // Tell the server our deets.
+    p.socket.on('matched', p.matched);              // Lets us know we've been matched
+    p.socket.on('aNewBoid', p.otherUserDraws);      // When a boid from our partner arrives
+    p.socket.on('theyResized', p.theyResized);          // Lets us know we've been unmatched (the other person left)
+    p.socket.on('unMatched', p.unmatched);          // Lets us know we've been unmatched (the other person left)
+    p.socket.on('goodbye', p.goodbye);          // Other person sent a goodbye
 
   };
 
@@ -352,10 +345,9 @@ const pewpewSketch = ( p ) => {
     if ( p.boids.length < p.maxBoids){
       let xposition = p.map(data.x, 0, p.otherWidth, 0, p.width);   // mapped to other user's screensize
       let yposition = p.map(data.y, 0, p.otherHeight, 0, p.height);
-      
 
       var newBoid = new Boid(xposition, yposition, data.xoff, data.yoff, data.speed, data.directionx, data.directiony, data.diameter,
-                                data.maxDiameter, data.hue, data.sat, data.bri, data.wiggleAmt);
+                                data.maxDiameter, data.hue, data.sat, data.bri);
       p.boids.push(newBoid);    // other user boids get added to the same array as this user's boids.
       p.id++;
     }
@@ -370,24 +362,13 @@ const pewpewSketch = ( p ) => {
   }*/
 
   p.draw = () => {
-    p.blendMode(p.BLEND);
     //p.textFont(myFont, 20);
     //p.clear();
     //p.blendMode(p.ADD);
 
- 
-    p.fill(0,0,5,60);
-
-
-
+    p.fill(0,0,5,40);
     p.rect(0,0,p.width,p.height);
-
-    // for(let i = 0; i < p.height; i+=10){
-    //   let brightness = p.map(i, 0, p.height, 20, 0);
-    //   p.fill(200,30,brightness,60);
-    //   p.rect(0,i,p.width,10);
-    // }
-    
+    p.blendMode(p.BLEND);
 
     if(p.debugMode){
       if (p.frameCount % 5 == 0){
@@ -514,17 +495,12 @@ const pewpewSketch = ( p ) => {
               tempBri = p.brightness(p.colorCollections[p.colorChoice].colorC);
             }
 
-            let ns = p.random(p.noiseSpeed.min, p.noiseSpeed.max);
-            let wiggleAmt = p.random(p.wiggleAmount.min, p.wiggleAmount.max);
-
             var newBoid = new Boid(p.random(p.mouseX - p.spawnRandomness, p.mouseX + p.spawnRandomness), // pos x
                                 p.random(p.mouseY - p.spawnRandomness, p.mouseY + p.spawnRandomness),    // pos y
-                                p.random(0,1000), p.random(0,1000), ns,                                // xoff yoff noiseSpeed
+                                p.random(0,1000), p.random(0,1000), p.noiseSpeed,                                // xoff yoff noiseSpeed
                                 p.mouseDirection.x, p.mouseDirection.y,                                  // velocity
                                 5, p.random(p.minSize,p.maxSize),                                        // diameter maxdiameter
-                                tempHue, tempSat, tempBri, 
-                                wiggleAmt
-                              );                                              // hue sat bri
+                                tempHue, tempSat, tempBri);                                              // hue sat bri
 
             p.id++;
 
@@ -551,9 +527,7 @@ const pewpewSketch = ( p ) => {
 
               }
               // send it
-              if (p.socket){
-                p.socket.emit('aNewBoid', data);
-              }
+              p.socket.emit('aNewBoid', data);
 
             }
           }
@@ -592,7 +566,6 @@ const pewpewSketch = ( p ) => {
       boid.update();
       boid.noiseWiggle();     // wiggles!
       boid.growAndShrink();     // other updates (diameter)
-      boid.createPath();
     }
 
     for (var i = 0; i < p.boids.length; i++){
@@ -639,7 +612,7 @@ const pewpewSketch = ( p ) => {
           state : "idle",
           choice: "went idle"
         }
-        if (ps.socket)ps.socket.emit('playSolo', sendData);
+        ps.socket.emit('playSolo', sendData);
 
         $("#idleWarningContent").html("You have been unpaired due lack of activity. Use the menu above to reconnect");
         p.matchState = "idle";
@@ -677,7 +650,7 @@ const pewpewSketch = ( p ) => {
 
 
   class Boid{
-    constructor(x, y, xoff, yoff, speed, dx, dy, diameter, maxDiameter, hue, sat, bri, wiggleAmt){
+    constructor(x, y, xoff, yoff, speed, dx, dy, diameter, maxDiameter, hue, sat, bri){
       this.position = p.createVector(x,y);       // mouseposition
       //this.position = p.createVector(p.random(p.width), p.random(p.height));
       this.velocity = p.createVector(dx,dy);      // velocity = mouse direction
@@ -692,67 +665,17 @@ const pewpewSketch = ( p ) => {
       this.hue = hue;
       this.sat = sat;
       this.bri = bri;
-      this.maxAlpha = p.random(40, 80);
-      this.alpha = 0;
       this.murder = false;
 
-      this.wiggle = wiggleAmt;  // max pixels the noise can map to
+      this.wiggle = p.wiggleAmount;  // max pixels the noise can map to
 
       this.maxSpeed = 5;          // for flocking
-      this.ultimateMaxSpeed = 30; // for flocking
+      this.ultimateMaxSpeed =40; // for flocking
       this.maxForce = p.forceAmount;      // for flocking
       this.force = 0;
 
       this.id = p.id;
-
-      this.noiseCenter = {
-        x: p.random(999),
-        y: p.random(999),
-      }
-
-      this.mode = p.random();
-
-      this.pointAngle = 0;
-      this.spinSpeed = p.random(.5, 4);
-      this.noiseZ = p.random(999);
-
-      if (p.random()<0.5) this.spinSpeed = -this.spinSpeed;
-
-      this.createPath();
   	}
-
-    createPath(){
-      this.path = [];
-
-      let numPoints = 100;
-      let angleGap = 360/numPoints;
-
-      for(let i =0; i < numPoints; i++){
-        let angle = i * angleGap;
-
-        let np = {
-          x: this.noiseCenter.x + p.cos(angle) * .3,
-          y: this.noiseCenter.y + p.sin(angle) * .3,
-          angle: angle
-        }
-
-        let n = p.noise(np.x, np.y, this.noiseZ);
-
-        let diameter = this.diameter + p.map(n, 0, 1, -this.diameter*0.5, this.diameter*1.1);
-
-
-        let x = this.position.x + p.cos(angle + this.pointAngle) * diameter;
-        let y = this.position.y + p.sin(angle + this.pointAngle) * diameter;
-        
-        this.path.push(p.createVector(x, y));
-      }
-
-      this.pointAngle += this.spinSpeed;
-      this.noiseZ += 0.03;
-
-      if (this.alpha < this.maxAlpha) this.alpha += 5;
-
-    }
 
     flock(boids){
 
@@ -831,8 +754,6 @@ const pewpewSketch = ( p ) => {
       if (this.force < this.maxForce){
         this.force+=0.002;
       }
-
-
     }
 
 
@@ -863,7 +784,7 @@ const pewpewSketch = ( p ) => {
       }
       else{
         if (this.diameter > p.deleteDiameter){
-          this.diameter -= 0.1;
+          this.diameter -= 0.05;
         }
         else{
           this.diameter -= 2;
@@ -879,16 +800,8 @@ const pewpewSketch = ( p ) => {
   	}
 
   	display(){
-      if (this.diameter <.5) return;
-
-      p.fill(this.hue, this.sat, this.bri, this.alpha);
-  		//p.ellipse(this.position.x, this.position.y, this.diameter, this.diameter);
-
-      p.beginShape();
-      for(let i = 0; i < this.path.length; i++){
-        p.vertex(this.path[i].x, this.path[i].y);
-      }
-      p.endShape();
+      p.fill(this.hue, this.sat, this.bri);
+  		p.ellipse(this.position.x, this.position.y, this.diameter, this.diameter);
   	}
   }
 
