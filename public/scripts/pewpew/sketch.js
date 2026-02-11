@@ -141,7 +141,7 @@ const pewpewSketch = ( p ) => {
 
   // flock variables
   p.perceptionRadius = 75;
-  p.desiredSeparation = 50;
+  p.desiredSeparation = 15;
   p.separationAmount = 1.2;
   p.separationDistanceAmount = 30;
   p.alignAmount = 2.1;
