@@ -96,7 +96,7 @@ const pewpewSketch = ( p ) => {
 
   p.maxSize = 10;         // Size the boids will grow to
   p.minSize = 3;
-  p.deleteDiameter = 5;   // size the boids get deleted at
+  p.deleteDiameter = 2;   // size the boids get deleted at
 
   p.previousMouseX = 0;   // To figure out what direction the mouse is going in
   p.previousMouseY = 0;
@@ -107,7 +107,7 @@ const pewpewSketch = ( p ) => {
   p.startSpeed = 4;          // how fast the mousedirection pushes a boid
 
   p.maxBoids = 500;      // Max number of boids, changes to be lower if framerate is struggling
-  p.topMaxBoids = 180;
+  p.topMaxBoids = 250;
   p.lowMaxBoids = 20;
 
   p.colorCollections = []; // Manage colour choices
@@ -141,7 +141,7 @@ const pewpewSketch = ( p ) => {
 
   // flock variables
   p.perceptionRadius = 75;
-  p.desiredSeparation = 15;
+  p.desiredSeparation = 25;
   p.separationAmount = 1.2;
   p.separationDistanceAmount = 30;
   p.alignAmount = 2.1;
