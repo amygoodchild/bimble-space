@@ -91,7 +91,7 @@ const pewpewSketch = ( p ) => {
   }
   p.noiseSpeed = {
     min: 0.02,
-    max: 0.1
+    max: 0.08
   }
 
   p.maxSize = 10;         // Size the boids will grow to
@@ -140,13 +140,13 @@ const pewpewSketch = ( p ) => {
   p.forceSlider;
 
   // flock variables
-  p.perceptionRadius = 75;
-  p.desiredSeparation = 25;
+  p.perceptionRadius = 150;
+  p.desiredSeparation = 50;
   p.separationAmount = 1.2;
   p.separationDistanceAmount = 30;
   p.alignAmount = 2.1;
   p.cohesionAmount = 0.3;
-  p.forceAmount = 0.6;
+  p.forceAmount = 0.8;
 
   p.dragLength = 0;
   p.drawCounter = 0;
