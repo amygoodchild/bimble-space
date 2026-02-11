@@ -106,8 +106,8 @@ const pewpewSketch = ( p ) => {
   p.initialSpeed = 300;      // how much the mouse direction affects initial velocity
   p.startSpeed = 5;          // how fast the mousedirection pushes a boid
 
-  p.maxBoids = 500;      // Max number of boids, changes to be lower if framerate is struggling
-  p.topMaxBoids = 250;
+  p.maxBoids = 230;      // Max number of boids, changes to be lower if framerate is struggling
+  p.topMaxBoids = 230;
   p.lowMaxBoids = 20;
 
   p.colorCollections = []; // Manage colour choices
@@ -866,7 +866,7 @@ const pewpewSketch = ( p ) => {
       }
       else{
         if (this.diameter > p.deleteDiameter){
-          this.diameter -= 0.03;
+          this.diameter -= 0.05;
         }
         else{
           this.diameter -= 2;
