@@ -490,6 +490,9 @@ const pewpewSketch = ( p ) => {
           //                                  p.mouseY - p.previousMouseY
           //                                  );
 
+          if (p.frameCount % 10 == 0) p.duplicates = 2;
+          else p.duplicates = 1;
+
           for (var i = 0; i < p.duplicates; i++){
             // choosing a colour
             p.probability = p.random(0,1);
