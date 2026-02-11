@@ -866,7 +866,7 @@ const pewpewSketch = ( p ) => {
       }
       else{
         if (this.diameter > p.deleteDiameter){
-          this.diameter -= 0.1;
+          this.diameter -= 0.03;
         }
         else{
           this.diameter -= 2;
